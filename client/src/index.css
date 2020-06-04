@@ -7,18 +7,27 @@ html, body {
   font-family: 'Lato', sans-serif;
   color: #505962;
 }
+a {
+  text-decoration: none !important;
+}
 
-.btn-primary {
+/* Button styles */
+.btn {
+  padding: .8rem 3rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+}
+.login-btn {
   background-color: rgb(102, 117, 223) !important;
 }
-.btn-primary:hover {
+.login-btn:hover {
   background-color: #1d2fb3 !important;
 }
-.btn-outline-primary {
+.demo-btn {
   border-color:  rgb(102, 117, 223) !important;
   color:  rgb(102, 117, 223) !important;
 }
-.btn-outline-primary:hover {
+.demo-btn:hover {
   background-color:  rgb(102, 117, 223) !important;
   color: white !important;
 }
@@ -31,9 +40,4 @@ form {
 }
 .form-group {
   margin-bottom: 2.5rem;
-}
-.login-btn {
-  padding: .8rem 3rem;
-  font-size: 1.2rem;
-  border-radius: 2rem;
 }
