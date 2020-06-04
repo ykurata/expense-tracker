@@ -13,12 +13,12 @@ a {
 
 /* Button styles */
 .btn {
-  padding: .8rem 3rem;
-  font-size: 1.2rem;
   border-radius: 2rem;
 }
 .login-btn {
   background-color: rgb(102, 117, 223) !important;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 .login-btn:hover {
   background-color: #1d2fb3 !important;
@@ -40,4 +40,13 @@ form {
 }
 .form-group {
   margin-bottom: 2.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  form {
+    padding-top: 2rem;
+  }
+  .image-grid {
+    max-height: 8rem;
+  }
 }
