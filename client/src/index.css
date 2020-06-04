@@ -8,11 +8,19 @@ html, body {
   color: #505962;
 }
 
-button {
+.btn-primary {
   background-color: rgb(102, 117, 223) !important;
 }
-button:hover {
+.btn-primary:hover {
   background-color: #1d2fb3 !important;
+}
+.btn-outline-primary {
+  border-color:  rgb(102, 117, 223) !important;
+  color:  rgb(102, 117, 223) !important;
+}
+.btn-outline-primary:hover {
+  background-color:  rgb(102, 117, 223) !important;
+  color: white !important;
 }
 
 /* Login page styles */
@@ -24,5 +32,8 @@ form {
 .form-group {
   margin-bottom: 2.5rem;
 }
-
-
+.login-btn {
+  padding: .8rem 3rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+}
