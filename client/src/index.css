@@ -7,12 +7,29 @@ html, body {
   font-family: 'Lato', sans-serif;
   color: #505962;
 }
+a {
+  text-decoration: none !important;
+}
 
-button {
+/* Button styles */
+.btn {
+  padding: .8rem 3rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+}
+.login-btn {
   background-color: rgb(102, 117, 223) !important;
 }
-button:hover {
+.login-btn:hover {
   background-color: #1d2fb3 !important;
+}
+.demo-btn {
+  border-color:  rgb(102, 117, 223) !important;
+  color:  rgb(102, 117, 223) !important;
+}
+.demo-btn:hover {
+  background-color:  rgb(102, 117, 223) !important;
+  color: white !important;
 }
 
 /* Login page styles */
@@ -24,5 +41,3 @@ form {
 .form-group {
   margin-bottom: 2.5rem;
 }
-
-

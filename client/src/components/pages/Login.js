@@ -25,7 +25,12 @@ const Login = () => {
 						<div className="form-group">
 							<input type="password" className="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"/>
 						</div>
-						<button type="button" className="btn btn-primary btn-lg btn-block">Log In</button>
+						<button type="button" className="btn btn-lg btn-primary login-btn mr-3">Log In</button>
+						<button type="button" className="btn btn-lg btn-outline-primary demo-btn">Demo User</button>
+						<div className="text-center pt-5 pb-5">
+							<p>Not a member?</p>
+							<a href="/">Sign Up</a>
+						</div>
 					</form>
 				</div>
 			</div>
