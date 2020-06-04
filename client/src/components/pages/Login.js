@@ -15,7 +15,7 @@ const Login = () => {
 	return (
 		<div id="login">
 			<div className="row"> 
-				<div className="col-lg-6 col-md-6 d-none d-md-block" style={loginStyles}></div>
+				<div className="col-lg-6 col-md-6 image-grid" style={loginStyles}></div>
 				<div className="col-lg-6 col-md-6">
 					<form>
 						<h2 className="title text-center mb-5">Log In</h2>
@@ -25,8 +25,10 @@ const Login = () => {
 						<div className="form-group">
 							<input type="password" className="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"/>
 						</div>
-						<button type="button" className="btn btn-lg btn-primary login-btn mr-3">Log In</button>
-						<button type="button" className="btn btn-lg btn-outline-primary demo-btn">Demo User</button>
+						<div className="text-center">
+							<button type="button" className="btn btn-lg btn-primary login-btn mr-3">Log In</button>
+							<button type="button" className="btn btn-lg btn-outline-primary demo-btn">Demo User</button>
+						</div>
 						<div className="text-center pt-5 pb-5">
 							<p>Not a member?</p>
 							<a href="/">Sign Up</a>
