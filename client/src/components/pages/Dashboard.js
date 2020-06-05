@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Dashboard = () => {
+  const [open, setOpen] = useState(false);
+
+  const onClick = e => {
+    setOpen(true);
+  }
+  console.log(open)
+
   return (
     <div id="dashboard" className="wrapper">
       <nav id="sidebar">
@@ -23,7 +30,7 @@ const Dashboard = () => {
       <div id="content">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            <button type="button" id="sidebarCollapse" className="btn btn-info">
+            <button onClick={onClick} type="button" id="sidebarCollapse" className="btn btn-info">
               <i className="fas fa-align-left"></i>
               <span>Toggle Sidebar</span>
             </button>
