@@ -46,19 +46,8 @@ form {
   margin-bottom: 1.8rem;
 }
 
-@media screen and (max-width: 767px) {
-  form {
-    padding-top: 2rem;
-  }
-  .image-grid {
-    max-height: 8rem;
-  }
-}
-
-
 /* Sidebar  */
 #sidebar {
-  height: 100vh;
   overflow-x: hidden;
   padding-top: 55px;
 }
@@ -66,6 +55,8 @@ form {
 .w-sidebar {
   width: 200px;
   max-width: 200px;
+  top: 0;
+  z-index: 1060;
 }
 
 .row.collapse {
@@ -96,7 +87,7 @@ transition: all .15s linear;
   .row > .sidebar.collapse {
       display: flex !important;
       margin-left: -100% !important;
-      transition: all .25s linear;
+      transition: all .3s linear;
       position: fixed;
       z-index: 1050;
       max-width: 0;
@@ -114,10 +105,21 @@ transition: all .15s linear;
   .row > .sidebar.collapsing {
       display: flex !important;
       margin-left: -10% !important;
-      transition: all .2s linear !important;
+      transition: all .3s linear !important;
       position: fixed;
       z-index: 1050;
       min-width: initial;
   }
   
 }
+
+
+@media screen and (max-width: 767px) {
+  form {
+    padding-top: 2rem;
+  }
+  .image-grid {
+    max-height: 8rem;
+  }
+}
+
