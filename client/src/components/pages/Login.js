@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import image from '../images/login7.jpg';
+import image from '../images/login5.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
