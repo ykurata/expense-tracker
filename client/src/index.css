@@ -1,52 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Rotobo', sans-serif;
   color: #505962;
-}
-a {
-  text-decoration: none !important;
-}
-
-/* Button styles */
-.btn {
-  border-radius: 2rem;
-}
-.login-btn {
-  background-color: rgb(102, 117, 223) !important;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-}
-.login-btn:hover {
-  background-color: #1d2fb3 !important;
-}
-.demo-btn {
-  border-color:  rgb(102, 117, 223) !important;
-  color:  rgb(102, 117, 223) !important;
-}
-.demo-btn:hover {
-  background-color:  rgb(102, 117, 223) !important;
-  color: white !important;
-}
-
-/* Login page styles */
-form {
-  width: 80%;
-  padding-top: 8rem;
-  margin: auto;
-}
-.form-group {
-  margin-bottom: 1.8rem;
-}
-
-@media screen and (max-width: 767px) {
-  form {
-    padding-top: 2rem;
-  }
-  .image-grid {
-    max-height: 8rem;
-  }
 }
