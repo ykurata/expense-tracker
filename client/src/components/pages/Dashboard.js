@@ -9,12 +9,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -26,11 +26,15 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       flexShrink: 0,
-    },
+		}
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+		zIndex: theme.zIndex.drawer + 1,
 	},
+	avatar: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
@@ -48,7 +52,10 @@ const useStyles = makeStyles(theme => ({
   closeMenuButton: {
     marginRight: 'auto',
     marginLeft: 0,
-  },
+	},
+	list : {
+		paddingTop: '2rem'
+	}
 }));
 
 
@@ -75,7 +82,7 @@ const Dashboard = () => {
 	
 	const drawer = (
     <div>
-      <List>
+      <List className={classes.list}>
         {dummyCategories.map((text, index) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
@@ -109,7 +116,7 @@ const Dashboard = () => {
 							onClick={handleMenu}
 							color="inherit"
 						>
-							<AccountCircle />
+							 <Avatar alt="Remy Sharp" src="" className={classes.avatar} />
 						</IconButton>
 						<Menu
 							id="menu-appbar"
