@@ -57,13 +57,12 @@ const Dashboard = () => {
   const classes = useStyles();
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
+	const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
 	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
 	}
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
