@@ -9,9 +9,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -27,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-  },
+	},
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
@@ -49,15 +52,27 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function Dashboard() {
-  const dummyCategories = ['Hokusai', 'Hiroshige', 'Utamaro', 'Kuniyoshi', 'Yoshitoshi']
+const Dashboard = () => {
+  const dummyCategories = ['Add Expense', 'Add Income', 'Add Category', 'Create Budget']
   const classes = useStyles();
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
-	function handleDrawerToggle() {
+	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
 	}
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 	
 	const drawer = (
     <div>
@@ -84,9 +99,38 @@ function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
+          <Typography variant="h6" style={{ flex: 1 }} noWrap>
+            Expense Tracker
           </Typography>
+					<div>
+						<IconButton
+							aria-label="account of current user"
+							aria-controls="menu-appbar"
+							aria-haspopup="true"
+							onClick={handleMenu}
+							color="inherit"
+						>
+							<AccountCircle />
+						</IconButton>
+						<Menu
+							id="menu-appbar"
+							anchorEl={anchorEl}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+							open={open}
+							onClose={handleClose}
+						>
+							<MenuItem onClick={handleClose}>Log Out</MenuItem>
+							<MenuItem onClick={handleClose}>My account</MenuItem>
+						</Menu>
+					</div>
         </Toolbar>
       </AppBar>
       
