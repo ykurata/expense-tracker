@@ -109,6 +109,7 @@ const Dashboard = () => {
             Expense Tracker
           </Typography>
 					<div>
+						<span>Yasuko Kurata</span>
 						<IconButton
 							aria-label="account of current user"
 							aria-controls="menu-appbar"
