@@ -1,74 +1,139 @@
-import React, { useState } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const Dashboard = () => {
-  const [open, setOpen] = useState(false);
+const drawerWidth = 240;
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('md')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  closeMenuButton: {
+    marginRight: 'auto',
+    marginLeft: 0,
+  },
+}));
 
-  const onClick = e => {
-    setOpen(true);
-  }
-  console.log(open)
 
-  return (
-    <div id="dashboard" className="wrapper">
-      <nav id="sidebar">
-        <div className="sidebar-header">
-          <h3>Expense Tracker</h3>
-        </div>
-        <ul className="components">
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/">Add Expense</a>
-          </li>
-          <li>
-            <a href="/">Add Income</a>
-          </li>
-        </ul>
+function Dashboard() {
+  const dummyCategories = ['Hokusai', 'Hiroshige', 'Utamaro', 'Kuniyoshi', 'Yoshitoshi']
+  const classes = useStyles();
+  const theme = useTheme();
+	const [mobileOpen, setMobileOpen] = React.useState(false);
+
+	function handleDrawerToggle() {
+    setMobileOpen(!mobileOpen)
+	}
+	
+	const drawer = (
+    <div>
+      <List>
+        {dummyCategories.map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+	return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Responsive drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      
+      <nav className={classes.drawer}>
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden mdUp implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            <IconButton onClick={handleDrawerToggle} className={classes.closeMenuButton}>
+              <CloseIcon/>
+            </IconButton>
+            {drawer}
+          </Drawer>
+        </Hidden>
+				<Hidden smDown implementation="css">
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <div className={classes.toolbar} />
+            {drawer}
+          </Drawer>  
+        </Hidden>
       </nav>
-
-      <div id="content">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
-            <button onClick={onClick} type="button" id="sidebarCollapse" className="btn btn-info">
-              <i className="fas fa-align-left"></i>
-              <span>Toggle Sidebar</span>
-            </button>
-          </div>
-        </nav>
-
-        <br></br>
-
-        <h2>Collapse sidebar using bootstrap</h2>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting i
-          ndustry. Lorem Ipsum has been the industry's standard dummy text 
-          ever since the 1500s, when an unknown printer took a galley of type 
-          and scrambled it to make a type specimen book. It has survived not 
-          only five centuries, but also the leap into electronic typesetting, 
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages,
-          and more recently with desktop publishing software like Aldus PageMaker 
-          including versions of Lorem Ipsum.
-        </p>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting i
-          ndustry. Lorem Ipsum has been the industry's standard dummy text 
-          ever since the 1500s, when an unknown printer took a galley of type 
-          and scrambled it to make a type specimen book. It has survived not 
-          only five centuries, but also the leap into electronic typesetting, 
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages,
-          and more recently with desktop publishing software like Aldus PageMaker 
-          including versions of Lorem Ipsum.
-        </p>
-
-        <div className="line">
-
-        </div>
+      <div className={classes.content}>
+        <div className={classes.toolbar} />
       </div>
     </div>
   );
 }
 
+Dashboard.propTypes = {
+  // Injected by the documentation to work in an iframe.
+  // You won't need it on your project.
+  container: PropTypes.object,
+};
 export default Dashboard;
