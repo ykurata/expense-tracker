@@ -32,9 +32,18 @@ const useStyles = makeStyles(theme => ({
 		zIndex: theme.zIndex.drawer + 1,
 	},
 	avatar: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
+    width: theme.spacing(6),
+		height: theme.spacing(6),
+		[theme.breakpoints.down('sm')]: {
+      width: theme.spacing(5),
+			height: theme.spacing(5),
+		},
+	},
+	username: {
+		[theme.breakpoints.down('xs')]: {
+      display: 'none',
+		},
+	},
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
@@ -109,7 +118,7 @@ const Dashboard = () => {
             Expense Tracker
           </Typography>
 					<div>
-						<span>Yasuko Kurata</span>
+						<span className={classes.username}>Yasuko Kurata</span>
 						<IconButton
 							aria-label="account of current user"
 							aria-controls="menu-appbar"
