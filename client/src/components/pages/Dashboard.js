@@ -15,11 +15,12 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -69,9 +70,14 @@ const useStyles = makeStyles(theme => ({
 	list : {
 		paddingTop: '2rem'
 	},
-	card: {
-		maxWidth: '450px'
-	}
+	paper: {
+		minHeight: '22rem',
+	},
+	header: {
+		borderBottom: '1px solid #ebeced',
+		padding: theme.spacing(1),
+		height: '4rem'
+	},
 }));
 
 
@@ -84,7 +90,6 @@ const Dashboard = () => {
 	const open = Boolean(anchorEl);
 	
 	const data = {
-		labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
 		datasets:[
 			{
 				label:'Population',
@@ -184,7 +189,6 @@ const Dashboard = () => {
       </AppBar>
       
       <nav className={classes.drawer}>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden mdUp implementation="css">
           <Drawer
             variant="temporary"
@@ -219,16 +223,31 @@ const Dashboard = () => {
       </nav>
       <div className={classes.content}>
         <div className={classes.toolbar} />
-				<Grid container spacing={2}>
-					<Grid item xs={6} >
-						<Card className={classes.card}>
+				<Grid container spacing={3}>
+					<Grid item xs={12} sm={6} md={6} >
+						<Paper className={classes.paper}>
+							<Grid container className={classes.header}>
+								<Grid xs={6} item>
+									<Typography variant="h6">$1000.00</Typography>
+									<Typography variant="body2">Income</Typography>
+								</Grid>
+								<Grid xs={6} item>
+									<Typography align='right' variant="h6">$500.00</Typography>
+									<Typography align='right' variant="body2">Expenses</Typography>
+								</Grid>
+							</Grid>
+							
 							<Doughnut data={data} />
-						</Card>
+							<Typography align='center' variant="h6">Saving 50%</Typography>
+						</Paper>
 					</Grid>
-					<Grid item xs={6} >
-						<Card className={classes.card}>
-							<Doughnut data={data} />
-						</Card>
+					<Grid item xs={12} sm={6} md={6}>
+						<Paper className={classes.paper}>
+							<Grid container className={classes.header}>
+								<Typography variant="h6">Monthly Expneses</Typography>
+							</Grid>
+							<Line data={data} />
+						</Paper>
 					</Grid>
 				</Grid>
       </div>
