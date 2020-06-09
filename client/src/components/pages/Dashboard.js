@@ -17,6 +17,18 @@ import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+
+import DraftsIcon from '@material-ui/icons/Drafts';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -76,8 +88,14 @@ const useStyles = makeStyles(theme => ({
 	header: {
 		borderBottom: '1px solid #ebeced',
 		padding: theme.spacing(1),
-		height: '4rem'
+		marginLeft: '.5rem'
 	},
+	subTitle: {
+		padding: theme.spacing(1),
+	},
+	transactionPaper: {
+		marginTop: '2rem'
+	}
 }));
 
 
@@ -225,24 +243,23 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={6} md={6} >
-						<Paper className={classes.paper}>
-							<Grid container className={classes.header}>
+						<Paper className={classes.paper} elevation={3}>
+							<Grid container className={classes.subTitle}>
 								<Grid xs={6} item>
-									<Typography variant="h6">$1000.00</Typography>
-									<Typography variant="body2">Income</Typography>
+										<Typography variant="h6">$1000.00</Typography>
+										<Typography variant="body2">Income</Typography>
 								</Grid>
 								<Grid xs={6} item>
 									<Typography align='right' variant="h6">$500.00</Typography>
 									<Typography align='right' variant="body2">Expenses</Typography>
 								</Grid>
 							</Grid>
-							
 							<Doughnut data={data} />
 							<Typography align='center' variant="h6">Saving 50%</Typography>
 						</Paper>
 					</Grid>
 					<Grid item xs={12} sm={6} md={6}>
-						<Paper className={classes.paper}>
+						<Paper className={classes.paper} elevation={3}>
 							<Grid container className={classes.header}>
 								<Typography variant="h6">Monthly Expneses</Typography>
 							</Grid>
@@ -250,6 +267,28 @@ const Dashboard = () => {
 						</Paper>
 					</Grid>
 				</Grid>
+				
+				<Paper className={classes.transactionPaper} elevation={3}>
+					<Grid>
+						<Typography variant="h6" className={classes.header}>Monthly transaction</Typography>
+					</Grid>
+					<TableContainer className={classes.container}>
+					<Table stickyHeader aria-label="sticky table">
+						<TableHead>
+							<TableRow>
+								<TableCell>Date</TableCell>
+								<TableCell>Category</TableCell>
+								<TableCell>Description</TableCell>
+								<TableCell>Amount</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							
+						</TableBody>
+					</Table>
+					</TableContainer>
+				</Paper>
+			
       </div>
     </div>
   );
