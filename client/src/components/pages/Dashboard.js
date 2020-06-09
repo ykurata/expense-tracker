@@ -15,7 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import { Doughnut } from 'react-chartjs-2';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -64,6 +68,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	list : {
 		paddingTop: '2rem'
+	},
+	card: {
+		maxWidth: '450px'
 	}
 }));
 
@@ -74,7 +81,33 @@ const Dashboard = () => {
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+	const open = Boolean(anchorEl);
+	
+	const data = {
+		labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+		datasets:[
+			{
+				label:'Population',
+				data:[
+					617594,
+					181045,
+					153060,
+					106519,
+					105162,
+					95072
+				],
+				backgroundColor:[
+					'rgba(255, 99, 132, 0.6)',
+					'rgba(54, 162, 235, 0.6)',
+					'rgba(255, 206, 86, 0.6)',
+					'rgba(75, 192, 192, 0.6)',
+					'rgba(153, 102, 255, 0.6)',
+					'rgba(255, 159, 64, 0.6)',
+					'rgba(255, 99, 132, 0.6)'
+				]
+			}
+		]
+	}
 
 	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -186,6 +219,18 @@ const Dashboard = () => {
       </nav>
       <div className={classes.content}>
         <div className={classes.toolbar} />
+				<Grid container spacing={2}>
+					<Grid item xs={6} >
+						<Card className={classes.card}>
+							<Doughnut data={data} />
+						</Card>
+					</Grid>
+					<Grid item xs={6} >
+						<Card className={classes.card}>
+							<Doughnut data={data} />
+						</Card>
+					</Grid>
+				</Grid>
       </div>
     </div>
   );
