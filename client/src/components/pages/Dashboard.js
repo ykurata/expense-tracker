@@ -15,7 +15,24 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+
+import DraftsIcon from '@material-ui/icons/Drafts';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import { Doughnut, Line } from 'react-chartjs-2';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -24,6 +41,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
+		backgroundColor: '#6fc251',
+		color: 'white'
 	},
 	avatar: {
     width: theme.spacing(6),
@@ -52,7 +71,8 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+		width: drawerWidth,
+		backgroundColor: '#f2f4f5',
   },
   content: {
     flexGrow: 1,
@@ -64,6 +84,24 @@ const useStyles = makeStyles(theme => ({
 	},
 	list : {
 		paddingTop: '2rem'
+	},
+	paper: {
+		minHeight: '22rem',
+	},
+	header: {
+		borderBottom: '1px solid #ebeced',
+		padding: theme.spacing(1),
+		marginLeft: '.5rem',
+		color:  '#3c8c1f',
+	},
+	subTitle: {
+		padding: theme.spacing(1),
+	},
+	transactionPaper: {
+		marginTop: '2rem',
+	},
+	tableContainer: {
+		height: '20rem'
 	}
 }));
 
@@ -74,7 +112,32 @@ const Dashboard = () => {
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+	const open = Boolean(anchorEl);
+	
+	const data = {
+		datasets:[
+			{
+				label:'Population',
+				data:[
+					617594,
+					181045,
+					153060,
+					106519,
+					105162,
+					95072
+				],
+				backgroundColor:[
+					'rgba(255, 99, 132, 0.6)',
+					'rgba(54, 162, 235, 0.6)',
+					'rgba(255, 206, 86, 0.6)',
+					'rgba(75, 192, 192, 0.6)',
+					'rgba(153, 102, 255, 0.6)',
+					'rgba(255, 159, 64, 0.6)',
+					'rgba(255, 99, 132, 0.6)'
+				]
+			}
+		]
+	}
 
 	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -151,7 +214,6 @@ const Dashboard = () => {
       </AppBar>
       
       <nav className={classes.drawer}>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden mdUp implementation="css">
           <Drawer
             variant="temporary"
@@ -186,6 +248,123 @@ const Dashboard = () => {
       </nav>
       <div className={classes.content}>
         <div className={classes.toolbar} />
+				<Grid container spacing={3}>
+					<Grid item xs={12} sm={6} md={6} >
+						<Paper className={classes.paper} elevation={3}>
+							<Grid container className={classes.subTitle}>
+								<Grid xs={6} item>
+										<Typography variant="h6">$1000.00</Typography>
+										<Typography variant="body2">Income</Typography>
+								</Grid>
+								<Grid xs={6} item>
+									<Typography align='right' variant="h6">$500.00</Typography>
+									<Typography align='right' variant="body2">Expenses</Typography>
+								</Grid>
+							</Grid>
+							<Doughnut data={data} />
+							<Typography align='center' variant="h6">Saving 50%</Typography>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={6}>
+						<Paper className={classes.paper} elevation={3}>
+							<Grid container className={classes.header}>
+								<Typography variant="h6">Monthly Expneses</Typography>
+							</Grid>
+							<Line data={data} />
+						</Paper>
+					</Grid>
+				</Grid>
+				
+				<Paper className={classes.transactionPaper} elevation={3}>
+					<Grid>
+						<Typography variant="h6" className={classes.header}>Monthly transaction</Typography>
+					</Grid>
+					<TableContainer className={classes.tableContainer}>
+						<Table stickyHeader aria-label="sticky table">
+							<TableHead>
+								<TableRow>
+									<TableCell>Date</TableCell>
+									<TableCell>Category</TableCell>
+									<TableCell>Description</TableCell>
+									<TableCell>Amount</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills 
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</Paper>
+			
       </div>
     </div>
   );
