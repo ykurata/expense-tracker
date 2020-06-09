@@ -21,14 +21,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-  },
-  drawer: {
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-		}
-  },
-  appBar: {
+	},
+	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
 	},
 	avatar: {
@@ -44,6 +38,12 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
 		},
 	},
+  drawer: {
+    [theme.breakpoints.up('md')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+		}
+  },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
