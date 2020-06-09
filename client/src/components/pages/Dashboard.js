@@ -41,6 +41,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
+		backgroundColor: '#6fc251',
+		color: 'white'
 	},
 	avatar: {
     width: theme.spacing(6),
@@ -69,7 +71,8 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+		width: drawerWidth,
+		backgroundColor: '#f2f4f5',
   },
   content: {
     flexGrow: 1,
@@ -88,13 +91,17 @@ const useStyles = makeStyles(theme => ({
 	header: {
 		borderBottom: '1px solid #ebeced',
 		padding: theme.spacing(1),
-		marginLeft: '.5rem'
+		marginLeft: '.5rem',
+		color:  '#3c8c1f',
 	},
 	subTitle: {
 		padding: theme.spacing(1),
 	},
 	transactionPaper: {
-		marginTop: '2rem'
+		marginTop: '2rem',
+	},
+	tableContainer: {
+		height: '20rem'
 	}
 }));
 
@@ -272,20 +279,89 @@ const Dashboard = () => {
 					<Grid>
 						<Typography variant="h6" className={classes.header}>Monthly transaction</Typography>
 					</Grid>
-					<TableContainer className={classes.container}>
-					<Table stickyHeader aria-label="sticky table">
-						<TableHead>
-							<TableRow>
-								<TableCell>Date</TableCell>
-								<TableCell>Category</TableCell>
-								<TableCell>Description</TableCell>
-								<TableCell>Amount</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							
-						</TableBody>
-					</Table>
+					<TableContainer className={classes.tableContainer}>
+						<Table stickyHeader aria-label="sticky table">
+							<TableHead>
+								<TableRow>
+									<TableCell>Date</TableCell>
+									<TableCell>Category</TableCell>
+									<TableCell>Description</TableCell>
+									<TableCell>Amount</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills 
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell>07/09/2020</TableCell>
+									<TableCell>
+										<ListItemIcon>
+											<FastfoodIcon></FastfoodIcon>
+										</ListItemIcon>
+									</TableCell>
+									<TableCell>
+										No Frills
+									</TableCell>
+									<TableCell>
+										$100.00
+									</TableCell>
+								</TableRow>
+							</TableBody>
+						</Table>
 					</TableContainer>
 				</Paper>
 			
