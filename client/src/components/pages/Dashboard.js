@@ -26,9 +26,22 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -102,18 +115,25 @@ const useStyles = makeStyles(theme => ({
 	},
 	tableContainer: {
 		height: '20rem'
-	}
+  },
+  textField: {
+    marginBottom: '1rem'
+  }
 }));
 
 
 const Dashboard = () => {
-  const dummyCategories = ['Add Expense', 'Add Income', 'Add Category', 'Create Budget']
   const classes = useStyles();
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
-	
+	const [expenseOpen, setExpenseOpen] = React.useState(false);
+  const [incomeOpen, setIncomeOpen] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [state, setState] = React.useState({ amount: '' });
+
+  
 	const data = {
 		datasets:[
 			{
@@ -138,7 +158,26 @@ const Dashboard = () => {
 			}
 		]
 	}
+	
+  // Add expense
+  const handleExpenseOpen = () => {
+    setExpenseOpen(true);
+  };
 
+  const handleExpenseClose = () => {
+    setExpenseOpen(false);
+	};
+	
+	// Add income
+  const handleIncomeOpen = () => {
+    setIncomeOpen(true);
+  };
+
+  const handleIncomeClose = () => {
+    setIncomeOpen(false);
+  };
+
+  // open side nav
 	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
 	}
@@ -151,15 +190,116 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
+  
+  // category change
+  // const handleChange = name => event => {
+  //   setState({ ...state, [name]: Number(event.target.value) || '' });
+  // };
+  const handleChange = (prop) => (event) => {
+    setState({ ...state, [prop]: event.target.value });
+  };
+
+
+
 	
 	const drawer = (
     <div>
       <List className={classes.list}>
-        {dummyCategories.map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+				<ListItem button>
+					<ListItemText primary={'Add Expense'} onClick={handleExpenseOpen} />
+				</ListItem>
+
+				<Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title">Add Expense</DialogTitle>
+					<DialogContent>
+            <form className={classes.container}>
+              <TextField
+                id="date"
+                label="Date"
+                type="date"
+                defaultValue="2020-06-10"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <InputLabel htmlFor="age-simple">Category</InputLabel>
+              <Select
+                value={state.age}
+                onChange={handleChange('age')}
+                input={<Input id="age-simple" />}
+                fullWidth
+                className={classes.textField}
+              >
+                <MenuItem value={10}>Rent</MenuItem>
+                <MenuItem value={20}>Grocery</MenuItem>
+                <MenuItem value={30}>Eat Out</MenuItem>
+              </Select>
+              
+              <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+              <Input
+                id="standard-adornment-amount"
+                value={state.amount}
+                onChange={handleChange('amount')}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                fullWidth
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="description"
+                label="Description"
+                type="text"
+                fullWidth
+              />
+            </form>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleExpenseClose} color="primary">
+							Submit
+						</Button>
+						<Button onClick={handleExpenseClose} color="primary">
+							Cancel
+						</Button>
+					</DialogActions>
+				</Dialog>
+
+				<ListItem button>
+					<ListItemText primary={'Add Income'} onClick={handleIncomeOpen}/>
+				</ListItem>
+
+				<Dialog open={incomeOpen} onClose={handleIncomeClose} aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title">Add Income</DialogTitle>
+					<DialogContent>
+	
+						<TextField
+							autoFocus
+							margin="dense"
+							id="income"
+							label="Income"
+							type="income"
+							fullWidth
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleIncomeClose} color="primary">
+							Submit
+						</Button>
+						<Button onClick={handleIncomeClose} color="primary">
+							Cancel
+						</Button>
+					</DialogActions>
+				</Dialog>
+				
+				<ListItem button>
+					<ListItemText primary={'Add Category'} />
+				</ListItem>
+				<ListItem button>
+					<ListItemText primary={'Create Budget'} />
+				</ListItem>
       </List>
     </div>
   );
