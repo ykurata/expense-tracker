@@ -26,8 +26,8 @@ const Saving = () => {
           50
 				],
 				backgroundColor:[
-				  '#79dfe8',
-					'rgba(54, 162, 235, 0.6)'
+				  '#647fe3',
+					'#d5dbed'
 				]
 			}
 		]
