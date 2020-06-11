@@ -126,6 +126,9 @@ const useStyles = makeStyles(theme => ({
     color: 'grey',
     fontSize: '4rem',
     marginBottom: '2rem'
+  },
+  cateroryTitle: {
+    padding: theme.spacing(4,0,3,0),
   }
 }));
 
@@ -415,6 +418,8 @@ const Dashboard = () => {
 						</Paper>
 					</Grid>
 				</Grid>
+
+        <Typography className={classes.cateroryTitle} variant="h5">Categories with Budget Expense</Typography>
 
 				<Grid container spacing={3}>
           <Grid item xs={6} sm={4} md={3}>
