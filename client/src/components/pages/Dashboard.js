@@ -31,7 +31,6 @@ import HouseIcon from '@material-ui/icons/House';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
-import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -47,6 +46,11 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import { Doughnut, Line } from 'react-chartjs-2';
 
+
+import Saving from "../layout/Saving";
+import MonthlyExpense from "../layout/MonthlyExpense";
+
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,8 +58,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
-		backgroundColor: '#6fc251',
-		color: 'white'
+		backgroundColor: '#fafafa',
+		color: 'grey'
 	},
 	avatar: {
     width: theme.spacing(6),
@@ -85,7 +89,8 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
 		width: drawerWidth,
-		backgroundColor: '#f2f4f5',
+    backgroundColor: '#2c3761',
+    color: 'white'
   },
   content: {
     flexGrow: 1,
@@ -97,18 +102,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	list : {
 		paddingTop: '2rem'
-	},
-	paper: {
-		minHeight: '22rem',
-	},
-	header: {
-		borderBottom: '1px solid #ebeced',
-		padding: theme.spacing(1),
-		marginLeft: '.5rem',
-		color:  '#3c8c1f',
-	},
-	subTitle: {
-		padding: theme.spacing(1),
 	},
 	transactionPaper: {
 		marginTop: '2rem',
@@ -394,28 +387,12 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={6} md={6} >
-						<Paper className={classes.paper} elevation={3}>
-							<Grid container className={classes.subTitle}>
-								<Grid xs={6} item>
-										<Typography variant="h6">$1000.00</Typography>
-										<Typography variant="body2">Income</Typography>
-								</Grid>
-								<Grid xs={6} item>
-									<Typography align='right' variant="h6">$500.00</Typography>
-									<Typography align='right' variant="body2">Expenses</Typography>
-								</Grid>
-							</Grid>
-							<Doughnut data={data} />
-							<Typography align='center' variant="h6">Saving 50%</Typography>
-						</Paper>
+            {/* saving component */}
+						<Saving />
 					</Grid>
 					<Grid item xs={12} sm={6} md={6}>
-						<Paper className={classes.paper} elevation={3}>
-							<Grid container className={classes.header}>
-								<Typography variant="h6">Monthly Expneses</Typography>
-							</Grid>
-							<Line data={data} />
-						</Paper>
+            {/* Monthly expense chart */}
+						<MonthlyExpense />
 					</Grid>
 				</Grid>
 
