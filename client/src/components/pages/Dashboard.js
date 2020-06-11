@@ -140,7 +140,7 @@ const Dashboard = () => {
   const [incomeOpen, setIncomeOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
   const [state, setState] = React.useState({ amount: '' });
-
+  const [today, setToday] = React.useState(new Date());
   
 	const data = {
 		datasets:[
@@ -221,7 +221,7 @@ const Dashboard = () => {
                 id="date"
                 label="Date"
                 type="date"
-                defaultValue="2020-06-10"
+                defaultValue={today}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
