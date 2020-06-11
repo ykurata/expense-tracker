@@ -16,8 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -26,29 +24,18 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FastfoodIcon from '@material-ui/icons/Fastfood';
-import HouseIcon from '@material-ui/icons/House';
-import PhoneIcon from '@material-ui/icons/Phone';
-import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { Doughnut, Line } from 'react-chartjs-2';
-
-
 import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
+import Category from '../layout/Category';
+import AddExpense from '../layout/AddExpense';
 
 
 const drawerWidth = 240;
@@ -111,17 +98,6 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     marginBottom: '1rem'
-  },
-  categoryCard: {
-    minWidth: 275
-  },
-  icon: {
-    color: 'grey',
-    fontSize: '4rem',
-    marginBottom: '2rem'
-  },
-  cateroryTitle: {
-    padding: theme.spacing(4,0,3,0),
   }
 }));
 
@@ -138,40 +114,14 @@ const Dashboard = () => {
   const [state, setState] = React.useState({ amount: '' });
   const [today, setToday] = React.useState(new Date());
   
-	const data = {
-		datasets:[
-			{
-				label:'Population',
-				data:[
-					617594,
-					181045,
-					153060,
-					106519,
-					105162,
-					95072
-				],
-				backgroundColor:[
-					'rgba(255, 99, 132, 0.6)',
-					'rgba(54, 162, 235, 0.6)',
-					'rgba(255, 206, 86, 0.6)',
-					'rgba(75, 192, 192, 0.6)',
-					'rgba(153, 102, 255, 0.6)',
-					'rgba(255, 159, 64, 0.6)',
-					'rgba(255, 99, 132, 0.6)'
-				]
-			}
-		]
-	}
-	
-  // Add expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
   };
 
   const handleExpenseClose = () => {
     setExpenseOpen(false);
-	};
-	
+  };
+
 	// Add income
   const handleIncomeOpen = () => {
     setIncomeOpen(true);
@@ -208,61 +158,9 @@ const Dashboard = () => {
 				<ListItem button>
 					<ListItemText primary={'Add Expense'} onClick={handleExpenseOpen} />
 				</ListItem>
-
-				<Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
-					<DialogTitle id="form-dialog-title">Add Expense</DialogTitle>
-					<DialogContent>
-            <form className={classes.container}>
-              <TextField
-                id="date"
-                label="Date"
-                type="date"
-                defaultValue={today}
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <InputLabel htmlFor="age-simple">Category</InputLabel>
-              <Select
-                value={state.age}
-                onChange={handleChange('age')}
-                input={<Input id="age-simple" />}
-                fullWidth
-                className={classes.textField}
-              >
-                <MenuItem value={10}>Rent</MenuItem>
-                <MenuItem value={20}>Grocery</MenuItem>
-                <MenuItem value={30}>Eat Out</MenuItem>
-              </Select>
-              
-              <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-              <Input
-                id="standard-adornment-amount"
-                value={state.amount}
-                onChange={handleChange('amount')}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                fullWidth
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="description"
-                label="Description"
-                type="text"
-                fullWidth
-              />
-            </form>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleExpenseClose} color="primary">
-							Submit
-						</Button>
-						<Button onClick={handleExpenseClose} color="primary">
-							Cancel
-						</Button>
-					</DialogActions>
-				</Dialog>
+        <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
+          <AddExpense/>
+        </Dialog>
 
 				<ListItem button>
 					<ListItemText primary={'Add Income'} onClick={handleIncomeOpen}/>
@@ -395,50 +293,10 @@ const Dashboard = () => {
 						<MonthlyExpense />
 					</Grid>
 				</Grid>
-
-        <Typography className={classes.cateroryTitle} variant="h5">Categories with Budget Expense</Typography>
-
-				<Grid container spacing={3}>
-          <Grid item xs={6} sm={4} md={3}>
-            <Card>
-              <CardContent>
-                <LocalGroceryStoreIcon fontSize='large' className={classes.icon} />
-                <Typography variant="body1">Grocery</Typography>
-                <Typography variant="h6">$100.00</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4} md={3}>
-            <Card>
-              <CardContent>
-                <HouseIcon fontSize='large' className={classes.icon} />
-                <Typography variant="body1">Rent</Typography>
-                <Typography variant="h6">$500.00</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4} md={3}>
-            <Card>
-              <CardContent>
-                <PhoneIcon fontSize='large' className={classes.icon} />
-                <Typography variant="body1">Electoricity</Typography>
-                <Typography variant="h6">$100.00</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4} md={3}>
-            <Card>
-              <CardContent>
-                <FastfoodIcon fontSize='large' className={classes.icon} />
-                <Typography variant="body1">Eat Out</Typography>
-                <Typography variant="h6">$100.00</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-         
-        </Grid>
 				
-			
+        {/* Expenses with Categories */}
+        <Category/>
+        
       </div>
     </div>
   );
