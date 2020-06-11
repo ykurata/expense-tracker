@@ -18,13 +18,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -33,8 +26,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DraftsIcon from '@material-ui/icons/Drafts';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import HouseIcon from '@material-ui/icons/House';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
@@ -42,6 +37,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -118,6 +118,17 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     marginBottom: '1rem'
+  },
+  categoryCard: {
+    minWidth: 275
+  },
+  icon: {
+    color: 'grey',
+    fontSize: '4rem',
+    marginBottom: '2rem'
+  },
+  cateroryTitle: {
+    padding: theme.spacing(4,0,3,0),
   }
 }));
 
@@ -132,7 +143,7 @@ const Dashboard = () => {
   const [incomeOpen, setIncomeOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
   const [state, setState] = React.useState({ amount: '' });
-
+  const [today, setToday] = React.useState(new Date());
   
 	const data = {
 		datasets:[
@@ -193,18 +204,11 @@ const Dashboard = () => {
   const handleDateChange = date => {
     setSelectedDate(date);
   };
-  
-  // category change
-  // const handleChange = name => event => {
-  //   setState({ ...state, [name]: Number(event.target.value) || '' });
-  // };
+
   const handleChange = (prop) => (event) => {
     setState({ ...state, [prop]: event.target.value });
   };
 
-
-
-	
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -220,7 +224,7 @@ const Dashboard = () => {
                 id="date"
                 label="Date"
                 type="date"
-                defaultValue="2020-06-10"
+                defaultValue={today}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
@@ -414,96 +418,49 @@ const Dashboard = () => {
 						</Paper>
 					</Grid>
 				</Grid>
+
+        <Typography className={classes.cateroryTitle} variant="h5">Categories with Budget Expense</Typography>
+
+				<Grid container spacing={3}>
+          <Grid item xs={6} sm={4} md={3}>
+            <Card>
+              <CardContent>
+                <LocalGroceryStoreIcon fontSize='large' className={classes.icon} />
+                <Typography variant="body1">Grocery</Typography>
+                <Typography variant="h6">$100.00</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3}>
+            <Card>
+              <CardContent>
+                <HouseIcon fontSize='large' className={classes.icon} />
+                <Typography variant="body1">Rent</Typography>
+                <Typography variant="h6">$500.00</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3}>
+            <Card>
+              <CardContent>
+                <PhoneIcon fontSize='large' className={classes.icon} />
+                <Typography variant="body1">Electoricity</Typography>
+                <Typography variant="h6">$100.00</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3}>
+            <Card>
+              <CardContent>
+                <FastfoodIcon fontSize='large' className={classes.icon} />
+                <Typography variant="body1">Eat Out</Typography>
+                <Typography variant="h6">$100.00</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+         
+        </Grid>
 				
-				<Paper className={classes.transactionPaper} elevation={3}>
-					<Grid>
-						<Typography variant="h6" className={classes.header}>Monthly transaction</Typography>
-					</Grid>
-					<TableContainer className={classes.tableContainer}>
-						<Table stickyHeader aria-label="sticky table">
-							<TableHead>
-								<TableRow>
-									<TableCell>Date</TableCell>
-									<TableCell>Category</TableCell>
-									<TableCell>Description</TableCell>
-									<TableCell>Amount</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								<TableRow>
-									<TableCell>07/09/2020</TableCell>
-									<TableCell>
-										<ListItemIcon>
-											<FastfoodIcon></FastfoodIcon>
-										</ListItemIcon>
-									</TableCell>
-									<TableCell>
-										No Frills 
-									</TableCell>
-									<TableCell>
-										$100.00
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>07/09/2020</TableCell>
-									<TableCell>
-										<ListItemIcon>
-											<FastfoodIcon></FastfoodIcon>
-										</ListItemIcon>
-									</TableCell>
-									<TableCell>
-										No Frills
-									</TableCell>
-									<TableCell>
-										$100.00
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>07/09/2020</TableCell>
-									<TableCell>
-										<ListItemIcon>
-											<FastfoodIcon></FastfoodIcon>
-										</ListItemIcon>
-									</TableCell>
-									<TableCell>
-										No Frills
-									</TableCell>
-									<TableCell>
-										$100.00
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>07/09/2020</TableCell>
-									<TableCell>
-										<ListItemIcon>
-											<FastfoodIcon></FastfoodIcon>
-										</ListItemIcon>
-									</TableCell>
-									<TableCell>
-										No Frills
-									</TableCell>
-									<TableCell>
-										$100.00
-									</TableCell>
-								</TableRow>
-								<TableRow>
-									<TableCell>07/09/2020</TableCell>
-									<TableCell>
-										<ListItemIcon>
-											<FastfoodIcon></FastfoodIcon>
-										</ListItemIcon>
-									</TableCell>
-									<TableCell>
-										No Frills
-									</TableCell>
-									<TableCell>
-										$100.00
-									</TableCell>
-								</TableRow>
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Paper>
 			
       </div>
     </div>
