@@ -6,7 +6,14 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -18,36 +25,49 @@ const useStyles = makeStyles(theme => ({
 const AddIncome = () => {
   const classes = useStyles();
   const [incomeOpen, setIncomeOpen] = useState(false);
-  const [today, setToday] = React.useState(new Date());
-  const [state, setState] = React.useState({ amount: '' });
+  const [selectedDate, setSelectedDate] = useState(Date.now());
+  const [state, setState] = useState({ date: selectedDate, amount: '', description: '' });
 
   const handleIncomeClose = () => {
     setIncomeOpen(false);
   };
 
-  const handleChange = (prop) => (event) => {
-    setState({ ...state, [prop]: event.target.value });
+  const handleChange = (name) => (event) => {
+    setState({ ...state, [name]: event.target.value });
   };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
 
   return (
     <div>
       <DialogTitle id="form-dialog-title">Add Income</DialogTitle>
       <DialogContent>
         <form className={classes.container}>
-          <TextField
-            id="date"
-            label="Date"
-            type="date"
-            defaultValue={today}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date"
+              name="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>  
+        
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
           <Input
             id="standard-adornment-amount"
             value={state.amount}
+            name="amount"
             onChange={handleChange('amount')}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             fullWidth
@@ -55,8 +75,10 @@ const AddIncome = () => {
           <TextField
             autoFocus
             margin="dense"
+            name="description"
             id="description"
             label="Description"
+            value={state.description}
             type="text"
             fullWidth
           />
@@ -66,9 +88,9 @@ const AddIncome = () => {
         <Button onClick={handleIncomeClose} color="primary">
           Submit
         </Button>
-        <Button onClick={handleIncomeClose} color="primary">
+        {/* <Button onClick={handleExpenseClose} color="primary">
           Cancel
-        </Button>
+        </Button> */}
       </DialogActions>
     </div> 
   );

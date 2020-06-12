@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -93,11 +93,11 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
   const classes = useStyles();
   const theme = useTheme();
-	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [mobileOpen, setMobileOpen] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
-	const [expenseOpen, setExpenseOpen] = React.useState(false);
-  const [incomeOpen, setIncomeOpen] = React.useState(false);
+	const [expenseOpen, setExpenseOpen] = useState(false);
+  const [incomeOpen, setIncomeOpen] = useState(false);
   
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
