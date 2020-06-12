@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "expense",
+    "password": "password",
+    "database": "expenses",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "password",
+    "database": "expenses",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": "passowrd",
+    "database": "expenses",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
