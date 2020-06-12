@@ -16,19 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Select from '@material-ui/core/Select';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -36,7 +24,7 @@ import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
 import Category from '../layout/Category';
 import AddExpense from '../layout/AddExpense';
-
+import AddIncome from '../layout/AddIncome';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -110,9 +98,6 @@ const Dashboard = () => {
 	const open = Boolean(anchorEl);
 	const [expenseOpen, setExpenseOpen] = React.useState(false);
   const [incomeOpen, setIncomeOpen] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-  const [state, setState] = React.useState({ amount: '' });
-  const [today, setToday] = React.useState(new Date());
   
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
@@ -144,14 +129,6 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
-
-  const handleChange = (prop) => (event) => {
-    setState({ ...state, [prop]: event.target.value });
-  };
-
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -165,28 +142,8 @@ const Dashboard = () => {
 				<ListItem button>
 					<ListItemText primary={'Add Income'} onClick={handleIncomeOpen}/>
 				</ListItem>
-
 				<Dialog open={incomeOpen} onClose={handleIncomeClose} aria-labelledby="form-dialog-title">
-					<DialogTitle id="form-dialog-title">Add Income</DialogTitle>
-					<DialogContent>
-	
-						<TextField
-							autoFocus
-							margin="dense"
-							id="income"
-							label="Income"
-							type="income"
-							fullWidth
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleIncomeClose} color="primary">
-							Submit
-						</Button>
-						<Button onClick={handleIncomeClose} color="primary">
-							Cancel
-						</Button>
-					</DialogActions>
+          <AddIncome/>
 				</Dialog>
 				
 				<ListItem button>
