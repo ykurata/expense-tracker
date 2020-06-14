@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-
 const Expense = require('../models').Expenses;
 const auth = require("./auth/auth");
 
+
+// Create a new expense
 router.post("/", auth, (req, res) => {
   Expense.create({
     userId: req.user,
@@ -19,4 +20,30 @@ router.post("/", auth, (req, res) => {
   .catch(err => {
     console.log(err);
   });
+});
+
+// Get all expenses
+router.get("/all", auth, (req, res) => {
+  Expense.findAll({
+    order: [["createdAt", "DESC"]]
+  })
+  .then(expenses => {
+    res.json(expenses);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+});
+
+
+// Delete an expense
+router.delete("/delete/:id", auth, (req, res) => {
+  Expense.findOne({ where: { id: req.params.id }})
+    .then(expense => {
+      expense.destroy();
+      return res.json({ message: "Successfully deleted"});
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
