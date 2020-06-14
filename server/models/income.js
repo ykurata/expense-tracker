@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     monthId: DataTypes.INTEGER
   }, {});
   Income.associate = function(models) {
-    // associations can be defined here
+    Income.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade'});
   };
   return Income;
 };

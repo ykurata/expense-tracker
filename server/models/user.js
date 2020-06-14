@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Expense, {foreignKey: 'userId', onDelete: 'cascade'});
+    User.hasMany(models.Income, {foreignKey: 'userId', onDelete: 'cascade'});
   };
   return User;
 };

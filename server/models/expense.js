@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING
   }, {});
   Expense.associate = function(models) {
-    // associations can be defined here
+    Expense.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade'});
   };
   return Expense;
 };
