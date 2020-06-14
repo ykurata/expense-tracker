@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Expense = require('../models').Expenses;
+const Expense = require('../models').Expense;
 const auth = require("./auth/auth");
-
 
 // Create a new expense
 router.post("/", auth, (req, res) => {
@@ -47,3 +46,5 @@ router.delete("/delete/:id", auth, (req, res) => {
       console.log(err);
     });
 });
+
+module.exports = router;
