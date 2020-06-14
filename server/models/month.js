@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     income: DataTypes.STRING
   }, {});
   Month.associate = function(models) {
-    // associations can be defined here
+    Month.hasMany(models.Expense, {foreignKey: 'monthId'});
+    Month.hasMany(models.Income, {foreignKey: 'monthId'});
   };
   return Month;
 };
