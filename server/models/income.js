@@ -4,13 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     amount: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    date: DataTypes.STRING
+    date: DataTypes.STRING,
+    monthId: DataTypes.INTEGER
   }, {});
   Income.associate = function(models) {
-    Income.belongsTo(models.Month, {
-      onDelete: "CASCADE",
-      foreignKey: 'monthId' 
-    });
+    // associations can be defined here
   };
   return Income;
 };

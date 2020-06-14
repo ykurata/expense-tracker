@@ -5,13 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     category: DataTypes.STRING,
     amount: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    date: DataTypes.STRING
+    date: DataTypes.STRING,
+    monthId: DataTypes.INTEGER
   }, {});
   Expense.associate = function(models) {
-    Expense.belongsTo(models.Month, {
-      onDelete: "CASCADE",
-      foreignKey: 'monthId' 
-    });
+    // associations can be defined here
   };
   return Expense;
 };
