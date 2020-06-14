@@ -8,7 +8,7 @@ const app = express();
 
 // import routes
 const user = require("./routes/user");
-const transaction = require("./routes/transaction");
+const expense = require("./routes/expense");
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -23,7 +23,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/user", user);
-app.use("/transaction", transaction);
+app.use("/expense", expense);
 
 // Set up cors
 app.use(cors());
