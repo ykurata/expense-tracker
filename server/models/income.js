@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     amount: DataTypes.DECIMAL(10,2),
     description: DataTypes.STRING,
-    date: DataTypes.STRING,
-    monthId: DataTypes.INTEGER
+    date: DataTypes.STRING
   }, {});
   Income.associate = function(models) {
     Income.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade'});

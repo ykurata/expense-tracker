@@ -18,7 +18,23 @@ router.post("/", auth, (req, res) => {
     .catch(err => {
       console.log(err);
     });
-  });
+	});
+	
+	// Update an income 
+	router.put("/update/:id", auth, (req, res) => {
+		Income.findOne({ where: {id: req.params.id}})
+			.then(income => {
+				income.update({
+					date: req.body.date,
+					amount: req.body.amount,
+					description: req.body.description
+				})
+				res.status(200).json(income);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	});
   
   // Get all incomes
   router.get("/all", auth, (req, res) => {
