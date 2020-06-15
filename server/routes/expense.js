@@ -14,7 +14,7 @@ router.post("/", auth, (req, res) => {
     description: req.body.description
   })
   .then(expense => {
-    res.json(expense);
+    res.status(200).json(expense);
   })
   .catch(err => {
     console.log(err);
