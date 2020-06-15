@@ -5,7 +5,7 @@ const router = express.Router();
 const keys = require("../config/keys");
 
 const User = require('../models').User;
-//const authentication = require("./middleware/auth");
+const authentication = require("./auth/auth");
 
 // Import validators 
 const validateRegisterInput = require("../validation/register");
