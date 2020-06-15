@@ -10,6 +10,7 @@ const app = express();
 const user = require("./routes/user");
 const expense = require("./routes/expense");
 const income = require("./routes/income");
+const category = require("./routes/category");
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -26,6 +27,7 @@ require("./config/passport")(passport);
 app.use("/user", user);
 app.use("/expense", expense);
 app.use("/income", income);
+app.use("/category", category);
 
 // Set up cors
 app.use(cors());
