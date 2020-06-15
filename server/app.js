@@ -9,6 +9,7 @@ const app = express();
 // import routes
 const user = require("./routes/user");
 const expense = require("./routes/expense");
+const income = require("./routes/income");
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -24,6 +25,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/user", user);
 app.use("/expense", expense);
+app.use("/income", income);
 
 // Set up cors
 app.use(cors());
