@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     budget: DataTypes.DECIMAL(10,2)
   }, {});
   Category.associate = function(models) {
-    // associations can be defined here
+    Category.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade'});
   };
   return Category;
 };
