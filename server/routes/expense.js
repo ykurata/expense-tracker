@@ -27,12 +27,29 @@ router.get("/all", auth, (req, res) => {
     order: [["createdAt", "DESC"]]
   })
   .then(expenses => {
-    res.json(expenses);
+    res.status(200).json(expenses);
   })
   .catch(err => {
     console.log(err);
   });
 });
+
+// Update an expense
+router.put("/update/:id", auth, (req, res) => {
+  Expense.findOne({ where: {id: req.params.id}})
+    .then(expense => {
+      expense.update({
+        date: req.body.date,
+        category: req.body.category,
+        amount: req.body.amount,
+        description: req.body.description
+      })
+      res.status(200).json(expense);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
 
 
 // Delete an expense
