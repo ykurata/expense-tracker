@@ -5,7 +5,8 @@ const router = express.Router();
 const keys = require("../config/keys");
 
 const User = require('../models').User;
-const authentication = require("./auth/auth");
+const upload = require("./s3/upload");
+const auth = require("./auth/auth");
 
 // Import validators 
 const validateRegisterInput = require("../validation/register");
@@ -93,5 +94,35 @@ router.post("/login", (req, res) => {
       console.log(err);
     });
 });
+
+// POST a user avatar 
+router.post('/avatar', upload.single('avatar'), auth, (req, res) => {
+  User.findOne({ where: { id: req.user }})
+    .then(user => {
+      if (!user) {
+        return res.status(400).json({ error: "User not found" });
+      }
+      user.update({
+        avatar: req.file.location
+      })
+      .then(user => {
+        res.status(200).json(user);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+    });
+});
+
+// GET all users
+router.get("/all", (req, res) => {
+  User.findAll({})
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
 
 module.exports = router;

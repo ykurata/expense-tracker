@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    avatar: DataTypes.STRING
   }, {});
   User.beforeSave((user, options) => {
     if (user.changed('password')) {
