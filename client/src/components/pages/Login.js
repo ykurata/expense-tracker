@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -44,6 +46,35 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: ""
+  });
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  const onChange = e => {
+    setUserInput({
+      ...userInput, 
+      [e.target.name]: e.target.value 
+    });
+  }
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const user = {
+      email: userInput.email,
+      password: userInput.password
+    };
+    axios.post("/user/login", user)
+      .then(res => {
+        console.log(res.data.token);
+        const decoded = jwt_decode(res.data.token);
+        console.log(decoded.id);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -54,7 +85,7 @@ const Login = () => {
           <Typography variant="h3" gutterBottom color='textSecondary'>
             Log in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -65,6 +96,7 @@ const Login = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -76,6 +108,7 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={onChange}
             />
             <Button
               type="submit"
