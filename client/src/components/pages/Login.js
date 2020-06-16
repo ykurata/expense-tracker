@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -46,12 +46,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const { token, userId, validationErrors, error, login } = useContext(AuthContext);
   const [userInput, setUserInput] = useState({
     email: "",
     password: ""
   });
-  const [validationErrors, setValidationErrors] = useState([]);
-
+  // const [validationErrors, setValidationErrors] = useState([]);
+   
+  console.log(token)
   const onChange = e => {
     setUserInput({
       ...userInput, 
@@ -65,15 +67,16 @@ const Login = () => {
       email: userInput.email,
       password: userInput.password
     };
-    axios.post("/user/login", user)
-      .then(res => {
-        console.log(res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        console.log(decoded.id);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    login(user);
+    // axios.post("/user/login", user)
+    //   .then(res => {
+    //     console.log(res.data.token);
+    //     const decoded = jwt_decode(res.data.token);
+    //     console.log(decoded.id);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   return (
