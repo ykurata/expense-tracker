@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -44,6 +46,38 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
+  const [userInput, setUserInput] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password2: ""
+  });
+  
+  const onChange = e => {
+    setUserInput({
+      ...userInput,
+      [e.target.name] : e.target.value
+    });
+  }
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const user = {
+      username: userInput.username,
+      email: userInput.email,
+      password: userInput.password
+    }
+
+    axios.post("/user/register", user)
+      .then(res => {
+        console.log(res.data.token);
+        const decoded = jwt_decode(res.data.token);
+        console.log(decoded.id);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -54,7 +88,7 @@ const SignUp = () => {
           <Typography variant="h3" gutterBottom color='textSecondary'>
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -65,6 +99,7 @@ const SignUp = () => {
               name="username"
               autoComplete="username"
               autoFocus
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -76,6 +111,7 @@ const SignUp = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -87,6 +123,7 @@ const SignUp = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={onChange}
             />
             <TextField
               variant="outlined"
@@ -98,6 +135,7 @@ const SignUp = () => {
               type="password"
               id="password2"
               autoComplete="current-password"
+              onChange={onChange}
             />
             <Button
               type="submit"
