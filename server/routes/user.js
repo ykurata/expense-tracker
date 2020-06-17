@@ -114,6 +114,18 @@ router.post('/avatar', upload.single('avatar'), auth, (req, res) => {
     });
 });
 
+// GET a by id
+router.get("/:id", auth, (req, res) => {
+  User.findOne({ where: { id: req.params.id }})
+    .then(user => {
+      res.json(user);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+
 // GET all users
 router.get("/all", (req, res) => {
   User.findAll({})
