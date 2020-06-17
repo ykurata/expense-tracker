@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import image from '../images/login5.jpg';
 
-const loginStyles = makeStyles((theme) => ({
+const signupStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
@@ -33,4 +33,4 @@ const loginStyles = makeStyles((theme) => ({
   },
 }));
 
-export default loginStyles;  
+export default signupStyles;
