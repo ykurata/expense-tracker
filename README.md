@@ -14,7 +14,7 @@ This is an application to track your income and expenses monthly base. Users can
     * Material-UI
 
 
-** Features
+##  Features
 
 * Register, login, and logout 
 * Create income
