@@ -95,14 +95,13 @@ router.post("/login", async(req, res) => {
 
 
 // GET all users
-router.get("/all", (req, res) => {
-  User.findAll({})
-    .then(users => {
-      res.json(users);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-})
+router.get("/all", async(req, res) => {
+  try {
+    const users = await User.findAll({});
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;
