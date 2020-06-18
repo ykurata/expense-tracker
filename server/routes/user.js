@@ -58,71 +58,33 @@ router.post("/register", (req, res) => {
 
 
 // User login route 
-router.post("/login", (req, res) => {
+router.post("/login", async(req, res) => {
   // form validation 
   const { errors, isValid } = validateLoginInput(req.body);
   // check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
-  const password = req.body.password;
-
-  User.findOne({ where: { email: req.body.email }})
-    .then(user => {
-      if (!user) {
-        return res.status(400).json({ error: "Email not found"});
-      }
-      // check password
-      bcrypt.compare(password, user.password).then(isMatch => {
-        if (isMatch) {
-          // create jwt payload
-          const payload = {
-            id: user.id,
-            name: user.username
-          };
-          // sign token 
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: 31556926}, (err, token) => {
-            res.json({ success: true, token: token });
-          });
-        } else {
-          return res.status(400).json({ error: "Password incorrect" });
-        }
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-// POST a user avatar 
-router.post('/avatar', upload.single('avatar'), auth, (req, res) => {
-  User.findOne({ where: { id: req.user }})
-    .then(user => {
-      if (!user) {
-        return res.status(400).json({ error: "User not found" });
-      }
-      user.update({
-        avatar: req.file.location
-      })
-      .then(user => {
-        res.status(200).json(user);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-    });
-});
-
-// GET a by id
-router.get("/:id", auth, (req, res) => {
-  User.findOne({ where: { id: req.params.id }})
-    .then(user => {
-      res.json(user);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  
+  try {
+    const user = await User.findOne({ where: { email: req.body.email }});
+    if (!user) {
+      return res.status(400).json({ error: "Email not found"});
+    }
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: "Password is incorrect" });
+    }
+    // create jwt payload 
+    const payload = {
+      id: user.id,
+      name: user.username
+    };
+    const token = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 31556926});
+    res.json({ success: true, token: token });
+  } catch(err) {
+    console.log(err);
+  }
 });
 
 
