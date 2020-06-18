@@ -93,6 +93,29 @@ router.post("/login", async(req, res) => {
   } 
 });
 
+// POST a user avatar 
+router.post('/avatar', upload.single('avatar'), auth, async(req, res) => {
+  try {
+    const user = await User.findOne({ where: { id: req.user }});
+    const updatedUser = await user.update({
+      avatar: req.file.location
+    });
+    return res.status(200).json(updatedUser);
+  } catch(err) {
+    res.status(400).json({ error: err });
+  }
+});
+
+// GET a user by id
+router.get("/:id", auth, async(req, res) => {
+  try {
+    const user = await User.findOne({ where: { id: req.params.id }});
+    return res.status(200).json(user);
+  } catch(err) {
+    res.status(400).json({ error: err });
+  }
+});
+
 
 // GET all users
 router.get("/all", async(req, res) => {
