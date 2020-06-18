@@ -66,25 +66,31 @@ router.post("/login", async(req, res) => {
     return res.status(400).json(errors);
   }
   
-  try {
-    const user = await User.findOne({ where: { email: req.body.email }});
-    if (!user) {
-      return res.status(400).json({ error: "Email not found"});
-    }
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) {
-      return res.status(400).json({ error: "Password is incorrect" });
-    }
-    // create jwt payload 
-    const payload = {
-      id: user.id,
-      name: user.username
-    };
-    const token = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 31556926});
-    res.json({ success: true, token: token });
-  } catch(err) {
-    console.log(err);
+  // Find a user by email 
+  const user = await User.findOne({ where: { email: req.body.email }});
+  if (!user) {
+    return res.status(400).json({ error: "Email not found"});
   }
+
+  // Compare user's registerd password and user's typed password
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) {
+    return res.status(400).json({ error: "Password is incorrect" });
+  }
+
+  // Create jwt payload 
+  const payload = {
+    id: user.id,
+    name: user.username
+  };
+
+  // Create a token  
+  const token = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 31556926});
+  if (token) {
+    res.json({ success: true, token: token });
+  } else {
+    res.status(400).json({ error: "Login failed" });
+  } 
 });
 
 
