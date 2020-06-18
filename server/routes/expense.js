@@ -5,33 +5,32 @@ const Expense = require('../models').Expense;
 const auth = require("./auth/auth");
 
 // Create a new expense
-router.post("/", auth, (req, res) => {
-  Expense.create({
-    userId: req.user,
-    date: req.body.date,
-    category: req.body.category,
-    amount: req.body.amount,
-    description: req.body.description
-  })
-  .then(expense => {
-    res.status(200).json(expense);
-  })
-  .catch(err => {
+router.post("/", auth, async(req, res) => {
+  try {
+    const expense = {
+      userId: req.user,
+      date: req.body.date,
+      category: req.body.category,
+      amount: req.body.amount,
+      description: req.body.description
+    }
+    const newExpense = await Expense.create(expense);
+    res.status(200).json(newExpense);
+  } catch(err) {
     console.log(err);
-  });
+  }  
 });
 
 // Get all expenses
-router.get("/all", auth, (req, res) => {
-  Expense.findAll({
-    order: [["createdAt", "DESC"]]
-  })
-  .then(expenses => {
+router.get("/all", auth, async(req, res) => {
+  try {
+    const expenses = await Expense.findAll({
+      order: [["createdAt", "DESC"]]
+    });
     res.status(200).json(expenses);
-  })
-  .catch(err => {
+  } catch(err) {
     console.log(err);
-  });
+  }
 });
 
 // Update an expense
