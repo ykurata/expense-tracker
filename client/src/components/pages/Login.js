@@ -15,7 +15,7 @@ const Login = () => {
   const classes = loginStyles();
   const [userInput, setUserInput] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [validationErrors, setValidationErrors] = useState([]);
 
@@ -26,21 +26,20 @@ const Login = () => {
     });
   }
 
-  const onSubmit = e => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     const user = {
       email: userInput.email,
       password: userInput.password
     };
-    axios.post("/user/login", user)
-      .then(res => {
-        console.log(res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        console.log(decoded.id);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    try {
+      const data = await axios.post("/user/login", user);
+      const decoded = jwt_decode(data.data.token);
+      console.log(decoded.id)
+      console.log(data.data.token);
+    } catch(err) {
+      console.log(err);
+    }  
   }
 
   return (

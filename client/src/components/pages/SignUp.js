@@ -26,23 +26,21 @@ const SignUp = () => {
     });
   }
 
-  const onSubmit = e => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     const user = {
       username: userInput.username,
       email: userInput.email,
       password: userInput.password
     }
-
-    axios.post("/user/register", user)
-      .then(res => {
-        console.log(res.data.token);
-        const decoded = jwt_decode(res.data.token);
-        console.log(decoded.id);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    try {
+      const data = await axios.post("/user/register", user);
+      const decoded = jwt_decode(data.data.token);
+      console.log(decoded.id)
+      console.log(data.data.token);
+    } catch(err) {
+      console.log(err);
+    }  
   }
 
   return (
