@@ -35,8 +35,8 @@ const Login = () => {
     try {
       const data = await axios.post("/user/login", user);
       const decoded = jwt_decode(data.data.token);
-      console.log(decoded.id)
-      console.log(data.data.token);
+      localStorage.setItem('token', data.data.token);
+      localStorage.setItem('userId', decoded.id);
     } catch(err) {
       console.log(err);
     }  

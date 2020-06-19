@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -28,6 +29,9 @@ import dashboardStyles from '../styles/dashboardStyles';
 
 const Dashboard = () => {
   const classes = dashboardStyles();
+  const [user, setUser] = useState({});
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -35,6 +39,7 @@ const Dashboard = () => {
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
   
+  // Open Expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
   };
@@ -43,7 +48,7 @@ const Dashboard = () => {
     setExpenseOpen(false);
   };
 
-	// Add income
+	// Open Income
   const handleIncomeOpen = () => {
     setIncomeOpen(true);
   };
@@ -52,7 +57,7 @@ const Dashboard = () => {
     setIncomeOpen(false);
   };
 
-  // open side nav
+  // Open side nav
 	const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
 	}
@@ -64,6 +69,17 @@ const Dashboard = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await axios.get(
+        `/user/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
+      );
+      setUser(result.data);
+    }
+    fetchUser();
+  },[userId]);
+  console.log(user);
 
 	const drawer = (
     <div>
@@ -195,9 +211,4 @@ const Dashboard = () => {
   );
 }
 
-Dashboard.propTypes = {
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-};
 export default Dashboard;
