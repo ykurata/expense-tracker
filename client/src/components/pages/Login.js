@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import Button from '@material-ui/core/Button';
@@ -13,11 +14,13 @@ import loginStyles from '../styles/loginStyles';
 
 const Login = () => {
   const classes = loginStyles();
+  const history = useHistory();
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
   });
   const [validationErrors, setValidationErrors] = useState([]);
+  const [error, setError] = useState("");
 
   const onChange = e => {
     setUserInput({
@@ -35,10 +38,13 @@ const Login = () => {
     try {
       const data = await axios.post("/user/login", user);
       const decoded = jwt_decode(data.data.token);
-      console.log(decoded.id)
-      console.log(data.data.token);
+      localStorage.setItem('token', data.data.token);
+      localStorage.setItem('userId', decoded.id);
+      history.push("/");
     } catch(err) {
       console.log(err);
+      setValidationErrors(err.response.data);
+      setError(err.response.data.error);
     }  
   }
 
@@ -52,6 +58,16 @@ const Login = () => {
             Log in
           </Typography>
           <form className={classes.form} onSubmit={onSubmit} noValidate>
+            {error ? (
+              <Typography color="error" variant="body2">{error}</Typography>
+            ) : (
+              null
+            )}
+            {validationErrors ? (
+              <Typography color="error" variant="body2">{validationErrors.email}</Typography>
+            ) : (
+              null
+            )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -64,6 +80,11 @@ const Login = () => {
               autoFocus
               onChange={onChange}
             />
+            {validationErrors ? (
+              <Typography color="error" variant="body2">{validationErrors.password}</Typography>
+            ) : (
+              null
+            )}
             <TextField
               variant="outlined"
               margin="normal"

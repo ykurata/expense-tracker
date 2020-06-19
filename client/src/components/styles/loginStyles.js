@@ -30,7 +30,7 @@ const loginStyles = makeStyles((theme) => ({
   submit: {
     padding: theme.spacing(1.5, 2.5),
     margin: theme.spacing(3, 3, 3, 0),
-  },
+  }
 }));
 
 export default loginStyles;  
