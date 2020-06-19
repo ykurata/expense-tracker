@@ -125,7 +125,11 @@ const Dashboard = () => {
             Expense Tracker
           </Typography>
 					<div>
-						<span className={classes.username}>Yasuko Kurata</span>
+            {user ? (
+              <span className={classes.username}>{user.username}</span>
+            ) : (
+              null
+            )}
 						<IconButton
 							aria-label="account of current user"
 							aria-controls="menu-appbar"
@@ -133,7 +137,7 @@ const Dashboard = () => {
 							onClick={handleMenu}
 							color="inherit"
 						>
-							 <Avatar alt="Remy Sharp" src="" className={classes.avatar} />
+							 <Avatar alt="Remy Sharp" src={user.avatar} className={classes.avatar} />
 						</IconButton>
 						<Menu
 							id="menu-appbar"
