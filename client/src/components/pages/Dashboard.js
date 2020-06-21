@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -29,6 +30,7 @@ import dashboardStyles from '../styles/dashboardStyles';
 
 const Dashboard = () => {
   const classes = dashboardStyles();
+  const history = useHistory();
   const [user, setUser] = useState({});
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -79,7 +81,12 @@ const Dashboard = () => {
     }
     fetchUser();
   },[userId]);
-  console.log(user);
+
+  const signOut = e => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  }
 
 	const drawer = (
     <div>
@@ -154,7 +161,7 @@ const Dashboard = () => {
 							open={open}
 							onClose={handleClose}
 						>
-							<MenuItem onClick={handleClose}>Log Out</MenuItem>
+							<MenuItem onClick={signOut} >Log Out</MenuItem>
 							<MenuItem onClick={handleClose}>My account</MenuItem>
 						</Menu>
 					</div>
