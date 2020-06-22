@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
@@ -169,7 +169,6 @@ const Dashboard = () => {
               <Button href="/login" variant="contained" color="primary">
                 Log In
               </Button>
-              
             )}
 						
 					</div>
