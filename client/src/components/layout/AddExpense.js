@@ -27,17 +27,19 @@ const AddExpense = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
   const [categories, setCategories] = useState([]);
-  const [setExpenseOpen] = useState(false);
+  const [expenseOpen, setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(Date.now());
-  const [state, setState] = useState({ date: selectedDate, category: '', amount: '', description: '' });
+  const [expenseData, setExpenseData] = useState({ date: selectedDate, category: '', amount: '', description: '' });
 
   const handleExpenseClose = () => {
     setExpenseOpen(false);
   };
 
-  const handleChange = (name) => (event) => {
-    setState({ ...state, [name]: event.target.value });
+  const handleChange  = e => {
+    setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
   };
+
+  console.log(expenseData)
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -78,9 +80,9 @@ const AddExpense = () => {
           </MuiPickersUtilsProvider>  
           <InputLabel htmlFor="age-simple">Category</InputLabel>
           <Select
-            value={state.category}
+            value={expenseData.category}
             name="category"
-            onChange={handleChange('age')}
+            onChange={handleChange}
             input={<Input id="age-simple" />}
             fullWidth
             className={classes.textField}
@@ -94,9 +96,9 @@ const AddExpense = () => {
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
           <Input
             id="standard-adornment-amount"
-            value={state.amount}
+            value={expenseData.amount}
             name="amount"
-            onChange={handleChange('amount')}
+            onChange={handleChange}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             fullWidth
           />
@@ -106,9 +108,10 @@ const AddExpense = () => {
             name="description"
             id="description"
             label="Description"
-            value={state.description}
+            value={expenseData.description}
             type="text"
             fullWidth
+            onChange={handleChange}
           />
         </form>
       </DialogContent>
