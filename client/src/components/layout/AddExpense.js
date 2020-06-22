@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -24,7 +25,9 @@ const useStyles = makeStyles(theme => ({
 
 const AddExpense = () => {
   const classes = useStyles();
-  const [expenseOpen, setExpenseOpen] = useState(false);
+  const token = localStorage.getItem("token");
+  const [categories, setCategories] = useState([]);
+  const [setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(Date.now());
   const [state, setState] = useState({ date: selectedDate, category: '', amount: '', description: '' });
 
@@ -40,10 +43,21 @@ const AddExpense = () => {
     setSelectedDate(date);
   };
 
+  useEffect(() => {
+    const fetchData = async() => {
+      const result = await axios.get("/category/all", { headers: {"Authorization":`Bearer ${token}` }})
+      setCategories(result.data);
+    }
+    fetchData();
+  }, [token])
+
+  let menuItems = categories.map(item => 
+    <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
+  )
 
   return (
     <div>
-      <DialogTitle id="form-dialog-title">Add Expense</DialogTitle>
+      <DialogTitle id="form-dialmog-title">Add Expense</DialogTitle>
       <DialogContent>
         <form className={classes.container}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -71,9 +85,10 @@ const AddExpense = () => {
             fullWidth
             className={classes.textField}
           > 
-            <MenuItem value="Rent">Rent</MenuItem>
+            {menuItems}
+            {/* <MenuItem value="Rent">Rent</MenuItem>
             <MenuItem value="Grocery">Grocery</MenuItem>
-            <MenuItem value="Eat Out">Eat Out</MenuItem>
+            <MenuItem value="Eat Out">Eat Out</MenuItem> */}
           </Select>
           
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
