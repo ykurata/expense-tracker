@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -24,15 +22,15 @@ import Dialog from '@material-ui/core/Dialog';
 import { useTheme } from '@material-ui/core/styles';
 import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
-import Category from '../layout/Category';
+import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
 import AddIncome from '../layout/AddIncome';
+import AddCategory from '../layout/AddCategory';
 
 import dashboardStyles from '../styles/dashboardStyles';
 
 const Dashboard = () => {
   const classes = dashboardStyles();
-  const history = useHistory();
   const [user, setUser] = useState({});
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -42,6 +40,7 @@ const Dashboard = () => {
 	const open = Boolean(anchorEl);
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -60,6 +59,15 @@ const Dashboard = () => {
   const handleIncomeClose = () => {
     setIncomeOpen(false);
   };
+
+  // Open Category
+  const handleCategoryOpen = () => {
+    setCategoryOpen(true);
+  }
+
+  const handleCategoryClose = () => {
+    setCategoryOpen(false);
+  }
 
   // Open side nav
 	const handleDrawerToggle = () => {
@@ -108,11 +116,11 @@ const Dashboard = () => {
 				</Dialog>
 				
 				<ListItem button>
-					<ListItemText primary={'Add Category'} />
+					<ListItemText primary={'Add Category'} onClick={handleCategoryOpen} />
 				</ListItem>
-				<ListItem button>
-					<ListItemText primary={'Create Budget'} />
-				</ListItem>
+        <Dialog open={categoryOpen} onClose={handleCategoryClose} aria-labelledby="form-dialog-title">
+          <AddCategory/>
+				</Dialog>
       </List>
     </div>
   );
@@ -222,7 +230,7 @@ const Dashboard = () => {
 				</Grid>
 				
         {/* Expenses with Categories */}
-        <Category/>
+        <Categories/>
         
       </div>
     </div>
