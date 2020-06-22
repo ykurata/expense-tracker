@@ -45,7 +45,7 @@ const AddCategory = () => {
             onChange={handleChange}
             className={classes.textField}
           />
-          <InputLabel htmlFor="standard-adornment-amount">Budget</InputLabel>
+          <InputLabel htmlFor="standard-adornment-amount">Mothly Budget</InputLabel>
           <Input
             id="standard-adornment-amount"
             value={state.amount}
