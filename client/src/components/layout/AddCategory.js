@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -17,29 +18,40 @@ const useStyles = makeStyles(theme => ({
 
 const AddCategory = () => {
   const classes = useStyles();
-  const [categoryOpen, setCategoryOpen] = useState(false);
-  const [state, setState] = useState({ category: '', budget: '' });
+  const token = localStorage.getItem("token");
+  const [setCategoryOpen] = useState(false);
+  const [category, setCategory] = useState({ name: '', budget: '' });
 
   const handleCategoryClose = () => {
     setCategoryOpen(false);
   }
 
   const handleChange = e => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    setCategory({ ...category, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const newCategory = await axios.post("/category", category, { headers: {"Authorization" : `Bearer ${token}`}})
+      console.log(newCategory);
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div>
       <DialogTitle id="form-dialog-title">Add Category</DialogTitle>
       <DialogContent>
-        <form >
+        <form onSubmit={handleSubmit}>
           <TextField
             autoFocus
             margin="dense"
-            name="category"
-            id="category"
+            name="name"
+            id="name"
             label="Category"
-            value={state.category}
+            value={category.name}
             type="text"
             fullWidth
             onChange={handleChange}
@@ -48,19 +60,19 @@ const AddCategory = () => {
           <InputLabel htmlFor="standard-adornment-amount">Mothly Budget</InputLabel>
           <Input
             id="standard-adornment-amount"
-            value={state.amount}
-            name="amount"
+            value={category.budget}
+            name="budget"
             onChange={handleChange}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             fullWidth
           />
+          <DialogActions>
+            <Button onClick={handleCategoryClose} type="submit" color="primary" >
+              Submit
+            </Button>
+          </DialogActions>
         </form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCategoryClose} color="primary">
-          Submit
-        </Button>
-      </DialogActions>
     </div>
   );
 }
