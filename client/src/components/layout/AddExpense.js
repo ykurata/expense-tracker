@@ -39,8 +39,6 @@ const AddExpense = () => {
     setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
   };
 
-  console.log(expenseData)
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
