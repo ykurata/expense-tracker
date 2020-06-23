@@ -1,17 +1,17 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-module.exports = function validateExpenseInput(data) {
+module.exports = function validateIncomeInput(data) {
   let errors = {};
   // Convert empty fields to an empty string so we can use validator functions
-  data.category= !isEmpty(data.category) ? data.category : "";
 	data.amount = !isEmpty(data.amount) ? data.amount : "";
-	data.date = !isEmpty(data.date) ? data.date : "";
+  data.date = !isEmpty(data.date) ? data.date : "";
+  data.description = !isEmpty(data.description) ? data.description : "";
 
 
-  // Category checks
-  if (Validator.isEmpty(data.category)) {
-    errors.category = "Category field is required";
+  // Description checks
+  if (Validator.isEmpty(data.description)) {
+    errors.description = "Description field is required";
 	} 
 
 	// Amount checks
