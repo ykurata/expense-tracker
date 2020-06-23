@@ -90,7 +90,7 @@ const Dashboard = () => {
       setUser(result.data);
     }
     fetchUser();
-  },[userId]);
+  },[token, userId]);
 
   const signOut = e => {
     e.preventDefault();

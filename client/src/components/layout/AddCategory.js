@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 const AddCategory = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
-  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [setCategoryOpen] = useState(false);
   const [category, setCategory] = useState({ name: '', budget: '' });
 
   const handleCategoryClose = () => {
@@ -30,7 +30,6 @@ const AddCategory = () => {
     setCategory({ ...category, [e.target.name]: e.target.value });
   };
 
-  console.log(category)
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
