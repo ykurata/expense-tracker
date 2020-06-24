@@ -51,7 +51,6 @@ const AddCategory = () => {
     } catch (err) {
       setErrors(err.response.data);
       console.log(err);
-      setCategoryOpen(false);
     }
   }
 

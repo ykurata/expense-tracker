@@ -8,7 +8,6 @@ module.exports = function validateExpenseInput(data) {
 	data.amount = !isEmpty(data.amount) ? data.amount : "";
 	data.date = !isEmpty(data.date) ? data.date : "";
 
-
   // Category checks
   if (Validator.isEmpty(data.category)) {
     errors.category = "Category field is required";
