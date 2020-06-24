@@ -25,10 +25,13 @@ const useStyles = makeStyles(theme => ({
 const AddExpense = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
+  let curr = new Date();
+  curr.setDate(curr.getDate());
+  const today = curr.toISOString().substr(0, 10);
   const [categories, setCategories] = useState([]);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
-  const [expenseData, setExpenseData] = useState({ date: '', category: '', amount: '', description: '' });
+  const [expenseData, setExpenseData] = useState({ date: today, category: '', amount: '', description: '' });
   const [errors, setErrors] = useState([]);
 
   const handleExpenseClose = () => {
@@ -73,7 +76,7 @@ const AddExpense = () => {
   
   let menuItems = categories.map(item => 
     <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
-  )
+  );
 
   return (
     <div>
@@ -90,9 +93,8 @@ const AddExpense = () => {
             label="Date"
             type="date"
             name="date"
-            //defaultValue=""
+            defaultValue={today}
             onChange={handleChange}
-            value={expenseData.date}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,

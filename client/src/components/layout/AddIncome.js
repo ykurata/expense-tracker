@@ -23,8 +23,11 @@ const useStyles = makeStyles(theme => ({
 const AddIncome = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
+  let curr = new Date();
+  curr.setDate(curr.getDate());
+  const today = curr.toISOString().substr(0, 10);
+  const [incomeData, setIncomeData] = useState({ date: today, amount: '', description: '' });
   const [incomeOpen, setIncomeOpen] = useState(false);
-  const [incomeData, setIncomeData] = useState({ date: '', amount: '', description: '' });
   const [errors, setErrors] = useState([]);
 
   const handleIncomeClose = () => {
@@ -55,6 +58,8 @@ const AddIncome = () => {
     }
   }
 
+  console.log(incomeData)
+
   return (
     <div>
       <DialogTitle id="form-dialog-title">Add Income</DialogTitle>
@@ -70,9 +75,8 @@ const AddIncome = () => {
             label="Date"
             type="date"
             name="date"
-            //defaultValue=""
+            defaultValue={today}
             onChange={handleChange}
-            value={incomeData.date}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
@@ -107,6 +111,7 @@ const AddIncome = () => {
             <Button type="submit" onClick={handleIncomeClose} color="primary">
               Submit
             </Button>
+            <ToastContainer />
           </DialogActions>
         </form>
       </DialogContent>
