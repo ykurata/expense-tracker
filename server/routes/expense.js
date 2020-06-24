@@ -2,10 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const Expense = require('../models').Expense;
+const validateExpenseInput = require("../validation/expense");
 const auth = require("./auth/auth");
 
 // Create a new expense
 router.post("/", auth, async(req, res) => {
+  // form validation 
+  const { errors, isValid } = validateExpenseInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const expense = {
       userId: req.user,
@@ -35,6 +42,12 @@ router.get("/all", auth, async(req, res) => {
 
 // Update an expense
 router.put("/update/:id", auth, async(req, res) => {
+  // form validation 
+  const { errors, isValid } = validateExpenseInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const expense = await Expense.findOne({ where: {id: req.params.id}});
     const updatedExpense = await expense.update({

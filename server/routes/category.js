@@ -2,10 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const Category = require('../models').Category;
+const validateCategoryInput = require("../validation/category");
 const auth = require("./auth/auth");
 
 // POST a new category
 router.post("/", auth, async(req, res) => {
+  // form validation
+  const { errors, isValid } = validateCategoryInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const category = {
       userId: req.user,
@@ -21,6 +28,12 @@ router.post("/", auth, async(req, res) => {
 
 // Update a category
 router.put("/update/:id", auth, async(req, res) => {
+  // form validation
+  const { errors, isValid } = validateCategoryInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const category = await Category.findOne({ where: { id: req.params.id}});
     const updatedCategory = await category.update({

@@ -2,10 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const Income = require('../models').Income;
+const validateIncomeInput = require("../validation/income");
 const auth = require("./auth/auth");
 
 // Create a new income
 router.post("/", auth, async(req, res) => {
+  // form validation 
+  const { errors, isValid } = validateIncomeInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   try { 
     const income  = {
       userId: req.user,
@@ -22,6 +29,12 @@ router.post("/", auth, async(req, res) => {
 	
 // Update an income 
 router.put("/update/:id", auth, async(req, res) => {
+  // form validation 
+  const { errors, isValid } = validateIncomeInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  
   try {
     const income = await Income.findOne({ where: {id: req.params.id}});
     const updatedIncome = await income.update({
