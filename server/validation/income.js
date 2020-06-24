@@ -6,13 +6,6 @@ module.exports = function validateIncomeInput(data) {
   // Convert empty fields to an empty string so we can use validator functions
 	data.amount = !isEmpty(data.amount) ? data.amount : "";
   data.date = !isEmpty(data.date) ? data.date : "";
-  data.description = !isEmpty(data.description) ? data.description : "";
-
-
-  // Description checks
-  if (Validator.isEmpty(data.description)) {
-    errors.description = "Description field is required";
-	} 
 
 	// Amount checks
   if (Validator.isEmpty(data.amount)) {
