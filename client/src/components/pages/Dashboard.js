@@ -2,32 +2,37 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import CloseIcon from '@material-ui/icons/Close';
+import Dialog from '@material-ui/core/Dialog';
 import Drawer from '@material-ui/core/Drawer';
+import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import Dialog from '@material-ui/core/Dialog';
 import { useTheme } from '@material-ui/core/styles';
+
+// Import components 
 import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
 import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
 import AddIncome from '../layout/AddIncome';
 import AddCategory from '../layout/AddCategory';
+import Month from '../layout/Month';
 
+// Import styles
 import dashboardStyles from '../styles/dashboardStyles';
+
 
 const Dashboard = () => {
   const classes = dashboardStyles();
@@ -121,6 +126,8 @@ const Dashboard = () => {
         <Dialog open={categoryOpen} onClose={handleCategoryClose} aria-labelledby="form-dialog-title">
           <AddCategory/>
 				</Dialog>
+
+        <Month/>
       </List>
     </div>
   );
