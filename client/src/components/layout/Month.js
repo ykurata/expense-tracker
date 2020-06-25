@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -20,7 +21,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const Month = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -34,11 +34,10 @@ const Month = () => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
+  const handleListKeyDown = (event) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
@@ -51,7 +50,6 @@ const Month = () => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
 
@@ -75,9 +73,9 @@ const Month = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={handleClose}>May 2020</MenuItem>
+                  <MenuItem onClick={handleClose}>June 2020</MenuItem>
+                  <MenuItem onClick={handleClose}>July 2020</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
