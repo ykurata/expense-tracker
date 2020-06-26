@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 const AddExpense = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
   let curr = new Date();
   curr.setDate(curr.getDate());
   const today = curr.toISOString().substr(0, 10);
@@ -48,7 +49,7 @@ const AddExpense = () => {
 
   useEffect(() => {
     const fetchData = async() => {
-      const result = await axios.get("/category/all", { headers: {"Authorization":`Bearer ${token}` }})
+      const result = await axios.get(`/category/all/${userId}`, { headers: {"Authorization":`Bearer ${token}` }})
       setCategories(result.data);
     }
     fetchData();

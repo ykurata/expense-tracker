@@ -20,16 +20,18 @@ const useStyles = makeStyles(theme => ({
 const Saving = () => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 	const [expense, setExpense] = useState([]);
 	const [income, setIncome] = useState([]);
   
   useEffect(() => {
     const fetchExpense = async () => {
       const result = await axios.get(
-        '/expense/all', { headers: {"Authorization" : `Bearer ${token}`} }
+        `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
       const expenses = [];
       result.data.map(x => expenses.push(Number(x.amount)));
+
       setExpense(expenses);
     }
     fetchExpense();
@@ -37,7 +39,9 @@ const Saving = () => {
 	
 	useEffect(() => {
 		const fetchIncome = async () => {
-			const result = await axios.get("/income/all",  { headers: {"Authorization" : `Bearer ${token}`} });
+			const result = await axios.get(
+        `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
+      );
       const incomes = [];
       result.data.map(x => incomes.push(Number(x.amount)));
       setIncome(incomes);
@@ -45,8 +49,8 @@ const Saving = () => {
 		fetchIncome();
   }, [token]);
   
-  const totalIncome = income.reduce((a, b) => a + b, 0);
-  const totalExpense = expense.reduce((a, b) => a + b, 0);
+  const totalIncome = income.reduce((a, b) => a + b, 0).toFixed(2);
+  const totalExpense = expense.reduce((a, b) => a + b, 0).toFixed(2);
   const percentage = (totalIncome / totalExpense).toFixed(2)
   
   const data = {

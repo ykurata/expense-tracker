@@ -46,6 +46,18 @@ router.put("/update/:id", auth, async(req, res) => {
   }
 });
 
+// Get logged in user's all categories
+router.get("/all/:id", auth, async(req, res) => {
+  try {
+    const categories = await Category.findAll({
+      where: { userId: req.params.id }
+    });
+    res.status(200).json(categories);
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
+
 // GET all categories
 router.get("/all", auth, async(req, res) => {
   try {
