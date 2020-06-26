@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from "axios";
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -18,16 +20,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MonthlyExpense = () => {
-  const classes = useStyles();
+	const classes = useStyles();
+
   const data = {
 		datasets:[
 			{
 				label:'Monthly Expenses',
-				data:[
-					170,
-					150,
-					230,
-					180
+				data:[  
+					200,
+					100
 				],
 				backgroundColor:[
 				  '#79dfe8'
