@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
     userId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    budget: DataTypes.DECIMAL(10,2)
+    budget: DataTypes.FLOAT
   }, {});
   Category.associate = function(models) {
     Category.belongsTo(models.User, {foreignKey: 'userId', onDelete: 'cascade'});

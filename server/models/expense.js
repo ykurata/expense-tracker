@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Expense = sequelize.define('Expense', {
     userId: DataTypes.INTEGER,
     category: DataTypes.STRING,
-    amount: DataTypes.DECIMAL(10,2),
+    amount: DataTypes.FLOAT,
     description: DataTypes.STRING,
     date: DataTypes.STRING
   }, {});
