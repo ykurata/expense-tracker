@@ -51,22 +51,28 @@ const Saving = () => {
   
   const totalIncome = income.reduce((a, b) => a + b, 0).toFixed(2);
   const totalExpense = expense.reduce((a, b) => a + b, 0).toFixed(2);
-  const percentage = (totalIncome / totalExpense).toFixed(2)
-  
+  const percentage = ((totalExpense / totalIncome)* 100).toFixed(2)
+
   const data = {
-		datasets:[
-			{
-				label:'Saving',
-				data:[
-          totalIncome,
-          totalExpense
-				],
-				backgroundColor:[
-				  '#647fe3',
-					'#d5dbed'
-				]
-			}
-		]
+
+      datasets:[
+        {
+          label: 'Saving',
+          data:[
+            totalIncome,
+            (totalIncome-totalExpense).toFixed(2)
+          ],
+          backgroundColor:[
+            '#647fe3',
+            '#d5dbed'
+          ]
+        }
+      ],
+      labels: [
+        'Expense',
+        'Saving'
+      ]
+    
 	}
 
   return (
