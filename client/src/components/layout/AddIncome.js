@@ -58,8 +58,6 @@ const AddIncome = () => {
     }
   }
 
-  console.log(incomeData)
-
   return (
     <div>
       <DialogTitle id="form-dialog-title">Add Income</DialogTitle>

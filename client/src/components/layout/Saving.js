@@ -30,8 +30,7 @@ const Saving = () => {
         `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
       const expenses = [];
-      result.data.map(x => expenses.push(Number(x.amount)));
-
+      result.data.map(x => expenses.push(x.amount));
       setExpense(expenses);
     }
     fetchExpense();
@@ -43,7 +42,7 @@ const Saving = () => {
         `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
       );
       const incomes = [];
-      result.data.map(x => incomes.push(Number(x.amount)));
+      result.data.map(x => incomes.push(x.amount));
       setIncome(incomes);
 		}
 		fetchIncome();
@@ -54,7 +53,6 @@ const Saving = () => {
   const percentage = ((totalExpense / totalIncome)* 100).toFixed(2)
 
   const data = {
-
       datasets:[
         {
           label: 'Saving',
@@ -69,10 +67,9 @@ const Saving = () => {
         }
       ],
       labels: [
-        'Expense',
-        'Saving'
+        'Income',
+        'Expense'
       ]
-    
 	}
 
   return (
@@ -88,7 +85,12 @@ const Saving = () => {
         </Grid>
       </Grid>
       <Doughnut data={data} />
-      <Typography align='center' variant="body1"><b>{percentage}</b>% of Income Spent</Typography>
+      {income.length === 0 || expense.length === 0 ? (
+        null
+      ) : (
+        <Typography align='center' variant="body1"><b>{percentage}</b>% of Income Spent</Typography>
+      )}
+    
     </Paper>
   );
 }
