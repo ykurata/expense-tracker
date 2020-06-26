@@ -47,7 +47,22 @@ router.put("/update/:id", auth, async(req, res) => {
     res.status(400).json({ error: err });
   }
 });
+
+
+// Get login user's all incomes 
+router.get("/all/:id", auth, async(req, res) => {
+  try {
+    const incomes = await Income.findAll({ 
+      where: { userId: req.params.id }, 
+      order: [["createdAt", "DESC"]]
+    });
+    return res.status(200).json(incomes);
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
   
+
 // Get all incomes
 router.get("/all", auth, async(req, res) => {
   try {
