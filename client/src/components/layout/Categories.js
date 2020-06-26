@@ -35,16 +35,34 @@ const Category = () => {
     fetchExpense();
   },[token]);
 
+
   let holder = {};
 
-  const card = expense.map(item => {
+  expense.forEach((data) => {
+    if (holder.hasOwnProperty(data.category)) {
+      holder[data.category] = holder[data.category] + data.amount;
+    } else {
+      holder[data.category] = data.amount;
+    }
+  });
+
+  console.log(holder)
+
+  let fixedExp = [];
+
+  for (var prop in holder) {
+    fixedExp.push({ name: prop, value: holder[prop].toFixed(2) });
+  }
+  console.log(fixedExp)
+
+  const card = fixedExp.map((item, index) => {
     return (
-      <Grid item xs={6} sm={4} md={3} key={item.id}>
+      <Grid item xs={6} sm={4} md={3} key={index}>
         <Card>
           <CardContent>
             {/* <LocalGroceryStoreIcon fontSize='large' className={classes.icon} /> */}
-            <Typography variant="body1">{item.category}</Typography>
-            <Typography variant="h6">${item.amount}</Typography>
+            <Typography variant="body1">{item.name}</Typography>
+            <Typography variant="h6">${item.value}</Typography>
           </CardContent>
         </Card>
       </Grid>
