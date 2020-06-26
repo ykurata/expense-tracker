@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       amount: {
-        type: Sequelize.DECIMAL(10,2),
+        type: Sequelize.FLOAT
       },
       description: {
         type: Sequelize.STRING
