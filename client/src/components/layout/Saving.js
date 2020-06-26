@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -17,13 +19,43 @@ const useStyles = makeStyles(theme => ({
 
 const Saving = () => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
+	const [expense, setExpense] = useState([]);
+	const [income, setIncome] = useState([]);
+  
+  useEffect(() => {
+    const fetchExpense = async () => {
+      const result = await axios.get(
+        '/expense/all', { headers: {"Authorization" : `Bearer ${token}`} }
+      );
+      const expenses = [];
+      result.data.map(x => expenses.push(Number(x.amount)));
+      setExpense(expenses);
+    }
+    fetchExpense();
+	},[token]);
+	
+	useEffect(() => {
+		const fetchIncome = async () => {
+			const result = await axios.get("/income/all",  { headers: {"Authorization" : `Bearer ${token}`} });
+      const incomes = [];
+      result.data.map(x => incomes.push(Number(x.amount)));
+      setIncome(incomes);
+		}
+		fetchIncome();
+  }, [token]);
+  
+  const totalIncome = income.reduce((a, b) => a + b, 0);
+  const totalExpense = expense.reduce((a, b) => a + b, 0);
+  const percentage = (totalIncome / totalExpense).toFixed(2)
+  
   const data = {
 		datasets:[
 			{
 				label:'Saving',
 				data:[
-          100,
-          50
+          totalIncome,
+          totalExpense
 				],
 				backgroundColor:[
 				  '#647fe3',
@@ -37,16 +69,16 @@ const Saving = () => {
     <Paper className={classes.paper} elevation={3}>
       <Grid container className={classes.subTitle}>
         <Grid xs={6} item>
-            <Typography variant="h6">$1000.00</Typography>
+            <Typography variant="h6">${totalIncome}</Typography>
             <Typography variant="body2">Income</Typography>
         </Grid>
         <Grid xs={6} item>
-          <Typography align='right' variant="h6">$500.00</Typography>
+          <Typography align='right' variant="h6">${totalExpense}</Typography>
           <Typography align='right' variant="body2">Expenses</Typography>
         </Grid>
       </Grid>
       <Doughnut data={data} />
-      <Typography align='center' variant="h6">Saving 50%</Typography>
+      <Typography align='center' variant="body1"><b>{percentage}</b>% of Income Spent</Typography>
     </Paper>
   );
 }
