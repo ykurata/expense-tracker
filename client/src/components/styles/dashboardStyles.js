@@ -61,6 +61,10 @@ const dashboardStyles = makeStyles(theme => ({
   },
   textField: {
     marginBottom: '1rem'
+  },
+  month: {
+    paddingBottom: '1rem',
+    color: '#2976f2'
   }
 }));
 

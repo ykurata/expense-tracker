@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';

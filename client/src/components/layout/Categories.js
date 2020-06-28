@@ -33,7 +33,7 @@ const Category = () => {
       setExpense(result.data);
     }
     fetchExpense();
-  },[token]);
+  },[token, userId]);
 
 
   let holder = {};
@@ -46,14 +46,11 @@ const Category = () => {
     }
   });
 
-  console.log(holder)
-
   let fixedExp = [];
 
   for (var prop in holder) {
     fixedExp.push({ name: prop, value: holder[prop].toFixed(2) });
   }
-  console.log(fixedExp)
 
   const card = fixedExp.map((item, index) => {
     return (
