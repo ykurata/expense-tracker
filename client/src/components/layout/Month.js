@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Month = () => {
+const Month = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -50,6 +50,9 @@ const Month = () => {
     prevOpen.current = open;
   }, [open]);
 
+  const monthArr = props.data.map(x => x.date)
+  console.log(monthArr);
+  
   return (
     <div>
       <Button
@@ -59,7 +62,7 @@ const Month = () => {
         onClick={handleToggle}
         className={classes.button}
       >
-        Monthly Transaction
+        Select Month
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (

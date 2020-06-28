@@ -45,6 +45,7 @@ const Dashboard = () => {
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
+  const [expenseData, setExpenseData] = useState([]);
 	const [expense, setExpense] = useState([]);
 	const [income, setIncome] = useState([]);
   
@@ -88,6 +89,12 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
+  const signOut = e => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       const result = await axios.get(
@@ -98,17 +105,12 @@ const Dashboard = () => {
     fetchUser();
   },[token, userId]);
 
-  const signOut = e => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
-  }
-
   useEffect(() => {
     const fetchExpense = async () => {
       const result = await axios.get(
         `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
+      setExpenseData(result.data);
       const expenses = [];
       result.data.map(x => expenses.push(x.amount));
       setExpense(expenses);
@@ -152,7 +154,6 @@ const Dashboard = () => {
           <AddCategory/>
 				</Dialog>
 
-        
       </List>
     </div>
   );
@@ -252,7 +253,7 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
           <Grid container> 
             <Typography className={classes.month} variant="h6">June 2020</Typography>
-            <Month/>
+            <Month data={expenseData} />
           </Grid>
         
           <Grid container spacing={3}>
