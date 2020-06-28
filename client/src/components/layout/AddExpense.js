@@ -53,7 +53,7 @@ const AddExpense = () => {
       setCategories(result.data);
     }
     fetchData();
-  }, [token])
+  }, [token, userId])
 
   const handleSubmit = async(e) => {
     e.preventDefault();

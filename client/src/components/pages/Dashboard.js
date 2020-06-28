@@ -33,10 +33,8 @@ import Month from '../layout/Month';
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
 
-
 const Dashboard = () => {
   const classes = dashboardStyles();
-  const [user, setUser] = useState({});
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const theme = useTheme();
@@ -46,6 +44,9 @@ const Dashboard = () => {
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [user, setUser] = useState({});
+	const [expense, setExpense] = useState([]);
+	const [income, setIncome] = useState([]);
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -103,6 +104,30 @@ const Dashboard = () => {
     window.location.href = "/";
   }
 
+  useEffect(() => {
+    const fetchExpense = async () => {
+      const result = await axios.get(
+        `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
+      );
+      const expenses = [];
+      result.data.map(x => expenses.push(x.amount));
+      setExpense(expenses);
+    }
+    fetchExpense();
+	},[token, userId]);
+	
+	useEffect(() => {
+		const fetchIncome = async () => {
+			const result = await axios.get(
+        `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
+      );
+      const incomes = [];
+      result.data.map(x => incomes.push(x.amount));
+      setIncome(incomes);
+		}
+		fetchIncome();
+  }, [token, userId]);
+
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -127,7 +152,7 @@ const Dashboard = () => {
           <AddCategory/>
 				</Dialog>
 
-        <Month/>
+        
       </List>
     </div>
   );
@@ -225,19 +250,24 @@ const Dashboard = () => {
       </nav>
       <div className={classes.content}>
         <div className={classes.toolbar} />
-				<Grid container spacing={3}>
-					<Grid item xs={12} sm={6} md={6} >
-            {/* saving component */}
-						<Saving />
-					</Grid>
-					<Grid item xs={12} sm={6} md={6}>
-            {/* Monthly expense chart */}
-						<MonthlyExpense />
-					</Grid>
-				</Grid>
-				
-        {/* Expenses with Categories */}
-        <Categories/>
+          <Grid container> 
+            <Typography className={classes.month} variant="h6">June 2020</Typography>
+            <Month/>
+          </Grid>
+        
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={6} >
+              {/* Doughnut chart */}
+              <Saving exp={expense} inc={income} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              {/* Monthly expense chart */}
+              <MonthlyExpense />
+            </Grid>
+          </Grid>
+          
+          {/* Expenses with Categories */}
+          <Categories/>
         
       </div>
     </div>

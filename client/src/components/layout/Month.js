@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -10,14 +9,12 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-  button: {
-    marginLeft: '.5rem'
+	button: {
+    backgroundColor: '#6397eb',
+    '&:hover': {
+      backgroundColor: '#d5dbed'
+    },
+    marginLeft: '2rem'
   }
 }));
 
@@ -56,11 +53,11 @@ const Month = () => {
   return (
     <div>
       <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          className={classes.button}
+        ref={anchorRef}
+        aria-controls={open ? 'menu-list-grow' : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}
+        className={classes.button}
       >
         Monthly Transaction
       </Button>
