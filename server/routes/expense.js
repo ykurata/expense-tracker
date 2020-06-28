@@ -37,7 +37,7 @@ router.get("/all/:id", auth, async(req, res) => {
     });
     return res.status(200).json(expenses);
   } catch(err) {
-    res.status(400).json(err);
+    console.log(err);
   }
 });
 
