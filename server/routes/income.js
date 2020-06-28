@@ -54,7 +54,7 @@ router.get("/all/:id", auth, async(req, res) => {
   try {
     const incomes = await Income.findAll({ 
       where: { userId: req.params.id }, 
-      order: [["createdAt", "DESC"]]
+      order: [["date", "DESC"]]
     });
     return res.status(200).json(incomes);
   } catch(err) {
@@ -67,7 +67,7 @@ router.get("/all/:id", auth, async(req, res) => {
 router.get("/all", auth, async(req, res) => {
   try {
     const incomes = await Income.findAll({
-      order: [["createdAt", "DESC"]]
+      order: [["date", "DESC"]]
     });
     return res.status(200).json(incomes);
   } catch(err) {
