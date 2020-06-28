@@ -250,21 +250,24 @@ const Dashboard = () => {
       </nav>
       <div className={classes.content}>
         <div className={classes.toolbar} />
-        <Month/>
-        <Typography className={classes.month} variant="h6">June 2020</Typography>
-				<Grid container spacing={3}>
-					<Grid item xs={12} sm={6} md={6} >
-            {/* Doughnut chart */}
-						<Saving exp={expense} inc={income} />
-					</Grid>
-					<Grid item xs={12} sm={6} md={6}>
-            {/* Monthly expense chart */}
-						<MonthlyExpense />
-					</Grid>
-				</Grid>
-				
-        {/* Expenses with Categories */}
-        <Categories/>
+          <Grid container> 
+            <Typography className={classes.month} variant="h6">June 2020</Typography>
+            <Month/>
+          </Grid>
+        
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={6} >
+              {/* Doughnut chart */}
+              <Saving exp={expense} inc={income} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              {/* Monthly expense chart */}
+              <MonthlyExpense />
+            </Grid>
+          </Grid>
+          
+          {/* Expenses with Categories */}
+          <Categories/>
         
       </div>
     </div>

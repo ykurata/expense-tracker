@@ -6,8 +6,20 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+	button: {
+    backgroundColor: '#6397eb',
+    '&:hover': {
+      backgroundColor: '#d5dbed'
+    },
+    marginLeft: '2rem'
+  }
+}));
 
 const Month = () => {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -41,10 +53,11 @@ const Month = () => {
   return (
     <div>
       <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
+        ref={anchorRef}
+        aria-controls={open ? 'menu-list-grow' : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}
+        className={classes.button}
       >
         Monthly Transaction
       </Button>

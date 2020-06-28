@@ -64,7 +64,7 @@ const dashboardStyles = makeStyles(theme => ({
   },
   month: {
     paddingBottom: '1rem',
-    color: '#2976f2'
+    color: '#647fe3'
   }
 }));
 
