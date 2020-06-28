@@ -33,7 +33,7 @@ router.get("/all/:id", auth, async(req, res) => {
   try {
     const expenses = await Expense.findAll({
       where: { userId: req.params.id },
-      order: [[ "createdAt", "DESC" ]]
+      order: [[ "date", "DESC" ]]
     });
     return res.status(200).json(expenses);
   } catch(err) {
@@ -45,7 +45,7 @@ router.get("/all/:id", auth, async(req, res) => {
 router.get("/all", auth, async(req, res) => {
   try {
     const expenses = await Expense.findAll({
-      order: [["createdAt", "DESC"]]
+      order: [["date", "DESC"]]
     });
     return res.status(200).json(expenses);
   } catch(err) {
