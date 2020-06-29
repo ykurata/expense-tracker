@@ -130,6 +130,10 @@ const Dashboard = () => {
 		fetchIncome();
   }, [token, userId]);
 
+  // I can filter data by filter method and includes method. 
+  // How to pass selected month and year value to the filter method...? 
+  //console.log(expenseData.filter(x => x.date.includes('2020-05')));
+
 	const drawer = (
     <div>
       <List className={classes.list}>

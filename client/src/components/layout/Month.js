@@ -50,9 +50,14 @@ const Month = (props) => {
     prevOpen.current = open;
   }, [open]);
 
-  const monthArr = props.data.map(x => x.date)
-  console.log(monthArr);
-  
+  const monthAndYear = [];
+  props.data.map(x => monthAndYear.push(x.date.slice(0, 7)));
+  let uniqMonth = [...new Set(monthAndYear)];
+
+  let menuItem = uniqMonth.map((x, i) => (
+    <MenuItem key={i} onClick={handleClose}>{x}</MenuItem>
+  ));
+
   return (
     <div>
       <Button
@@ -73,9 +78,7 @@ const Month = (props) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose}>May 2020</MenuItem>
-                  <MenuItem onClick={handleClose}>June 2020</MenuItem>
-                  <MenuItem onClick={handleClose}>July 2020</MenuItem>
+                  {menuItem}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
