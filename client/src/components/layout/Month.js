@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
 
 const Month = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [selectMonth, setSelectMonth] = useState("");
+  const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -28,10 +29,7 @@ const Month = (props) => {
   };
 
   const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
+    
   };
 
   const handleListKeyDown = (event) => {
@@ -50,12 +48,22 @@ const Month = (props) => {
     prevOpen.current = open;
   }, [open]);
 
+  const getMonth = e => {
+    const { myValue } = e.currentTarget.dataset;
+    setSelectMonth(myValue)
+    //setSelectMonth(e.target.value);
+    if (anchorRef.current && anchorRef.current.contains(e.target)) {
+      return;
+    }
+    setOpen(false);
+  }
+
   const monthAndYear = [];
   props.data.map(x => monthAndYear.push(x.date.slice(0, 7)));
   let uniqMonth = [...new Set(monthAndYear)];
-
+  
   let menuItem = uniqMonth.map((x, i) => (
-    <MenuItem key={i} onClick={handleClose}>{x}</MenuItem>
+    <MenuItem key={i} data-my-value={x} onClick={getMonth}>{x}</MenuItem>
   ));
 
   return (
