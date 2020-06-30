@@ -48,22 +48,21 @@ const Month = (props) => {
     prevOpen.current = open;
   }, [open]);
 
-  const getMonth = e => {
-    const { myValue } = e.currentTarget.dataset;
-    setSelectMonth(myValue)
-    //setSelectMonth(e.target.value);
-    if (anchorRef.current && anchorRef.current.contains(e.target)) {
-      return;
-    }
-    setOpen(false);
-  }
+  // const getDate = e => {
+  //   const { myValue } = e.currentTarget.dataset;
+  //   setSelectMonth(myValue)
+  //   if (anchorRef.current && anchorRef.current.contains(e.target)) {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // }
 
   const monthAndYear = [];
   props.data.map(x => monthAndYear.push(x.date.slice(0, 7)));
   let uniqMonth = [...new Set(monthAndYear)];
   
   let menuItem = uniqMonth.map((x, i) => (
-    <MenuItem key={i} data-my-value={x} onClick={getMonth}>{x}</MenuItem>
+    <MenuItem key={i} data-my-value={x} onClick={props.getDate}>{x}</MenuItem>
   ));
 
   return (

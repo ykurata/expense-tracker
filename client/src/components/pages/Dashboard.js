@@ -47,8 +47,8 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const [expenseData, setExpenseData] = useState([]);
 	const [expense, setExpense] = useState([]);
-	const [income, setIncome] = useState([]);
-  
+  const [income, setIncome] = useState([]);
+
   // Open Expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
@@ -130,8 +130,6 @@ const Dashboard = () => {
 		fetchIncome();
   }, [token, userId]);
 
-  // I can filter data by filter method and includes method. 
-  // How to pass selected month and year value to the filter method...? 
   //console.log(expenseData.filter(x => x.date.includes('2020-05')));
 
 	const drawer = (
@@ -257,6 +255,7 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
           <Grid container> 
             <Typography className={classes.month} variant="h6">June 2020</Typography>
+            {/* select month and year button*/}
             <Month data={expenseData} />
           </Grid>
         
