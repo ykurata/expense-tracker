@@ -65,6 +65,13 @@ const dashboardStyles = makeStyles(theme => ({
   month: {
     paddingBottom: '1rem',
     color: '#647fe3'
+  },
+  button: {
+    backgroundColor: '#6397eb',
+    '&:hover': {
+      backgroundColor: '#d5dbed'
+    },
+    marginLeft: '2rem'
   }
 }));
 

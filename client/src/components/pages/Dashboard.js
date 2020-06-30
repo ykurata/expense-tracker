@@ -21,6 +21,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
+
 // Import components 
 import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
@@ -28,7 +29,6 @@ import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
 import AddIncome from '../layout/AddIncome';
 import AddCategory from '../layout/AddCategory';
-import Month from '../layout/Month';
 
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
@@ -48,6 +48,10 @@ const Dashboard = () => {
   const [expenseData, setExpenseData] = useState([]);
 	const [expense, setExpense] = useState([]);
   const [income, setIncome] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [monthAnchorEl, setMonthAnchorEl] = useState(null);
+
+  console.log(selectedMonth)
 
   // Open Expense
   const handleExpenseOpen = () => {
@@ -94,6 +98,30 @@ const Dashboard = () => {
     localStorage.clear();
     window.location.href = "/";
   }
+
+  // Select Month and Year button 
+  const handleMonthClick = e => {
+    setMonthAnchorEl(e.currentTarget);
+  };
+
+  const handleMonthClose = () => {
+    setMonthAnchorEl(null);
+  };
+
+  const getDate = e => {
+    const { myValue } = e.currentTarget.dataset;
+    setSelectedMonth(myValue)
+    setMonthAnchorEl(null);
+  }
+
+  const monthAndYear = [];
+  expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
+  let uniqMonth = [...new Set(monthAndYear)];
+  
+  let menuItem = uniqMonth.map((x, i) => (
+    <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
+  ));
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -255,8 +283,26 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
           <Grid container> 
             <Typography className={classes.month} variant="h6">June 2020</Typography>
+            
             {/* select month and year button*/}
-            <Month data={expenseData} />
+            <div>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMonthClick}>
+                Open Menu
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={monthAnchorEl}
+                keepMounted
+                open={Boolean(monthAnchorEl)}
+                onClose={handleMonthClose}
+              > 
+                {menuItem}
+                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+              </Menu>
+            </div>
+            
           </Grid>
         
           <Grid container spacing={3}>
