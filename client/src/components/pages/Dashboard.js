@@ -21,7 +21,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
-
 // Import components 
 import Saving from "../layout/Saving";
 import MonthlyExpense from "../layout/MonthlyExpense";
@@ -48,10 +47,8 @@ const Dashboard = () => {
   const [expenseData, setExpenseData] = useState([]);
 	const [expense, setExpense] = useState([]);
   const [income, setIncome] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("2020-06");
   const [monthAnchorEl, setMonthAnchorEl] = useState(null);
-
-  console.log(selectedMonth)
 
   // Open Expense
   const handleExpenseOpen = () => {
@@ -114,15 +111,7 @@ const Dashboard = () => {
     setMonthAnchorEl(null);
   }
 
-  const monthAndYear = [];
-  expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
-  let uniqMonth = [...new Set(monthAndYear)];
-  
-  let menuItem = uniqMonth.map((x, i) => (
-    <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
-  ));
-
-
+ // Get user data
   useEffect(() => {
     const fetchUser = async () => {
       const result = await axios.get(
@@ -132,20 +121,22 @@ const Dashboard = () => {
     }
     fetchUser();
   },[token, userId]);
-
+  
+  // Get expense data
   useEffect(() => {
     const fetchExpense = async () => {
       const result = await axios.get(
         `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
       setExpenseData(result.data);
-      const expenses = [];
-      result.data.map(x => expenses.push(x.amount));
-      setExpense(expenses);
+      let filteredExpense = result.data.filter(x => x.date.includes(selectedMonth));
+      let expenseArr = filteredExpense.map(x => x.amount);
+      setExpense(expenseArr);
     }
     fetchExpense();
-	},[token, userId]);
-	
+  },[token, userId]);
+  
+  // Get income data
 	useEffect(() => {
 		const fetchIncome = async () => {
 			const result = await axios.get(
@@ -158,8 +149,14 @@ const Dashboard = () => {
 		fetchIncome();
   }, [token, userId]);
 
-  //console.log(expenseData.filter(x => x.date.includes('2020-05')));
-
+  const monthAndYear = [];
+  expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
+  let uniqMonth = [...new Set(monthAndYear)];
+  
+  let menuItem = uniqMonth.map((x, i) => (
+    <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
+  ));
+  
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -297,9 +294,6 @@ const Dashboard = () => {
                 onClose={handleMonthClose}
               > 
                 {menuItem}
-                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem> */}
               </Menu>
             </div>
             
