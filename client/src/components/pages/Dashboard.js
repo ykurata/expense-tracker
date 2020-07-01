@@ -110,15 +110,17 @@ const Dashboard = () => {
     const { myValue } = e.currentTarget.dataset;
     setSelectedMonth(myValue);
 
-    let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    let expenseArr = filteredExpense.map(x => x.amount);
-    setExpense(expenseArr);
+    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
     let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+    let expenseArr = filterExpense.map(x => x.amount);
     let incomeArr = filteredIncome.map(x => x.amount);
+    setExpense(expenseArr);
     setIncome(incomeArr);
 
     setMonthAnchorEl(null);
   }
+
+  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
 
  // Get user data
   useEffect(() => {
@@ -317,7 +319,7 @@ const Dashboard = () => {
           </Grid>
           
           {/* Expenses with Categories */}
-          <Categories/>
+          <Categories data={filteredExpense} />
         
       </div>
     </div>
