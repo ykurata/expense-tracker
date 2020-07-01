@@ -110,14 +110,22 @@ const Dashboard = () => {
     const { myValue } = e.currentTarget.dataset;
     setSelectedMonth(myValue);
 
-    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    let expenseArr = filterExpense.map(x => x.amount);
-    let incomeArr = filteredIncome.map(x => x.amount);
-    setExpense(expenseArr);
-    setIncome(incomeArr);
+    getExpense();
+    getIncome();
 
     setMonthAnchorEl(null);
+  }
+
+  const getExpense = () => {
+    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+    let expenseArr = filterExpense.map(x => x.amount);
+    setExpense(expenseArr);
+  }
+
+  const getIncome = () => {
+    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+    let incomeArr = filteredIncome.map(x => x.amount);
+    setIncome(incomeArr);
   }
 
   let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
