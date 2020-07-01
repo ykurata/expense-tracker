@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -19,26 +19,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Category = () => {
+const Category = (props) => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const [expense, setExpense] = useState([]);
-
-  useEffect(() => {
-    const fetchExpense = async () => {
-      const result = await axios.get(
-        `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setExpense(result.data);
-    }
-    fetchExpense();
-  },[token, userId]);
-
 
   let holder = {};
 
-  expense.forEach((data) => {
+  props.data.forEach((data) => {
     if (holder.hasOwnProperty(data.category)) {
       holder[data.category] = holder[data.category] + data.amount;
     } else {

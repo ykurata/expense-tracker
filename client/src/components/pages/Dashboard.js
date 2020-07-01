@@ -28,7 +28,6 @@ import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
 import AddIncome from '../layout/AddIncome';
 import AddCategory from '../layout/AddCategory';
-import Month from '../layout/Month';
 
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
@@ -46,8 +45,11 @@ const Dashboard = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
   const [expenseData, setExpenseData] = useState([]);
-	const [expense, setExpense] = useState([]);
+  const [expense, setExpense] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
   const [income, setIncome] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("2020-06");
+  const [monthAnchorEl, setMonthAnchorEl] = useState(null);
 
   // Open Expense
   const handleExpenseOpen = () => {
@@ -95,6 +97,39 @@ const Dashboard = () => {
     window.location.href = "/";
   }
 
+  // Select Month and Year button 
+  const handleMonthClick = e => {
+    setMonthAnchorEl(e.currentTarget);
+  };
+
+  const handleMonthClose = () => {
+    setMonthAnchorEl(null);
+  };
+
+  const getDate = e => {
+    const { myValue } = e.currentTarget.dataset;
+    setSelectedMonth(myValue);
+
+    getExpense();
+    getIncome();
+
+    setMonthAnchorEl(null);
+  }
+
+  const getExpense = () => {
+    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+    setExpense(filteredExpense.map(x => x.amount));
+  }
+
+  const getIncome = () => {
+    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+    setIncome(filteredIncome.map(x => x.amount));
+  }
+
+  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+
+ // Get user data
   useEffect(() => {
     const fetchUser = async () => {
       const result = await axios.get(
@@ -104,34 +139,39 @@ const Dashboard = () => {
     }
     fetchUser();
   },[token, userId]);
-
+  
+  // Get expense data
   useEffect(() => {
     const fetchExpense = async () => {
       const result = await axios.get(
         `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
       setExpenseData(result.data);
-      const expenses = [];
-      result.data.map(x => expenses.push(x.amount));
-      setExpense(expenses);
     }
     fetchExpense();
-	},[token, userId]);
-	
+  },[token, userId]);
+
+  
+  // Get income data
 	useEffect(() => {
 		const fetchIncome = async () => {
 			const result = await axios.get(
         `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
       );
-      const incomes = [];
-      result.data.map(x => incomes.push(x.amount));
-      setIncome(incomes);
+      setIncomeData(result.data);
 		}
 		fetchIncome();
   }, [token, userId]);
+  
 
-  //console.log(expenseData.filter(x => x.date.includes('2020-05')));
-
+  const monthAndYear = [];
+  expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
+  let uniqMonth = [...new Set(monthAndYear)];
+  
+  let menuItem = uniqMonth.map((x, i) => (
+    <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
+  ));
+  
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -254,15 +294,30 @@ const Dashboard = () => {
       <div className={classes.content}>
         <div className={classes.toolbar} />
           <Grid container> 
-            <Typography className={classes.month} variant="h6">June 2020</Typography>
+            <Typography className={classes.month} variant="h6">{selectedMonth}</Typography>
+            
             {/* select month and year button*/}
-            <Month data={expenseData} />
+            <div>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMonthClick}>
+                Select Month and Year
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={monthAnchorEl}
+                keepMounted
+                open={Boolean(monthAnchorEl)}
+                onClose={handleMonthClose}
+              > 
+                {menuItem}
+              </Menu>
+            </div>
+            
           </Grid>
         
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} >
               {/* Doughnut chart */}
-              <Saving exp={expense} inc={income} />
+              <Saving exp={filteredExpense} inc={filteredIncome} />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
@@ -271,7 +326,7 @@ const Dashboard = () => {
           </Grid>
           
           {/* Expenses with Categories */}
-          <Categories/>
+          <Categories data={filteredExpense} />
         
       </div>
     </div>

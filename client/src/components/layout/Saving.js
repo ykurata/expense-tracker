@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
 const Saving = (props) => {
   const classes = useStyles();
 
-  const totalIncome = props.inc.reduce((a, b) => a + b, 0).toFixed(2);
-  const totalExpense = props.exp.reduce((a, b) => a + b, 0).toFixed(2);
+  const totalExpense = props.exp.reduce((a, {amount}) => a + amount, 0).toFixed(2);
+  const totalIncome = props.inc.reduce((a, {amount}) => a + amount, 0).toFixed(2);
   const percentage = ((totalExpense / totalIncome)* 100).toFixed(2)
 
   const data = {
