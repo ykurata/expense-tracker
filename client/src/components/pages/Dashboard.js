@@ -118,17 +118,16 @@ const Dashboard = () => {
 
   const getExpense = () => {
     let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    let expenseArr = filterExpense.map(x => x.amount);
-    setExpense(expenseArr);
+    setExpense(filteredExpense.map(x => x.amount));
   }
 
   const getIncome = () => {
     let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    let incomeArr = filteredIncome.map(x => x.amount);
-    setIncome(incomeArr);
+    setIncome(filteredIncome.map(x => x.amount));
   }
 
   let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
 
  // Get user data
   useEffect(() => {
@@ -318,7 +317,7 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} >
               {/* Doughnut chart */}
-              <Saving exp={expense} inc={income} />
+              <Saving exp={filteredExpense} inc={filteredIncome} />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
