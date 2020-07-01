@@ -45,7 +45,8 @@ const Dashboard = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
   const [expenseData, setExpenseData] = useState([]);
-	const [expense, setExpense] = useState([]);
+  const [expense, setExpense] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
   const [income, setIncome] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState("2020-06");
   const [monthAnchorEl, setMonthAnchorEl] = useState(null);
@@ -107,7 +108,15 @@ const Dashboard = () => {
 
   const getDate = e => {
     const { myValue } = e.currentTarget.dataset;
-    setSelectedMonth(myValue)
+    setSelectedMonth(myValue);
+
+    let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+    let expenseArr = filteredExpense.map(x => x.amount);
+    setExpense(expenseArr);
+    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+    let incomeArr = filteredIncome.map(x => x.amount);
+    setIncome(incomeArr);
+
     setMonthAnchorEl(null);
   }
 
@@ -132,6 +141,7 @@ const Dashboard = () => {
     }
     fetchExpense();
   },[token, userId]);
+
   
   // Get income data
 	useEffect(() => {
@@ -139,20 +149,10 @@ const Dashboard = () => {
 			const result = await axios.get(
         `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
       );
-      const incomes = [];
-      result.data.map(x => incomes.push(x.amount));
-      setIncome(incomes);
+      setIncomeData(result.data);
 		}
 		fetchIncome();
   }, [token, userId]);
-  
-  // Filter expense data by selected year and month
-  useEffect(() => {
-    let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    let expenseArr = filteredExpense.map(x => x.amount);
-    setExpense(expenseArr);
-  }, [selectedMonth]);
-
   
 
   const monthAndYear = [];
@@ -285,12 +285,12 @@ const Dashboard = () => {
       <div className={classes.content}>
         <div className={classes.toolbar} />
           <Grid container> 
-            <Typography className={classes.month} variant="h6">June 2020</Typography>
+            <Typography className={classes.month} variant="h6">{selectedMonth}</Typography>
             
             {/* select month and year button*/}
             <div>
               <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMonthClick}>
-                Open Menu
+                Select Month and Year
               </Button>
               <Menu
                 id="simple-menu"
