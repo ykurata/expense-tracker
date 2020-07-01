@@ -129,9 +129,6 @@ const Dashboard = () => {
         `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
       );
       setExpenseData(result.data);
-      let filteredExpense = result.data.filter(x => x.date.includes(selectedMonth));
-      let expenseArr = filteredExpense.map(x => x.amount);
-      setExpense(expenseArr);
     }
     fetchExpense();
   },[token, userId]);
@@ -148,6 +145,15 @@ const Dashboard = () => {
 		}
 		fetchIncome();
   }, [token, userId]);
+  
+  // Filter expense data by selected year and month
+  useEffect(() => {
+    let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+    let expenseArr = filteredExpense.map(x => x.amount);
+    setExpense(expenseArr);
+  }, [selectedMonth]);
+
+  
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
