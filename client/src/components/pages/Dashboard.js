@@ -109,25 +109,8 @@ const Dashboard = () => {
   const getDate = e => {
     const { myValue } = e.currentTarget.dataset;
     setSelectedMonth(myValue);
-
-    getExpense();
-    getIncome();
-
     setMonthAnchorEl(null);
   }
-
-  const getExpense = () => {
-    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    setExpense(filteredExpense.map(x => x.amount));
-  }
-
-  const getIncome = () => {
-    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredIncome.map(x => x.amount));
-  }
-
-  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
 
  // Get user data
   useEffect(() => {
@@ -162,11 +145,13 @@ const Dashboard = () => {
 		}
 		fetchIncome();
   }, [token, userId]);
-  
+
+  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
-  let uniqMonth = [...new Set(monthAndYear)];
+  const uniqMonth = [...new Set(monthAndYear)];
   
   let menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
@@ -321,7 +306,7 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
-              <MonthlyExpense />
+              <MonthlyExpense data={expenseData} month={uniqMonth}/>
             </Grid>
           </Grid>
           

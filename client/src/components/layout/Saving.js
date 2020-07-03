@@ -29,6 +29,7 @@ const Saving = (props) => {
           data:[
             totalIncome,
             (totalIncome-totalExpense).toFixed(2)
+            //totalExpense
           ],
           backgroundColor:[
             '#647fe3',
@@ -38,7 +39,7 @@ const Saving = (props) => {
       ],
       labels: [
         'Income',
-        'Expense'
+        'Saving'
       ]
 	}
 

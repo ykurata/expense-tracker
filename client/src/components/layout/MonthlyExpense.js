@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 const useStyles = makeStyles(theme => ({
 	paper: {
@@ -18,20 +18,20 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const MonthlyExpense = () => {
-	const classes = useStyles();
-
+const MonthlyExpense = (props) => {
+  const classes = useStyles();
+  
   const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 		datasets:[
 			{
 				label:'Monthly Expenses',
-				data:[  
-					200,
-					100
-				],
-				backgroundColor:[
-				  '#79dfe8'
-				]
+        data: [65, 59, 80, 81, 56, 55, 40],
+				backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
 			}
 		]
 	}
@@ -40,7 +40,7 @@ const MonthlyExpense = () => {
       <Grid container className={classes.header}>
         <Typography variant="h6">Monthly Expneses</Typography>
       </Grid>
-      <Line data={data} />
+      <Bar data={data} />
     </Paper>
   );
 }
