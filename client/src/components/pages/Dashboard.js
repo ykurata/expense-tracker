@@ -46,9 +46,7 @@ const Dashboard = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
   const [expenseData, setExpenseData] = useState([]);
-  const [expense, setExpense] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
-  const [income, setIncome] = useState([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   
@@ -111,24 +109,11 @@ const Dashboard = () => {
     const { myValue } = e.currentTarget.dataset;
     setSelectedMonth(myValue);
 
-    getExpense();
-    getIncome();
-
     setMonthAnchorEl(null);
   }
 
-  const getExpense = () => {
-    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredExpense.map(x => x.amount));
-  }
-
-  const getIncome = () => {
-    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredIncome.map(x => x.amount));
-  }
-
-  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+  const filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+  const filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
 
  // Get user data
   useEffect(() => {
