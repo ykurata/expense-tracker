@@ -4,6 +4,7 @@ const router = express.Router();
 const Expense = require('../models').Expense;
 const validateExpenseInput = require("../validation/expense");
 const auth = require("./auth/auth");
+const expense = require('../validation/expense');
 
 // Create a new expense
 router.post("/", auth, async(req, res) => {
@@ -38,6 +39,23 @@ router.get("/all", auth, async(req, res) => {
     return res.status(200).json(expenses);
   } catch(err) {
     res.status(400).json(err);
+  }
+});
+
+
+// Filter data by selected month and get the total of the expense
+router.get("/:monthAndYear", auth, async(req, res) => {
+  try {
+    const expenses = await Expense.findAll({
+      where: { userId: req.user },
+      order: [[ "date", "DESC" ]]
+    });
+    const filteredData = expenses.filter(x => x.date.includes(req.params.monthAndYear))
+                              .map(x => x.amount);
+    const result = filteredData.reduce((a, b) => a + b, 0).toFixed(2);
+    return res.status(200).json({ total: result });
+  } catch(err) {
+    console.log(err);
   }
 });
 

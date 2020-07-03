@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
 const Saving = (props) => {
   const classes = useStyles();
 
-  const totalExpense = props.exp.reduce((a, {amount}) => a + amount, 0).toFixed(2);
   const totalIncome = props.inc.reduce((a, {amount}) => a + amount, 0).toFixed(2);
-  const percentage = ((totalExpense / totalIncome)* 100).toFixed(2)
+  const percentage = ((props.exp / totalIncome)* 100).toFixed(2)
 
   const data = {
       datasets:[
@@ -28,7 +27,7 @@ const Saving = (props) => {
           label: 'Saving',
           data:[
             totalIncome,
-            (totalIncome-totalExpense).toFixed(2)
+            (totalIncome-props.exp).toFixed(2)
           ],
           backgroundColor:[
             '#647fe3',
@@ -40,7 +39,7 @@ const Saving = (props) => {
         'Income',
         'Expense'
       ]
-	}
+  }
 
   return (
     <Paper className={classes.paper} elevation={3}>
@@ -50,7 +49,7 @@ const Saving = (props) => {
             <Typography variant="body2">Income</Typography>
         </Grid>
         <Grid xs={6} item>
-          <Typography align='right' variant="h6">${totalExpense}</Typography>
+          <Typography align='right' variant="h6">${props.exp}</Typography>
           <Typography align='right' variant="body2">Expenses</Typography>
         </Grid>
       </Grid>
