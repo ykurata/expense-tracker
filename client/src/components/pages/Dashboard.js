@@ -144,7 +144,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchExpense = async () => {
       const result = await axios.get(
-        `/expense/all/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
+        '/expense/all', { headers: {"Authorization" : `Bearer ${token}`} }
       );
       setExpenseData(result.data);
     }
@@ -156,7 +156,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		const fetchIncome = async () => {
 			const result = await axios.get(
-        `/income/all/${userId}`,  { headers: {"Authorization" : `Bearer ${token}`} }
+        '/income/all',  { headers: {"Authorization" : `Bearer ${token}`} }
       );
       setIncomeData(result.data);
 		}

@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -21,8 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const Category = (props) => {
   const classes = useStyles();
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
 
   let holder = {};
 
