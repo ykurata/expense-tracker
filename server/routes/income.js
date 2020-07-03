@@ -50,10 +50,10 @@ router.put("/update/:id", auth, async(req, res) => {
 
 
 // Get login user's all incomes 
-router.get("/all/:id", auth, async(req, res) => {
+router.get("/all", auth, async(req, res) => {
   try {
     const incomes = await Income.findAll({ 
-      where: { userId: req.params.id }, 
+      where: { userId: req.user }, 
       order: [["date", "DESC"]]
     });
     return res.status(200).json(incomes);
@@ -61,20 +61,7 @@ router.get("/all/:id", auth, async(req, res) => {
     res.status(400).json(err);
   }
 });
-  
 
-// Get all incomes
-router.get("/all", auth, async(req, res) => {
-  try {
-    const incomes = await Income.findAll({
-      order: [["date", "DESC"]]
-    });
-    return res.status(200).json(incomes);
-  } catch(err) {
-    res.status(400).json({ error: err });
-  }
-});
-  
 
 // Delete an income
 router.delete("/delete/:id", auth, async(req, res) => {

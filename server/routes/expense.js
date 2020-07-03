@@ -29,27 +29,15 @@ router.post("/", auth, async(req, res) => {
 });
 
 // Get login user's all expenses
-router.get("/all/:id", auth, async(req, res) => {
+router.get("/all", auth, async(req, res) => {
   try {
     const expenses = await Expense.findAll({
-      where: { userId: req.params.id },
+      where: { userId: req.user },
       order: [[ "date", "DESC" ]]
     });
     return res.status(200).json(expenses);
   } catch(err) {
     res.status(400).json(err);
-  }
-});
-
-// Get all expenses
-router.get("/all", auth, async(req, res) => {
-  try {
-    const expenses = await Expense.findAll({
-      order: [["date", "DESC"]]
-    });
-    return res.status(200).json(expenses);
-  } catch(err) {
-    console.log(err);
   }
 });
 
