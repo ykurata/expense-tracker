@@ -17,16 +17,17 @@ const useStyles = makeStyles(theme => ({
 
 const Saving = (props) => {
   const classes = useStyles();
-
-  const percentage = ((props.exp / props.inc)* 100).toFixed(2)
+  const expense = props.exp;
+  const income = props.inc;
+  const percentage = ((expense / income)* 100).toFixed(2)
 
   const data = {
       datasets:[
         {
           label: 'Saving',
           data:[
-            props.inc,
-            (props.inc-props.exp).toFixed(2)
+            income,
+            (income-expense).toFixed(2)
           ],
           backgroundColor:[
             '#647fe3',
@@ -44,16 +45,16 @@ const Saving = (props) => {
     <Paper className={classes.paper} elevation={3}>
       <Grid container className={classes.subTitle}>
         <Grid xs={6} item>
-            <Typography variant="h6">${props.inc}</Typography>
+            <Typography variant="h6">${income}</Typography>
             <Typography variant="body2">Income</Typography>
         </Grid>
         <Grid xs={6} item>
-          <Typography align='right' variant="h6">${props.exp}</Typography>
+          <Typography align='right' variant="h6">${expense}</Typography>
           <Typography align='right' variant="body2">Expenses</Typography>
         </Grid>
       </Grid>
       <Doughnut data={data} />
-      {props.inc.length === 0 || props.exp.length === 0 ? (
+      {income == 0.00 || expense == 0.00 ? (
         null
       ) : (
         <Typography align='center' variant="body1"><b>{percentage}</b>% of Income Spent</Typography>

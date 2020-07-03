@@ -48,8 +48,9 @@ const Dashboard = () => {
   const [expenseTotal, setExpenseTotal] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
   const [incomeTotal, setIncomeTotal] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("2020-06");
   const [monthAnchorEl, setMonthAnchorEl] = useState(null);
+  const now = new Date().toISOString().slice(0, 7);
+  const [selectedMonth, setSelectedMonth] = useState(now);
 
   // Open Expense
   const handleExpenseOpen = () => {
@@ -172,6 +173,24 @@ const Dashboard = () => {
 		}
 		fetchIncome();
   }, [token, userId]);
+
+  useEffect(() => {
+    const fetchExpenseTotal = async () => {
+      const result = await axios.get(
+        `expense/${now}`, { headers: {"Authorization" : `Bearer ${token}`} });
+        setExpenseTotal(result.data.total);  
+    }
+    fetchExpenseTotal();
+  }, [selectedMonth, token]);
+
+  useEffect(() => {
+    const fetchIncomeTotal = async () => {
+      const result = await axios.get(
+        `income/${now}`, { headers: {"Authorization" : `Bearer ${token}`} });
+        setIncomeTotal(result.data.total);  
+    }
+    fetchIncomeTotal();
+  }, [selectedMonth, token]);
   
 
   const monthAndYear = [];
