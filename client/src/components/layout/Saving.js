@@ -54,7 +54,12 @@ const Saving = (props) => {
           <Typography align='right' variant="body2">Expenses</Typography>
         </Grid>
       </Grid>
-      <Doughnut data={data} />
+      {props.exp.length === 0 && props.inc.length === 0 ? (
+        <Typography align='center'>No data saved</Typography>
+      ): (
+        <Doughnut data={data} />
+      )}
+      
       {props.inc.length === 0 || props.exp.length === 0 ? (
         null
       ) : (

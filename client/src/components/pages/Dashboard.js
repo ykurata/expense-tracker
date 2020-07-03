@@ -38,7 +38,8 @@ const Dashboard = () => {
   const token = localStorage.getItem("token");
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
-	const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [monthAnchorEl, setMonthAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
@@ -48,9 +49,9 @@ const Dashboard = () => {
   const [expense, setExpense] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
   const [income, setIncome] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("2020-06");
-  const [monthAnchorEl, setMonthAnchorEl] = useState(null);
-
+  const currentMonth = new Date().toISOString().slice(0, 7);
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  
   // Open Expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
@@ -118,7 +119,7 @@ const Dashboard = () => {
 
   const getExpense = () => {
     let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    setExpense(filteredExpense.map(x => x.amount));
+    setIncome(filteredExpense.map(x => x.amount));
   }
 
   const getIncome = () => {
