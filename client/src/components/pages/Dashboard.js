@@ -167,11 +167,12 @@ const Dashboard = () => {
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
-  let uniqMonth = [...new Set(monthAndYear)];
+  const uniqMonth = [...new Set(monthAndYear)];
   
-  let menuItem = uniqMonth.map((x, i) => (
+  const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
+
   
 	const drawer = (
     <div>
@@ -322,7 +323,7 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
-              <MonthlyExpense />
+              <MonthlyExpense data={expenseData}/>
             </Grid>
           </Grid>
           
