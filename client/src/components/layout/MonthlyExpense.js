@@ -31,9 +31,8 @@ const MonthlyExpense = (props) => {
                               .map(x => x.amount)
                               .reduce((a, b) => a + b, 0).toFixed(2))
   }
-
   amountArr.push(0)
-  
+
   const data = {
     labels: uniqMonth,
 		datasets:[
@@ -53,7 +52,11 @@ const MonthlyExpense = (props) => {
       <Grid container className={classes.header}>
         <Typography variant="h6">Monthly Expneses</Typography>
       </Grid>
-      <Bar data={data} />
+      {amountArr.length === 1 ? (
+        <Typography align='center'>No data saved</Typography>
+      ) : (
+        <Bar data={data} />
+      )}
     </Paper>
   );
 }

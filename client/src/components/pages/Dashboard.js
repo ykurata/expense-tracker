@@ -22,7 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
 // Import components 
-import Saving from "../layout/Saving";
+import DoughnutChart from "../layout/DoughnutChart";
 import MonthlyExpense from "../layout/MonthlyExpense";
 import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
@@ -295,7 +295,11 @@ const Dashboard = () => {
                 open={Boolean(monthAnchorEl)}
                 onClose={handleMonthClose}
               > 
-                {menuItem}
+                {uniqMonth.length === 0 ? (
+                  <MenuItem>No data saved</MenuItem>
+                ): (
+                  {menuItem}
+                )}
               </Menu>
             </div>
             
@@ -304,7 +308,7 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} >
               {/* Doughnut chart */}
-              <Saving exp={filteredExpense} inc={filteredIncome} />
+              <DoughnutChart exp={filteredExpense} inc={filteredIncome} />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
