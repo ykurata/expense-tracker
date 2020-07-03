@@ -43,7 +43,7 @@ router.get("/all", auth, async(req, res) => {
 });
 
 
-// Filter data by selected month and get the total of the expense
+// Get monthly total expense
 router.get("/:monthAndYear", auth, async(req, res) => {
   try {
     const expenses = await Expense.findAll({

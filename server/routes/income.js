@@ -63,6 +63,23 @@ router.get("/all", auth, async(req, res) => {
 });
 
 
+// Get monthly total income
+router.get("/:monthAndYear", auth, async(req, res) => {
+  try {
+    const incomes = await Income.findAll({
+      where: { userId: req.user },
+      order: [[ "date", "DESC" ]]
+    });
+    const filteredData = incomes.filter(x => x.date.includes(req.params.monthAndYear))
+                              .map(x => x.amount);
+    const result = filteredData.reduce((a, b) => a + b, 0).toFixed(2);
+    return res.status(200).json({ total: result });
+  } catch(err) {
+    console.log(err);
+  }
+});
+
+
 // Delete an income
 router.delete("/delete/:id", auth, async(req, res) => {
   try {

@@ -18,16 +18,15 @@ const useStyles = makeStyles(theme => ({
 const Saving = (props) => {
   const classes = useStyles();
 
-  const totalIncome = props.inc.reduce((a, {amount}) => a + amount, 0).toFixed(2);
-  const percentage = ((props.exp / totalIncome)* 100).toFixed(2)
+  const percentage = ((props.exp / props.inc)* 100).toFixed(2)
 
   const data = {
       datasets:[
         {
           label: 'Saving',
           data:[
-            totalIncome,
-            (totalIncome-props.exp).toFixed(2)
+            props.inc,
+            (props.inc-props.exp).toFixed(2)
           ],
           backgroundColor:[
             '#647fe3',
@@ -45,7 +44,7 @@ const Saving = (props) => {
     <Paper className={classes.paper} elevation={3}>
       <Grid container className={classes.subTitle}>
         <Grid xs={6} item>
-            <Typography variant="h6">${totalIncome}</Typography>
+            <Typography variant="h6">${props.inc}</Typography>
             <Typography variant="body2">Income</Typography>
         </Grid>
         <Grid xs={6} item>

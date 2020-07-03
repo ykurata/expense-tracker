@@ -47,7 +47,7 @@ const Dashboard = () => {
   const [expenseData, setExpenseData] = useState([]);
   const [expenseTotal, setExpenseTotal] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
-  const [income, setIncome] = useState([]);
+  const [incomeTotal, setIncomeTotal] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState("2020-06");
   const [monthAnchorEl, setMonthAnchorEl] = useState(null);
 
@@ -126,9 +126,14 @@ const Dashboard = () => {
     }
   }
 
-  const getIncome = () => {
-    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredIncome.map(x => x.amount));
+  const getIncome = async() => {
+    try {
+      const result = await axios.get(
+      `income/${selectedMonth}`, { headers: {"Authorization" : `Bearer ${token}`} });
+      setIncomeTotal(result.data.total);  
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
@@ -322,7 +327,7 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} >
               {/* Doughnut chart */}
-              <Saving exp={expenseTotal} inc={filteredIncome} />
+              <Saving exp={expenseTotal} inc={incomeTotal} />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
