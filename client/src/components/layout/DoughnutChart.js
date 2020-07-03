@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const Saving = (props) => {
+const DoughnutChart = (props) => {
   const classes = useStyles();
 
   const totalExpense = props.exp.reduce((a, {amount}) => a + amount, 0).toFixed(2);
@@ -28,7 +28,9 @@ const Saving = (props) => {
           label: 'Saving',
           data:[
             totalIncome,
-            (totalIncome-totalExpense).toFixed(2)
+            //(totalIncome-totalExpense).toFixed(2)
+            totalExpense
+
           ],
           backgroundColor:[
             '#647fe3',
@@ -70,4 +72,4 @@ const Saving = (props) => {
   );
 }
 
-export default Saving;
+export default DoughnutChart;

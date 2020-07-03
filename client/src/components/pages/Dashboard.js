@@ -22,7 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
 // Import components 
-import Saving from "../layout/Saving";
+import DoughnutChart from "../layout/DoughnutChart";
 import MonthlyExpense from "../layout/MonthlyExpense";
 import Categories from '../layout/Categories';
 import AddExpense from '../layout/AddExpense';
@@ -46,9 +46,7 @@ const Dashboard = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
   const [expenseData, setExpenseData] = useState([]);
-  const [expense, setExpense] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
-  const [income, setIncome] = useState([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   
@@ -111,24 +109,11 @@ const Dashboard = () => {
     const { myValue } = e.currentTarget.dataset;
     setSelectedMonth(myValue);
 
-    getExpense();
-    getIncome();
-
     setMonthAnchorEl(null);
   }
 
-  const getExpense = () => {
-    let filterExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredExpense.map(x => x.amount));
-  }
-
-  const getIncome = () => {
-    let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
-    setIncome(filteredIncome.map(x => x.amount));
-  }
-
-  let filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
-  let filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
+  const filteredExpense = expenseData.filter(x => x.date.includes(selectedMonth));
+  const filteredIncome = incomeData.filter(x => x.date.includes(selectedMonth));
 
  // Get user data
   useEffect(() => {
@@ -167,11 +152,12 @@ const Dashboard = () => {
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
-  let uniqMonth = [...new Set(monthAndYear)];
+  const uniqMonth = [...new Set(monthAndYear)];
   
-  let menuItem = uniqMonth.map((x, i) => (
+  const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
+
   
 	const drawer = (
     <div>
@@ -309,7 +295,11 @@ const Dashboard = () => {
                 open={Boolean(monthAnchorEl)}
                 onClose={handleMonthClose}
               > 
-                {menuItem}
+                {uniqMonth.length === 0 ? (
+                  <MenuItem>No data saved</MenuItem>
+                ): (
+                  {menuItem}
+                )}
               </Menu>
             </div>
             
@@ -318,11 +308,11 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} >
               {/* Doughnut chart */}
-              <Saving exp={filteredExpense} inc={filteredIncome} />
+              <DoughnutChart exp={filteredExpense} inc={filteredIncome} />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               {/* Monthly expense chart */}
-              <MonthlyExpense />
+              <MonthlyExpense data={expenseData}/>
             </Grid>
           </Grid>
           
