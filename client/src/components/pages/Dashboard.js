@@ -295,11 +295,12 @@ const Dashboard = () => {
                 open={Boolean(monthAnchorEl)}
                 onClose={handleMonthClose}
               > 
-                {uniqMonth.length === 0 ? (
+                {menuItem}
+                {/* {uniqMonth.length === 0 ? (
                   <MenuItem>No data saved</MenuItem>
                 ): (
                   {menuItem}
-                )}
+                )} */}
               </Menu>
             </div>
             
