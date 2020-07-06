@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ScrollMenu from 'react-horizontal-scrolling-menu';
+// import PerfectScrollbar from 'react-perfect-scrollbar'
+// import "react-perfect-scrollbar/dist/css/styles.css";
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -8,19 +12,23 @@ import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    color: 'grey',
-    fontSize: '4rem',
-    marginBottom: '2rem'
+  root: {
+    flexGrow: 1,
+    marginTop: 30,
+    display: 'flex',
+    overflowX: 'scroll',
+    overflowY: 'hidden',
+    whiteSpace: 'nowrap',
+    width: "900px"
   },
   cateroryTitle: {
     padding: theme.spacing(1,0,1,0),
-  }
+  },
 }));
 
 const Category = (props) => {
   const classes = useStyles();
-
+  
   let holder = {};
 
   props.data.forEach((data) => {
@@ -29,17 +37,17 @@ const Category = (props) => {
     } else {
       holder[data.category] = data.amount;
     }
-  });
+  }); 
 
   let fixedExp = [];
 
   for (var prop in holder) {
     fixedExp.push({ name: prop, value: holder[prop].toFixed(2) });
   }
-
+  
   const card = fixedExp.map((item, index) => {
     return (
-      <Grid item xs={6} sm={4} md={3} key={index}>
+      <Grid item xs={6} sm={4} md={3} key={index} >
         <Card>
           <CardContent>
             {/* <LocalGroceryStoreIcon fontSize='large' className={classes.icon} /> */}
@@ -56,7 +64,9 @@ const Category = (props) => {
       <Grid item xs={12}>
         <Typography className={classes.cateroryTitle} variant="h5">Categories with Budget Expense</Typography>
       </Grid>
+      
       {card}
+      
     </Grid>
   );
 }
