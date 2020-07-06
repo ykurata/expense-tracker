@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
     height: '200px',
     overflow: 'auto'
   },
-  cateroryTitle: {
-    padding: theme.spacing(1,0,1,0),
+  totalAmount: {
+    color: '#647fe3'
   },
   description: {
     fontWeight: 'bold',
@@ -57,8 +57,8 @@ const Category = (props) => {
     <Grid item xs={6} sm={6} md={4} key={index}>
       <Card className={classes.card}>
         <CardContent>
-          <Typography variant="body1">{item.name}</Typography>
-          <Typography variant="h6">${item.value}</Typography>
+          <Typography variant="body1" >{item.name}</Typography>
+          <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>
         </CardContent>
         <CardContent>
         {filteredData[index].map((x, i) => 
