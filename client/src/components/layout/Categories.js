@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import Moment from 'react-moment';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,14 +8,25 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    color: 'grey',
-    fontSize: '4rem',
-    marginBottom: '2rem'
+  card: {
+    height: '200px',
+    overflow: 'auto'
   },
   cateroryTitle: {
     padding: theme.spacing(1,0,1,0),
   },
+  description: {
+    fontWeight: 'bold',
+    alignItems: 'left'
+  },
+  amount: {
+    float: 'left',
+    color: '#647fe3'
+  },
+  date: {
+    flaot: 'right',
+    marginLeft: '8rem'
+  }
 }));
 
 const Category = (props) => {
@@ -42,21 +52,28 @@ const Category = (props) => {
   for (let i = 0; i < fixedExp.length; i++ ) {
     filteredData.push(props.data.filter(x => x.category.includes(fixedExp[i].name)));
   }
-  
+
   const card = fixedExp.map((item, index) => 
-    <Grid item xs={6} sm={4} md={4} key={index}>
-      <Card>
+    <Grid item xs={6} sm={6} md={4} key={index}>
+      <Card className={classes.card}>
         <CardContent>
           <Typography variant="body1">{item.name}</Typography>
           <Typography variant="h6">${item.value}</Typography>
         </CardContent>
-          {filteredData[index].map((x, i) => 
-            <CardContent key={i}>
-              <Typography>{x.date}</Typography>
-              <Typography>{x.description}</Typography>
-              <Typography>${x.amount}</Typography>
-            </CardContent>
+        <CardContent>
+        {filteredData[index].map((x, i) => 
+            <div key={i}>
+              <Typography className={classes.description} variant='subtitle1'>{x.description}</Typography>
+              <div className={classes.amount}>
+                <Typography>${x.amount.toFixed(2)}</Typography>
+              </div>
+              <div className={classes.date}>
+              <Typography><Moment format="YYYY/MM/DD">{x.date}</Moment></Typography>
+              </div>  
+            </div>
           )}
+        </CardContent>
+          
       </Card>  
     </Grid>
   );
