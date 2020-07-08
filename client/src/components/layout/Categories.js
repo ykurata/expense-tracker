@@ -1,36 +1,69 @@
 import React, { useState } from 'react';
 import Moment from 'react-moment';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Modal from '@material-ui/core/Modal';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    height: '200px',
-    overflow: 'auto'
+    '&:hover': {
+      backgroundColor: "#f2f4f7",
+    },
   },
   totalAmount: {
-    color: '#647fe3'
+    color: '#647fe3',
   },
   description: {
-    fontWeight: 'bold',
     alignItems: 'left'
   },
   amount: {
-    float: 'left',
     color: '#647fe3'
   },
   date: {
     flaot: 'right',
     marginLeft: '8rem'
-  }
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalCard: {
+    position: 'absolute',
+    minWidth: 650,
+    backgroundColor: theme.palette.background.paper,
+    border: '.5px solid #000',
+    // boxShadow: theme.shadows[5],
+    // padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 const Category = (props) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState();
+
+  const handleOpen = (e) => {
+    setOpen(true);
+    const { myValue } = e.currentTarget.dataset;
+    setIndex(myValue);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   let holder = {};
 
@@ -47,43 +80,63 @@ const Category = (props) => {
   for (var prop in holder) {
     fixedExp.push({ name: prop, value: holder[prop].toFixed(2) });
   }
-   
-  let filteredData = [];
-  for (let i = 0; i < fixedExp.length; i++ ) {
-    filteredData.push(props.data.filter(x => x.category.includes(fixedExp[i].name)));
-  }
 
   const card = fixedExp.map((item, index) => 
-    <Grid item xs={6} sm={6} md={4} key={index}>
-      <Card className={classes.card}>
+    <Grid item xs={6} sm={4} md={3} key={index} >
+      <Card className={classes.card} onClick={handleOpen} data-my-value={item.name}>
         <CardContent>
           <Typography variant="body1" >{item.name}</Typography>
           <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>
+          {/* <Button color="primary" size="small" onClick={handleOpen} data-my-value={item.name}>
+            See Details
+          </Button> */}
         </CardContent>
-        <CardContent>
-        {filteredData[index].map((x, i) => 
-            <div key={i}>
-              <Typography className={classes.description} variant='subtitle1'>{x.description}</Typography>
-              <div className={classes.amount}>
-                <Typography>${x.amount.toFixed(2)}</Typography>
-              </div>
-              <div className={classes.date}>
-              <Typography><Moment format="YYYY/MM/DD">{x.date}</Moment></Typography>
-              </div>  
-            </div>
-          )}
-        </CardContent>
-          
       </Card>  
     </Grid>
-  );
-  
+  );  
+
+  const details = props.data.filter(x => x.category.includes(index));
+ 
+  const modalContent =  <TableContainer component={Paper}>
+                          <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left">Description</TableCell>
+                                <TableCell align="left">Amount</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {details.map((x, i) => (
+                                <TableRow key={i}>
+                                  <TableCell component="th" scope="row">
+                                    <Moment format="YYYY/MM/DD">{x.date}</Moment>
+                                  </TableCell>
+                                  <TableCell align="left">{x.description}</TableCell>
+                                  <TableCell align="left" className={classes.amount}>${x.amount.toFixed(2)}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                              
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography className={classes.cateroryTitle} variant="h5">Expenses by Categories</Typography>
       </Grid>
       {card}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className={classes.modal}
+      >           
+        <div className={classes.modalCard}>
+          {modalContent}
+        </div>  
+      </Modal>    
     </Grid>
   );
 }
