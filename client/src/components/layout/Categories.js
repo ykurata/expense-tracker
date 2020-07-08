@@ -3,15 +3,18 @@ import Moment from 'react-moment';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
-import Link from '@material-ui/core/Link'
 
 import { makeStyles } from '@material-ui/core/styles';
-import { ExpansionPanelDetails } from '@material-ui/core';
-
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -26,7 +29,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'left'
   },
   amount: {
-    float: 'left',
     color: '#647fe3'
   },
   date: {
@@ -40,11 +42,11 @@ const useStyles = makeStyles(theme => ({
   },
   modalCard: {
     position: 'absolute',
-    width: 400,
+    minWidth: 650,
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    border: '.5px solid #000',
+    // boxShadow: theme.shadows[5],
+    // padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -95,19 +97,29 @@ const Category = (props) => {
 
   const details = props.data.filter(x => x.category.includes(index));
  
-  let modalContent = details.map((x, i) => 
-                      <CardContent key={i}>
-                        <Typography><Moment format="YYYY/MM/DD">{x.date}</Moment></Typography>
-                        <div className={classes.amount}>
-                          <Typography>${x.amount.toFixed(2)}</Typography>
-                        </div>
-                        <div className={classes.date}>
-                          <Typography className={classes.description} variant='subtitle1'>{x.description}</Typography>
-                        </div>  
-                        <Divider />
-                      </CardContent>
-                  );
-                        
+  const modalContent =  <TableContainer component={Paper}>
+                          <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left">Description</TableCell>
+                                <TableCell align="left">Amount</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {details.map((x, i) => (
+                                <TableRow key={i}>
+                                  <TableCell component="th" scope="row">
+                                    <Moment format="YYYY/MM/DD">{x.date}</Moment>
+                                  </TableCell>
+                                  <TableCell align="left">{x.description}</TableCell>
+                                  <TableCell align="left" className={classes.amount}>${x.amount.toFixed(2)}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                              
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -120,10 +132,10 @@ const Category = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         className={classes.modal}
-      > 
-        <Card className={classes.modalCard}>
+      >           
+        <div className={classes.modalCard}>
           {modalContent}
-        </Card>  
+        </div>  
       </Modal>    
     </Grid>
   );
