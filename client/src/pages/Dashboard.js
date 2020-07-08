@@ -22,12 +22,12 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
 // Import components 
-import DoughnutChart from "../layout/DoughnutChart";
-import MonthlyExpense from "../layout/MonthlyExpense";
-import Categories from '../layout/Categories';
-import AddExpense from '../layout/AddExpense';
-import AddIncome from '../layout/AddIncome';
-import AddCategory from '../layout/AddCategory';
+import DoughnutChart from "../components/DoughnutChart";
+import MonthlyExpense from "../components/MonthlyExpense";
+import Categories from '../components/Categories';
+import AddExpense from '../components/AddExpense';
+import AddIncome from '../components/AddIncome';
+import AddCategory from '../components/AddCategory';
 
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
