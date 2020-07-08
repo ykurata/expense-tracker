@@ -183,6 +183,13 @@ const Dashboard = () => {
           <AddCategory/>
 				</Dialog>
 
+        <ListItem button>
+					<ListItemText primary={'See All Expenses'} />
+				</ListItem>
+        <ListItem button>
+					<ListItemText primary={'See All Incomes'} />
+				</ListItem>
+
       </List>
     </div>
   );
