@@ -9,6 +9,21 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { ExpansionPanelDetails } from '@material-ui/core';
 
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
 const useStyles = makeStyles(theme => ({
   totalAmount: {
     color: '#647fe3'
@@ -24,11 +39,20 @@ const useStyles = makeStyles(theme => ({
   date: {
     flaot: 'right',
     marginLeft: '8rem'
-  }
+  },
+  card: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 const Category = (props) => {
   const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState();
 
@@ -107,7 +131,7 @@ const Category = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <Card>
+        <Card style={modalStyle} className={classes.card}>
           <CardContent>
             {modalCard}
           </CardContent>
