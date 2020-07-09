@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login } from '../actions/authActions';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 
 import loginStyles from '../styles/loginStyles';
 
-const Login = () => {
+const Login = (props) => {
   const classes = loginStyles();
   const history = useHistory();
   const [userInput, setUserInput] = useState({
@@ -20,7 +22,7 @@ const Login = () => {
     password: "",
   });
   const [validationErrors, setValidationErrors] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");  
 
   const onChange = e => {
     setUserInput({
@@ -29,23 +31,13 @@ const Login = () => {
     });
   }
 
-  const onSubmit = async(e) => {
+  const onSubmit = e => {
     e.preventDefault();
     const user = {
       email: userInput.email,
       password: userInput.password
     };
-    try {
-      const data = await axios.post("/user/login", user);
-      const decoded = jwt_decode(data.data.token);
-      localStorage.setItem('token', data.data.token);
-      localStorage.setItem('userId', decoded.id);
-      history.push("/");
-    } catch(err) {
-      console.log(err);
-      setValidationErrors(err.response.data);
-      setError(err.response.data.error);
-    }  
+    props.login(user);
   }
 
   return (
@@ -129,4 +121,7 @@ const Login = () => {
   );
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired
+}
+export default connect(null, { login })(Login); 
