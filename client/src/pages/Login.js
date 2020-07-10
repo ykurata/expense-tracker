@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../actions/authActions';
@@ -16,13 +15,10 @@ import loginStyles from '../styles/loginStyles';
 
 const Login = (props) => {
   const classes = loginStyles();
-  const history = useHistory();
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
-  });
-  const [validationErrors, setValidationErrors] = useState([]);
-  const [error, setError] = useState("");  
+  }); 
 
   const onChange = e => {
     setUserInput({
@@ -50,13 +46,13 @@ const Login = (props) => {
             Log in
           </Typography>
           <form className={classes.form} onSubmit={onSubmit} noValidate>
-            {error ? (
-              <Typography color="error" variant="body2">{error}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.error}</Typography>
             ) : (
               null
             )}
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.email}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.email}</Typography>
             ) : (
               null
             )}
@@ -72,8 +68,8 @@ const Login = (props) => {
               autoFocus
               onChange={onChange}
             />
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.password}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.password}</Typography>
             ) : (
               null
             )}
@@ -122,6 +118,12 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired
-}
-export default connect(null, { login })(Login); 
+  login: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProp = state => ({
+  errors: state.errors
+});
+
+export default connect(mapStateToProp, { login })(Login); 

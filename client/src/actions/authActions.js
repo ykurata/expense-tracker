@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN } from './types';
+import { LOG_IN, AUTH_ERRORS } from './types';
 
 export const login = (credential) => dispatch => {
   axios.post("/user/login", credential)
@@ -8,13 +8,12 @@ export const login = (credential) => dispatch => {
         type: LOG_IN,
         payload: res.data
       });
-      console.log("logged in action")
       window.location = "/";
     })
     .catch(err => {
       dispatch({
-        type: 'AUTH_ERROR',
-        payload: err.response
+        type: AUTH_ERRORS,
+        payload: err.response.data
       });
     });
 }
