@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getExpenses } from '../actions/expenseActions';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -32,7 +35,7 @@ import AddCategory from '../components/AddCategory';
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const classes = dashboardStyles();
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -325,4 +328,14 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  getExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = state => ({
+  expenses: state.expense.expenses,
+});
+
+export default connect(mapStateToProps, { getExpenses })(Dashboard);
+

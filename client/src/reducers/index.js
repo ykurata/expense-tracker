@@ -6,4 +6,5 @@ import expenseReducer from "./expenseReducer";
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
+  expense: expenseReducer
 });

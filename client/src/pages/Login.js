@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../actions/authActions';
+import { loginUser } from '../actions/authActions';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,7 +19,7 @@ const Login = (props) => {
     email: "",
     password: "",
   }); 
-
+  
   const onChange = e => {
     setUserInput({
       ...userInput, 
@@ -33,8 +33,10 @@ const Login = (props) => {
       email: userInput.email,
       password: userInput.password
     };
-    props.login(user);
+    props.loginUser(user);
   }
+
+  console.log(props.auth)
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -118,12 +120,14 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
-const mapStateToProp = state => ({
+const mapStateToProps = state => ({
+  auth: state.auth,
   errors: state.errors
 });
 
-export default connect(mapStateToProp, { login })(Login); 
+export default connect(mapStateToProps,{ loginUser })(Login);

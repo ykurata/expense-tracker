@@ -1,29 +1,28 @@
-import { LOG_IN, SIGN_UP } from '../actions/types';
-import jwt_decode from "jwt-decode";
+import {
+  SET_CURRENT_USER,
+  USER_LOADING
+} from "../actions/types";
 
-const initailState = {
-  token: "",
-  userId: ""
-}
+const isEmpty = require("is-empty");
 
-export default function(state = initailState, action){
+const initialState = {
+  isAuthenticated: false,
+  user: {},
+  loading: false
+};
+
+export default function(state = initialState, action){
   switch(action.type) {
-    case LOG_IN:
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('userId', jwt_decode(action.payload.token).id); 
-      console.log(...state);
+    case SET_CURRENT_USER:
       return {
         ...state,
-        token: action.payload.token,
-        userId: jwt_decode(action.payload.token).id,
+        isAuthenticated: !isEmpty(action.payload),
+        user: action.payload
       }
-    case SIGN_UP:
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('userId', jwt_decode(action.payload.token).id);
+    case USER_LOADING:
       return {
         ...state,
-        token: action.payload.token,
-        userId: jwt_decode(action.payload.token).id,
+        loading: true
       }
     default: 
       return state;  
