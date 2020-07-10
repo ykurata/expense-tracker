@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { signup } from '../actions/authActions';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import signupStyles from '../styles/signupStyles';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const classes = signupStyles();
   const history = useHistory();
   const [userInput, setUserInput] = useState({
@@ -20,8 +22,6 @@ const SignUp = () => {
     password: "",
     password2: ""
   });
-  const [validationErrors, setValidationErrors] = useState([]);
-  const [error, setError] = useState("");
   
   const onChange = e => {
     setUserInput({
@@ -38,17 +38,7 @@ const SignUp = () => {
       password: userInput.password,
       password2: userInput.password2
     }
-    try {
-      const data = await axios.post("/user/register", user);
-      const decoded = jwt_decode(data.data.token);
-      localStorage.setItem('token', data.data.token);
-      localStorage.setItem('userId', decoded.id);
-      history.push("/");
-    } catch(err) {
-      console.log(err);
-      setValidationErrors(err.response.data);
-      setError(err.response.data.error);
-    }  
+    props.signup(user);
   }
 
   return (
@@ -61,13 +51,13 @@ const SignUp = () => {
             Sign Up
           </Typography>
           <form className={classes.form} onSubmit={onSubmit} noValidate>
-            {error ? (
-              <Typography color="error" variant="body2">{error}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.error}</Typography>
             ) : (
               null
             )}
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.username}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.username}</Typography>
             ) : (
               null
             )}
@@ -83,8 +73,8 @@ const SignUp = () => {
               autoFocus
               onChange={onChange}
             />
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.email}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.email}</Typography>
             ) : (
               null
             )}
@@ -100,8 +90,8 @@ const SignUp = () => {
               autoFocus
               onChange={onChange}
             />
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.password}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.password}</Typography>
             ) : (
               null
             )}
@@ -117,8 +107,8 @@ const SignUp = () => {
               autoComplete="current-password"
               onChange={onChange}
             />
-            {validationErrors ? (
-              <Typography color="error" variant="body2">{validationErrors.password2}</Typography>
+            {props.errors ? (
+              <Typography color="error" variant="body2">{props.errors.password2}</Typography>
             ) : (
               null
             )}
@@ -166,4 +156,13 @@ const SignUp = () => {
   );
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  signup: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProp = state => ({
+  errors: state.errors
+});
+
+export default connect(mapStateToProp, { signup })(SignUp); 
