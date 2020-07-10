@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN, SIGN_UP, AUTH_ERRORS } from './types';
+import { LOG_IN, SIGN_UP, GET_ERRORS } from './types';
 
 export const login = (credential) => dispatch => {
   axios.post("/user/login", credential)
@@ -12,7 +12,7 @@ export const login = (credential) => dispatch => {
     })
     .catch(err => {
       dispatch({
-        type: AUTH_ERRORS,
+        type: GET_ERRORS,
         payload: err.response.data
       });
     });
@@ -29,7 +29,7 @@ export const signup = (userInput) => dispatch => {
     })
     .catch(err => {
       dispatch({
-        type: AUTH_ERRORS,
+        type: GET_ERRORS,
         payload: err.response.data
       });
     });
