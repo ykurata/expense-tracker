@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN, AUTH_ERRORS } from './types';
+import { LOG_IN, SIGN_UP, AUTH_ERRORS } from './types';
 
 export const login = (credential) => dispatch => {
   axios.post("/user/login", credential)
@@ -18,3 +18,19 @@ export const login = (credential) => dispatch => {
     });
 }
 
+export const signup = (userInput) => dispatch => {
+  axios.post("/user/register", userInput)
+    .then(res => {
+      dispatch({
+        type: SIGN_UP,
+        payload: res.data
+      });
+      window.location = "/";
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERRORS,
+        payload: err.response.data
+      });
+    });
+}
