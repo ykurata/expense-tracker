@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
 import { getExpenses } from '../actions/expenseActions';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -95,8 +96,7 @@ const Dashboard = (props) => {
 
   const signOut = e => {
     e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
+    props.logoutUser();
   }
 
   // Select Month and Year button 
@@ -329,13 +329,16 @@ const Dashboard = (props) => {
 }
 
 Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   getExpenses: PropTypes.func.isRequired,
   expenses: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   expenses: state.expense.expenses,
 });
 
-export default connect(mapStateToProps, { getExpenses })(Dashboard);
+export default connect(mapStateToProps, { logoutUser, getExpenses })(Dashboard);
 

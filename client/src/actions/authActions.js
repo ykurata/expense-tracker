@@ -18,6 +18,7 @@ export const registerUser = (userData, history) => dispatch => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+      localStorage.setItem('userId', decoded.id);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -39,6 +40,7 @@ export const loginUser = userData => dispatch => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+      localStorage.setItem('userId', decoded.id);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -65,3 +67,11 @@ export const setUserLoading = () => {
   };
 };
 
+// Log user out
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem("jwtToken");
+  // Remove auth header for future requests
+  setAuthToken(false);
+  // Set current user to empty object {} which will set isAuthenticated to false
+  dispatch(setCurrentUser({}));
+};

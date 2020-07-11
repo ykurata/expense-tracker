@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -39,11 +39,14 @@ const SignUp = (props) => {
       password2: userInput.password2
     }
     props.registerUser(user);
+  }
+
+  useEffect(() => {
     if (props.auth.isAuthenticated) {
       history.push("/");
     }
-  }
-
+  });
+  
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
