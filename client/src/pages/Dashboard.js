@@ -49,10 +49,11 @@ const Dashboard = (props) => {
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
-  const [expenseData, setExpenseData] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+
+  const expenseData = props.expenses;
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -129,18 +130,11 @@ const Dashboard = (props) => {
     fetchUser();
   },[token, userId]);
   
-  // Get expense data
+  // Get Expense data
   useEffect(() => {
-    const fetchExpense = async () => {
-      const result = await axios.get(
-        '/expense/all', { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setExpenseData(result.data);
-    }
-    fetchExpense();
-  },[token, userId]);
-
-  
+    props.getExpenses();
+  }, []);
+    
   // Get income data
 	useEffect(() => {
 		const fetchIncome = async () => {
@@ -160,7 +154,7 @@ const Dashboard = (props) => {
   const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
-
+  
   
 	const drawer = (
     <div>
