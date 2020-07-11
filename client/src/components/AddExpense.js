@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCategories } from '../actions/categoryActions';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,18 +26,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddExpense = () => {
+const AddExpense = (props) => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   let curr = new Date();
   curr.setDate(curr.getDate());
   const today = curr.toISOString().substr(0, 10);
-  const [categories, setCategories] = useState([]);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [expenseData, setExpenseData] = useState({ date: today, category: '', amount: '', description: '' });
   const [errors, setErrors] = useState([]);
+  const categories = props.category;
 
   const handleExpenseClose = () => {
     setExpenseOpen(false);
@@ -48,12 +52,8 @@ const AddExpense = () => {
   };
 
   useEffect(() => {
-    const fetchData = async() => {
-      const result = await axios.get(`/category/all/${userId}`, { headers: {"Authorization":`Bearer ${token}` }})
-      setCategories(result.data);
-    }
-    fetchData();
-  }, [token, userId])
+    props.getCategories();
+  }, []);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -156,4 +156,14 @@ const AddExpense = () => {
   );
 }
 
-export default AddExpense;
+AddExpense.propTypes = {
+  getCategories: PropTypes.func.isRequired,
+  category: PropTypes.array.isRequired
+};
+const mapStateToProps = state => ({
+  category: state.category.categories
+});
+export default connect(
+  mapStateToProps,
+  { getCategories }
+)(AddExpense);

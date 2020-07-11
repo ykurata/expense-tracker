@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
@@ -281,11 +280,6 @@ const Dashboard = (props) => {
                 onClose={handleMonthClose}
               > 
                 {menuItem}
-                {/* {uniqMonth.length === 0 ? (
-                  <MenuItem>No data saved</MenuItem>
-                ): (
-                  {menuItem}
-                )} */}
               </Menu>
             </div>
             
