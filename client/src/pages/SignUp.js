@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signup } from '../actions/authActions';
+import { registerUser } from '../actions/authActions';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,7 +38,10 @@ const SignUp = (props) => {
       password: userInput.password,
       password2: userInput.password2
     }
-    props.signup(user);
+    props.registerUser(user);
+    if (props.auth.isAuthenticated) {
+      history.push("/");
+    }
   }
 
   return (
@@ -157,12 +160,14 @@ const SignUp = (props) => {
 }
 
 SignUp.propTypes = {
-  signup: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProp = state => ({
+  auth: state.auth,
   errors: state.errors
 });
 
-export default connect(mapStateToProp, { signup })(SignUp); 
+export default connect(mapStateToProp, { registerUser })(SignUp); 

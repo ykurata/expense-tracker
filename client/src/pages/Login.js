@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions';
@@ -15,6 +16,7 @@ import loginStyles from '../styles/loginStyles';
 
 const Login = (props) => {
   const classes = loginStyles();
+  const history = useHistory();
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -34,9 +36,10 @@ const Login = (props) => {
       password: userInput.password
     };
     props.loginUser(user);
+    if (props.auth.isAuthenticated) {
+      history.push("/");
+    }
   }
-
-  console.log(props.auth)
 
   return (
     <Grid container component="main" className={classes.root}>
