@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import { getExpenses } from '../actions/expenseActions';
+import { getIncomes } from '../actions/incomeActions';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -49,11 +50,10 @@ const Dashboard = (props) => {
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [user, setUser] = useState({});
-  const [incomeData, setIncomeData] = useState([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-
   const expenseData = props.expenses;
+  const incomeData = props.incomes;
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -137,14 +137,8 @@ const Dashboard = (props) => {
     
   // Get income data
 	useEffect(() => {
-		const fetchIncome = async () => {
-			const result = await axios.get(
-        '/income/all',  { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setIncomeData(result.data);
-		}
-		fetchIncome();
-  }, [token, userId]);
+		props.getIncomes();
+  }, []);
   
 
   const monthAndYear = [];
@@ -327,12 +321,19 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   getExpenses: PropTypes.func.isRequired,
   expenses: PropTypes.array.isRequired,
+  getIncomes: PropTypes.func.isRequired,
+  incomes: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   expenses: state.expense.expenses,
+  incomes: state.income.incomes,
 });
 
-export default connect(mapStateToProps, { logoutUser, getExpenses })(Dashboard);
+export default 
+  connect(
+  mapStateToProps, 
+  { logoutUser, getExpenses, getIncomes })
+  (Dashboard);
 

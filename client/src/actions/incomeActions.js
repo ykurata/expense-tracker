@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { GET_EXPENSES } from './types';
+import { GET_INCOMES } from './types';
 
 const token = localStorage.getItem("token");
 
-export const getExpenses = () => dispatch => {
-  axios.get("/expense/all", { headers: {"Authorization" : `Bearer ${token}`} })
+export const getIncomes = () => dispatch => {
+  axios.get("/income/all", { headers: {"Authorization" : `Bearer ${token}`} })
     .then(res => {
       dispatch({
-        type: GET_EXPENSES,
+        type: GET_INCOMES,
         payload: res.data
       });
     })
