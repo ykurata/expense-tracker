@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import { getExpenses } from '../actions/expenseActions';
 import { getIncomes } from '../actions/incomeActions';
+import { getUser } from '../actions/userActions';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -49,11 +50,11 @@ const Dashboard = (props) => {
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [user, setUser] = useState({});
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const expenseData = props.expenses;
   const incomeData = props.incomes;
+  const user = props.user;
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -121,14 +122,8 @@ const Dashboard = (props) => {
 
  // Get user data
   useEffect(() => {
-    const fetchUser = async () => {
-      const result = await axios.get(
-        `/user/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setUser(result.data);
-    }
-    fetchUser();
-  },[token, userId]);
+    props.getUser();
+  },[]);
   
   // Get Expense data
   useEffect(() => {
@@ -139,7 +134,6 @@ const Dashboard = (props) => {
 	useEffect(() => {
 		props.getIncomes();
   }, []);
-  
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
@@ -323,17 +317,20 @@ Dashboard.propTypes = {
   expenses: PropTypes.array.isRequired,
   getIncomes: PropTypes.func.isRequired,
   incomes: PropTypes.array.isRequired,
+  getUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   expenses: state.expense.expenses,
   incomes: state.income.incomes,
+  user: state.user.user,
 });
 
 export default 
   connect(
   mapStateToProps, 
-  { logoutUser, getExpenses, getIncomes })
+  { logoutUser, getExpenses, getIncomes, getUser })
   (Dashboard);
 
