@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { GET_CATEGORIES } from './types';
+import { toast } from 'react-toastify';
+import { GET_CATEGORIES, GET_ERRORS } from './types';
 
 const token = localStorage.getItem("token");
 const userId = localStorage.getItem("userId");
@@ -21,9 +22,21 @@ export const createCategory = newCategory => dispatch => {
   axios.post("/category", newCategory, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
       console.log(res.data);
+      toast('Added a new category!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        });
+      window.location.href = "/";
     })
     .catch(err => {
-      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
     });
 };
 

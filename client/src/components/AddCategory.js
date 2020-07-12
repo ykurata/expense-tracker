@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { createCategory } from '../actions/categoryActions'; 
 
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,12 +22,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddCategory = () => {
+const AddCategory = (props) => {
   const classes = useStyles();
-  const token = localStorage.getItem("token");
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState({ name: '', budget: '' });
-  const [errors, setErrors] = useState([]);
 
   const handleCategoryClose = () => {
     setCategoryOpen(false);
@@ -34,24 +35,9 @@ const AddCategory = () => {
     setCategory({ ...category, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    try {
-      const newCategory = await axios.post("/category", category, { headers: {"Authorization" : `Bearer ${token}`}})
-      console.log(newCategory);
-      toast('Added a new category!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        });
-      window.location.href = "/";
-    } catch (err) {
-      setErrors(err.response.data);
-      console.log(err);
-    }
+    props.createCategory(category);
   }
 
   return (
@@ -59,8 +45,8 @@ const AddCategory = () => {
       <DialogTitle id="form-dialog-title">Add Category</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.name}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.name}</Typography>
           ) : (
             null
           )}
@@ -76,8 +62,8 @@ const AddCategory = () => {
             onChange={handleChange}
             className={classes.textField}
           />
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.budget}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.budget}</Typography>
           ) : (
             null
           )}
@@ -102,4 +88,15 @@ const AddCategory = () => {
   );
 }
 
-export default AddCategory;
+AddCategory.propTypes = {
+  createCategory: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { createCategory }
+)(AddCategory);
+

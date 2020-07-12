@@ -52,7 +52,7 @@ const AddExpense = (props) => {
     props.getCategories();
   }, []);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     props.createExpense(expenseData);
   }
