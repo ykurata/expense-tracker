@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { createIncome } from '../actions/incomeActions'; 
 
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -20,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddIncome = () => {
+const AddIncome = (props) => {
   const classes = useStyles();
   const token = localStorage.getItem("token");
   let curr = new Date();
@@ -28,7 +31,6 @@ const AddIncome = () => {
   const today = curr.toISOString().substr(0, 10);
   const [incomeData, setIncomeData] = useState({ date: today, amount: '', description: '' });
   const [incomeOpen, setIncomeOpen] = useState(false);
-  const [errors, setErrors] = useState([]);
 
   const handleIncomeClose = () => {
     setIncomeOpen(false);
@@ -38,24 +40,9 @@ const AddIncome = () => {
     setIncomeData({ ...incomeData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    try {
-      const result = await axios.post("/income", incomeData, { headers: {"Authorization":`Bearer ${token}` }});
-      console.log(result.data);
-      toast('Added a new income!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        });
-      window.location.href = "/";
-    } catch(err) {
-      console.log(err);
-      setErrors(err.response.data);
-    }
+    props.createIncome(incomeData);
   }
 
   return (
@@ -63,8 +50,8 @@ const AddIncome = () => {
       <DialogTitle id="form-dialog-title">Add Income</DialogTitle>
       <DialogContent>
         <form className={classes.container} onSubmit={handleSubmit}>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.date}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.date}</Typography>
           ) : (
             null
           )}
@@ -81,8 +68,8 @@ const AddIncome = () => {
             }}
           />
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.amount}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.amount}</Typography>
           ) : (
             null
           )}
@@ -118,4 +105,14 @@ const AddIncome = () => {
   );
 }
 
-export default AddIncome;
+AddIncome.propTypes = {
+  createIncome: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { createIncome }
+)(AddIncome);

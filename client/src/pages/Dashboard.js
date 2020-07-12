@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
+import { getExpenses } from '../actions/expenseActions';
+import { getIncomes } from '../actions/incomeActions';
+import { getUser } from '../actions/userActions';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -32,10 +37,8 @@ import AddCategory from '../components/AddCategory';
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const classes = dashboardStyles();
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -44,11 +47,11 @@ const Dashboard = () => {
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [user, setUser] = useState({});
-  const [expenseData, setExpenseData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const expenseData = props.expenses;
+  const incomeData = props.incomes;
+  const user = props.user;
   
   // Open Expense
   const handleExpenseOpen = () => {
@@ -92,8 +95,7 @@ const Dashboard = () => {
 
   const signOut = e => {
     e.preventDefault();
-    localStorage.clear();
-    window.location.href = "/";
+    props.logoutUser();
   }
 
   // Select Month and Year button 
@@ -117,38 +119,18 @@ const Dashboard = () => {
 
  // Get user data
   useEffect(() => {
-    const fetchUser = async () => {
-      const result = await axios.get(
-        `/user/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setUser(result.data);
-    }
-    fetchUser();
-  },[token, userId]);
+    props.getUser();
+  },[]);
   
-  // Get expense data
+  // Get Expense data
   useEffect(() => {
-    const fetchExpense = async () => {
-      const result = await axios.get(
-        '/expense/all', { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setExpenseData(result.data);
-    }
-    fetchExpense();
-  },[token, userId]);
-
-  
+    props.getExpenses();
+  }, []);
+    
   // Get income data
 	useEffect(() => {
-		const fetchIncome = async () => {
-			const result = await axios.get(
-        '/income/all',  { headers: {"Authorization" : `Bearer ${token}`} }
-      );
-      setIncomeData(result.data);
-		}
-		fetchIncome();
-  }, [token, userId]);
-  
+		props.getIncomes();
+  }, []);
 
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
@@ -157,7 +139,7 @@ const Dashboard = () => {
   const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
-
+  
   
 	const drawer = (
     <div>
@@ -204,7 +186,7 @@ const Dashboard = () => {
             Expense Tracker
           </Typography>
 					<div>
-            {token ? (
+            {props.auth.isAuthenticated ? (
               <div>
                 <span className={classes.username}>{user.username}</span>
                 <IconButton
@@ -296,11 +278,6 @@ const Dashboard = () => {
                 onClose={handleMonthClose}
               > 
                 {menuItem}
-                {/* {uniqMonth.length === 0 ? (
-                  <MenuItem>No data saved</MenuItem>
-                ): (
-                  {menuItem}
-                )} */}
               </Menu>
             </div>
             
@@ -325,4 +302,27 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  getExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.array.isRequired,
+  getIncomes: PropTypes.func.isRequired,
+  incomes: PropTypes.array.isRequired,
+  getUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  expenses: state.expense.expenses,
+  incomes: state.income.incomes,
+  user: state.user.user,
+});
+
+export default 
+  connect(
+  mapStateToProps, 
+  { logoutUser, getExpenses, getIncomes, getUser })
+  (Dashboard);
+
