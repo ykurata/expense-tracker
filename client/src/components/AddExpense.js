@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCategories } from '../actions/categoryActions';
+import { createExpense } from '../actions/expenseActions';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import DialogActions from '@material-ui/core/DialogActions';
@@ -28,15 +28,12 @@ const useStyles = makeStyles(theme => ({
 
 const AddExpense = (props) => {
   const classes = useStyles();
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
   let curr = new Date();
   curr.setDate(curr.getDate());
   const today = curr.toISOString().substr(0, 10);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [expenseData, setExpenseData] = useState({ date: today, category: '', amount: '', description: '' });
-  const [errors, setErrors] = useState([]);
   const categories = props.category;
 
   const handleExpenseClose = () => {
@@ -57,24 +54,9 @@ const AddExpense = (props) => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    try {
-      const result = await axios.post("/expense", expenseData, { headers: {"Authorization" : `Bearer ${token}`}});
-      console.log(result.data);
-      toast('Added a new expense!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        });
-      window.location.href = "/";
-    } catch (err) {
-      setErrors(err.response.data);
-      console.log(err);
-    }
+    props.createExpense(expenseData);
   }
-  
+
   let menuItems = categories.map(item => 
     <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
   );
@@ -84,8 +66,8 @@ const AddExpense = (props) => {
       <DialogTitle id="form-dialmog-title">Add Expense</DialogTitle>
       <DialogContent>
         <form className={classes.container} onSubmit={handleSubmit}>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.date}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.date}</Typography>
           ) : (
             null
           )}
@@ -102,8 +84,8 @@ const AddExpense = (props) => {
             }}
           />
           <InputLabel htmlFor="age-simple">Category</InputLabel>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.category}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.category}</Typography>
           ) : (
             null
           )}
@@ -119,8 +101,8 @@ const AddExpense = (props) => {
           </Select>
           
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-          {errors ? (
-            <Typography color="error" variant="body2">{errors.amount}</Typography>
+          {props.errors ? (
+            <Typography color="error" variant="body2">{props.errors.amount}</Typography>
           ) : (
             null
           )}
@@ -158,12 +140,15 @@ const AddExpense = (props) => {
 
 AddExpense.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  category: PropTypes.array.isRequired
+  category: PropTypes.array.isRequired,
+  createExpense: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  category: state.category.categories
+  category: state.category.categories,
+  errors: state.errors
 });
 export default connect(
   mapStateToProps,
-  { getCategories }
+  { getCategories, createExpense }
 )(AddExpense);

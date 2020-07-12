@@ -39,8 +39,6 @@ import dashboardStyles from '../styles/dashboardStyles';
 
 const Dashboard = (props) => {
   const classes = dashboardStyles();
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("token");
   const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -188,7 +186,7 @@ const Dashboard = (props) => {
             Expense Tracker
           </Typography>
 					<div>
-            {token ? (
+            {props.auth.isAuthenticated ? (
               <div>
                 <span className={classes.username}>{user.username}</span>
                 <IconButton
