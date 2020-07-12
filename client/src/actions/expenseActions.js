@@ -14,4 +14,14 @@ export const getExpenses = () => dispatch => {
     .catch(err => {
       console.log(err);
     });
-}
+};
+
+export const createExpense = newExpense => dispatch => {
+  axios.post("/expense", newExpense, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+};

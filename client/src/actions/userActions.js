@@ -16,3 +16,13 @@ export const getUser = () => dispatch => {
       console.log(err);
     }) ;
 };
+
+export const postAvatar = image => dispatch => {
+  axios.post("/avatar", image, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+};

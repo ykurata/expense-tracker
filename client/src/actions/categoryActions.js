@@ -17,3 +17,13 @@ export const getCategories = () => dispatch => {
     });
 };
 
+export const createCategory = newCategory => dispatch => {
+  axios.post("/category", newCategory, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+

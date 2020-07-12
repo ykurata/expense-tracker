@@ -15,3 +15,13 @@ export const getIncomes = () => dispatch => {
       console.log(err);
     });
 }
+
+export const createIncome = newIncome => dispatch => {
+  axios.post("/income", newIncome, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+};
