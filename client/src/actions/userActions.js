@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { GET_USER } from './types';
 
-const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
-
-export const getUser = () => dispatch => {
+export const getUser = (userId, token) => dispatch => {
   axios.get(`/user/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} })
     .then(res => {
       dispatch({
@@ -17,7 +14,7 @@ export const getUser = () => dispatch => {
     }) ;
 };
 
-export const postAvatar = image => dispatch => {
+export const postAvatar = (image, token) => dispatch => {
   axios.post("/avatar", image, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
       console.log(res.data);

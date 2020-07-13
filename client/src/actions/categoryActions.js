@@ -2,10 +2,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { GET_CATEGORIES, GET_ERRORS } from './types';
 
-const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
 
-export const getCategories = () => dispatch => {
+export const getCategories = (userId, token) => dispatch => {
   axios.get(`/category/all/${userId}`, { headers: {"Authorization":`Bearer ${token}` }})
     .then(res => {
       dispatch({
@@ -18,7 +16,7 @@ export const getCategories = () => dispatch => {
     });
 };
 
-export const createCategory = newCategory => dispatch => {
+export const createCategory = (newCategory, token) => dispatch => {
   axios.post("/category", newCategory, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
       console.log(res.data);

@@ -2,9 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { GET_EXPENSES, GET_ERRORS } from './types';
 
-const token = localStorage.getItem("token");
-
-export const getExpenses = () => dispatch => {
+export const getExpenses = (token) => dispatch => {
   axios.get("/expense/all", { headers: {"Authorization" : `Bearer ${token}`} })
     .then(res => {
       dispatch({
@@ -17,7 +15,7 @@ export const getExpenses = () => dispatch => {
     });
 };
 
-export const createExpense = newExpense => dispatch => {
+export const createExpense = (newExpense, token) => dispatch => {
   axios.post("/expense", newExpense, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
       console.log(res.data);

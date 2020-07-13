@@ -2,9 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { GET_INCOMES, GET_ERRORS } from './types';
 
-const token = localStorage.getItem("token");
-
-export const getIncomes = () => dispatch => {
+export const getIncomes = (token) => dispatch => {
   axios.get("/income/all", { headers: {"Authorization" : `Bearer ${token}`} })
     .then(res => {
       dispatch({
@@ -17,7 +15,7 @@ export const getIncomes = () => dispatch => {
     });
 }
 
-export const createIncome = newIncome => dispatch => {
+export const createIncome = (newIncome, token) => dispatch => {
   axios.post("/income", newIncome, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
       console.log(res.data);

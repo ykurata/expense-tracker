@@ -55,6 +55,9 @@ const Dashboard = (props) => {
   const incomeData = props.incomes;
   const user = props.user;
   
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+
   // Open Expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
@@ -131,17 +134,17 @@ const Dashboard = (props) => {
 
  // Get user data
   useEffect(() => {
-    props.getUser();
+    props.getUser(userId, token);
   },[]);
   
   // Get Expense data
   useEffect(() => {
-    props.getExpenses();
+    props.getExpenses(token)
   }, []);
     
   // Get income data
 	useEffect(() => {
-		props.getIncomes();
+		props.getIncomes(token);
   }, []);
 
   const monthAndYear = [];

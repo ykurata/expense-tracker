@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCategories } from '../actions/categoryActions';
-import { createExpense } from '../actions/expenseActions';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { getUser } from '../actions/userActions';
+
 import Avatar from '@material-ui/core/Avatar';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -34,7 +27,10 @@ const useStyles = makeStyles(theme => ({
     height: 200
   },
   input: {
-    paddingTop: '2rem'
+    paddingTop: '2rem',
+    "&:hover": {
+      color: 'blue'
+  }
   },
   button: {
     marginTop: '1.5rem'
@@ -44,6 +40,8 @@ const useStyles = makeStyles(theme => ({
 const ProfileImage = (props) => {
   const classes = useStyles();
   const [profileImageOpen, setProfileImageOpen] = useState(false);
+  const [image, setImage] = useState(props.user.avatar);
+  const [sendImage, setSendImage] = useState(null);
 
   // Open Profile Picture
   const handleImageOpen = () => {
@@ -53,15 +51,21 @@ const ProfileImage = (props) => {
   const handleImageClose = () => {
     setProfileImageOpen(false);
   };
+
+  const selectImage = e => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setSendImage(e.target.files[0]);
+  }
+
   return (
     <div> 
       <form className={classes.form}>
         <DialogTitle id="alert-dialog-title" align='center'>Profile Picture</DialogTitle>
         <DialogContent align='center'>
-          <Avatar className={classes.avatar} />
+          <Avatar src={image} className={classes.avatar} />
           <InputLabel className={classes.input}>
             Select Image
-            <input type="file" hidden />
+            <input type="file" hidden onChange={selectImage} />
           </InputLabel>
           <Button className={classes.button} variant="contained" color="primary">
             Submit
@@ -72,4 +76,17 @@ const ProfileImage = (props) => {
   );
 }
 
-export default ProfileImage;
+ProfileImage.propTypes = {
+  getUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user.user,
+});
+
+export default 
+  connect(
+  mapStateToProps, 
+  { getUser })
+  (ProfileImage);
