@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { getUser } from '../actions/userActions';
+import { getUser, postAvatar } from '../actions/userActions';
 
 import Avatar from '@material-ui/core/Avatar';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -35,6 +35,7 @@ const ProfileImage = (props) => {
   const [profileImageOpen, setProfileImageOpen] = useState(false);
   const [image, setImage] = useState(props.user.avatar);
   const [sendImage, setSendImage] = useState(null);
+  const token = localStorage.getItem('token');
 
   // Open Profile Picture
   const handleImageOpen = () => {
@@ -50,9 +51,16 @@ const ProfileImage = (props) => {
     setSendImage(e.target.files[0]);
   }
 
+  const onSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("avatar", sendImage);
+    props.postAvatar(formData, token);
+  }
+
   return (
     <div> 
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={onSubmit}>
         <DialogTitle id="alert-dialog-title" align='center'>Profile Picture</DialogTitle>
         <DialogContent align='center'>
           <Avatar src={image} className={classes.avatar} />
@@ -71,7 +79,7 @@ const ProfileImage = (props) => {
             </Button>
           </div>
           <div>
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
               Submit
             </Button>
             <ToastContainer />
@@ -84,6 +92,7 @@ const ProfileImage = (props) => {
 
 ProfileImage.propTypes = {
   getUser: PropTypes.func.isRequired,
+  postAvatar: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 };
 
@@ -94,5 +103,5 @@ const mapStateToProps = state => ({
 export default 
   connect(
   mapStateToProps, 
-  { getUser })
+  { getUser, postAvatar })
   (ProfileImage);

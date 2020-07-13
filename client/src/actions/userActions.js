@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_USER } from './types';
+import { toast } from 'react-toastify';
 
 export const getUser = (userId, token) => dispatch => {
   axios.get(`/user/${userId}`, { headers: {"Authorization" : `Bearer ${token}`} })
@@ -14,10 +15,18 @@ export const getUser = (userId, token) => dispatch => {
     }) ;
 };
 
-export const postAvatar = (image, token) => dispatch => {
-  axios.post("/avatar", image, { headers: {"Authorization" : `Bearer ${token}`}})
+export const postAvatar = (formData, token) => dispatch => {
+  axios.post("/user/avatar", formData, { headers: {"Authorization" : `Bearer ${token}`}})
     .then(res => {
-      console.log(res.data);
+      toast('Saved your profile image!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      window.location.href = "/";
     })
     .catch(err => {
       console.log(err);
