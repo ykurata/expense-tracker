@@ -83,7 +83,7 @@ const AddExpense = (props) => {
               shrink: true,
             }}
           />
-          <InputLabel htmlFor="age-simple">Category</InputLabel>
+          <InputLabel>Category</InputLabel>
           {props.errors ? (
             <Typography color="error" variant="body2">{props.errors.category}</Typography>
           ) : (
