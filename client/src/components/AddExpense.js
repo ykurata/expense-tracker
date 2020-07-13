@@ -35,6 +35,8 @@ const AddExpense = (props) => {
   const [selectedDate, setSelectedDate] = useState();
   const [expenseData, setExpenseData] = useState({ date: today, category: '', amount: '', description: '' });
   const categories = props.category;
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
 
   const handleExpenseClose = () => {
     setExpenseOpen(false);
@@ -49,7 +51,7 @@ const AddExpense = (props) => {
   };
 
   useEffect(() => {
-    props.getCategories();
+    props.getCategories(userId, token);
   }, []);
 
   const handleSubmit = e => {

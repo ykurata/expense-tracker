@@ -10,27 +10,20 @@ import { getUser } from '../actions/userActions';
 import Avatar from '@material-ui/core/Avatar';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-
-
-import DialogContentText from '@material-ui/core/DialogContentText';
 
 const useStyles = makeStyles(theme => ({
   form: {
     width: '400px',
-    height: '400px'
+    height: '450px'
   },
   avatar: {
     width: 200,
     height: 200
   },
   input: {
-    paddingTop: '2rem',
-    "&:hover": {
-      color: 'blue'
-  }
+    marginTop: '2rem'
   },
   button: {
     marginTop: '1.5rem'
@@ -63,13 +56,26 @@ const ProfileImage = (props) => {
         <DialogTitle id="alert-dialog-title" align='center'>Profile Picture</DialogTitle>
         <DialogContent align='center'>
           <Avatar src={image} className={classes.avatar} />
-          <InputLabel className={classes.input}>
-            Select Image
-            <input type="file" hidden onChange={selectImage} />
-          </InputLabel>
-          <Button className={classes.button} variant="contained" color="primary">
-            Submit
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              component="label"
+              className={classes.input}
+            >
+              Upload File
+              <input
+                type="file"
+                style={{ display: "none" }}
+                onChange={selectImage}
+              />
+            </Button>
+          </div>
+          <div>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Submit
+            </Button>
+            <ToastContainer />
+          </div>
         </DialogContent>
       </form>
     </div>
