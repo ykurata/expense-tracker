@@ -33,8 +33,8 @@ const DoughnutChart = (props) => {
 
           ],
           backgroundColor:[
-            '#647fe3',
-            '#d5dbed'
+            '#3590F3',
+            '#62BFED'
           ]
         }
       ],

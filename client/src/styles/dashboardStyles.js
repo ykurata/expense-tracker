@@ -39,8 +39,8 @@ const dashboardStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
 		width: drawerWidth,
-    backgroundColor: '#b2badb',
-    color: 'balck'
+    backgroundColor: '#F7C7DB',
+    color: 'black'
   },
   content: {
     flexGrow: 1,
