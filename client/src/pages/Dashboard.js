@@ -33,6 +33,7 @@ import Categories from '../components/Categories';
 import AddExpense from '../components/AddExpense';
 import AddIncome from '../components/AddIncome';
 import AddCategory from '../components/AddCategory';
+import ProfileImage from '../components/ProfileImage';
 
 // Import styles
 import dashboardStyles from '../styles/dashboardStyles';
@@ -47,12 +48,16 @@ const Dashboard = (props) => {
 	const [expenseOpen, setExpenseOpen] = useState(false);
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [profileImageOpen, setProfileImageOpen] = useState(false);
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const expenseData = props.expenses;
   const incomeData = props.incomes;
   const user = props.user;
   
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+
   // Open Expense
   const handleExpenseOpen = () => {
     setExpenseOpen(true);
@@ -93,6 +98,16 @@ const Dashboard = (props) => {
     setAnchorEl(null);
   };
 
+  // Open Profile Picture
+  const handleImageOpen = () => {
+    setProfileImageOpen(true);
+    setAnchorEl(null);
+  };
+
+  const handleImageClose = () => {
+    setProfileImageOpen(false);
+  };
+
   const signOut = e => {
     e.preventDefault();
     props.logoutUser();
@@ -119,17 +134,17 @@ const Dashboard = (props) => {
 
  // Get user data
   useEffect(() => {
-    props.getUser();
+    props.getUser(userId, token);
   },[]);
   
   // Get Expense data
   useEffect(() => {
-    props.getExpenses();
+    props.getExpenses(token)
   }, []);
     
   // Get income data
 	useEffect(() => {
-		props.getIncomes();
+		props.getIncomes(token);
   }, []);
 
   const monthAndYear = [];
@@ -213,8 +228,17 @@ const Dashboard = (props) => {
                   open={open}
                   onClose={handleClose}
                 >
+                  <MenuItem onClick={handleImageOpen}>Profile Picture</MenuItem>
+                  <Dialog
+                    open={profileImageOpen}
+                    onClose={handleImageClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <ProfileImage/>
+                  </Dialog>
+
                   <MenuItem onClick={signOut} >Log Out</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
                 </Menu>
               </div>
             ) : (

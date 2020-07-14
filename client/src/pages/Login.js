@@ -20,7 +20,7 @@ const Login = (props) => {
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
-  }); 
+  });
   
   const onChange = e => {
     setUserInput({

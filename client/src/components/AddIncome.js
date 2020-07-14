@@ -42,7 +42,7 @@ const AddIncome = (props) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.createIncome(incomeData);
+    props.createIncome(incomeData, token);
   }
 
   return (
