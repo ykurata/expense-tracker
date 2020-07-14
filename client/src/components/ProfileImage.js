@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import clsx from 'clsx';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,42 +8,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getUser, postAvatar } from '../actions/userActions';
 
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  form: {
-    width: '400px',
-    height: '450px'
-  },
-  avatar: {
-    width: 200,
-    height: 200
-  },
-  input: {
-    marginTop: '2rem'
-  },
-  button: {
-    marginTop: '1.5rem'
-  },
-  spinner: {
-    color: 'white'
-  }
-}));
+import profileImageStyles from '../styles/profileImageStyles';
 
 const ProfileImage = (props) => {
-  const classes = useStyles();
+  const classes = profileImageStyles();
   const [profileImageOpen, setProfileImageOpen] = useState(false);
   const [image, setImage] = useState(props.user.user.avatar);
   const [sendImage, setSendImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const token = localStorage.getItem('token');
-
-  const [isLoading, setIsLoading] = useState(false);
 
   // Open Profile Picture
   const handleImageOpen = () => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USER, POST_AVATAR } from './types';
+import { GET_USER } from './types';
 import { toast } from 'react-toastify';
 
 export const getUser = (userId, token) => dispatch => {
