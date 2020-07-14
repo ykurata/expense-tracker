@@ -5,3 +5,5 @@ export const GET_EXPENSES = "GET_EXPENSES";
 export const GET_INCOMES = "GET_INCOMES";
 export const GET_USER = "GET_USER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const IS_LOADING = "IS_LOADING";
+export const POST_AVATAR = "POST_AVATAR";

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -11,6 +12,8 @@ import Avatar from '@material-ui/core/Avatar';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -27,15 +30,21 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: '1.5rem'
+  },
+  spinner: {
+    color: 'white'
   }
 }));
 
 const ProfileImage = (props) => {
   const classes = useStyles();
   const [profileImageOpen, setProfileImageOpen] = useState(false);
-  const [image, setImage] = useState(props.user.avatar);
+  const [image, setImage] = useState(props.user.user.avatar);
   const [sendImage, setSendImage] = useState(null);
+  const [error, setError] = useState("");
   const token = localStorage.getItem('token');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // Open Profile Picture
   const handleImageOpen = () => {
@@ -53,9 +62,14 @@ const ProfileImage = (props) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("avatar", sendImage);
-    props.postAvatar(formData, token);
+    if (!sendImage) {
+      setError("No file is chosen");
+    } else {
+      setIsLoading(true);
+      const formData = new FormData();
+      formData.append("avatar", sendImage);
+      props.postAvatar(formData, token);
+    }
   }
 
   return (
@@ -63,6 +77,7 @@ const ProfileImage = (props) => {
       <form className={classes.form} onSubmit={onSubmit}>
         <DialogTitle id="alert-dialog-title" align='center'>Profile Picture</DialogTitle>
         <DialogContent align='center'>
+          <Typography color="secondary" variant="body2">{error}</Typography>
           <Avatar src={image} className={classes.avatar} />
           <div>
             <Button
@@ -79,9 +94,15 @@ const ProfileImage = (props) => {
             </Button>
           </div>
           <div>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>
-              Submit
-            </Button>
+            {isLoading === false ? 
+              <Button type="submit" variant="contained" color="primary" className={classes.button}>
+                Submit 
+              </Button>
+            : <Button type="submit" disabled variant="contained" color="primary" className={classes.button}>
+                Submit 
+                <CircularProgress size={24} className={classes.spinner} />
+              </Button>
+            }
             <ToastContainer />
           </div>
         </DialogContent>
@@ -97,7 +118,7 @@ ProfileImage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user.user,
+  user: state.user,
 });
 
 export default 
