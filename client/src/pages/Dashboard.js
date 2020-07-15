@@ -238,7 +238,8 @@ const Dashboard = (props) => {
                     <ProfileImage/>
                   </Dialog>
 
-                  <MenuItem onClick={signOut} >Log Out</MenuItem>
+                  <MenuItem onClick={signOut}>Log Out</MenuItem>
+                  <MenuItem><p>Hello</p></MenuItem>
                 </Menu>
               </div>
             ) : (

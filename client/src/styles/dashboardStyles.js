@@ -4,7 +4,7 @@ const drawerWidth = 240;
 
 const dashboardStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
