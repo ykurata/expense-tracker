@@ -51,7 +51,7 @@ const MonthlyExpense = (props) => {
   return (
     <Paper className={classes.paper} elevation={3}>
       <Grid container className={classes.header}>
-        <Typography variant="h6">Monthly Expneses</Typography>
+        <Typography variant="h6">MONTHLY EXPENSES</Typography>
       </Grid>
       {amountArr.length === 1 ? (
         <Typography align='center'>No data saved</Typography>

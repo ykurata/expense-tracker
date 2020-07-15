@@ -18,7 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   card: {
     '&:hover': {
-      backgroundColor: "#f2f4f7",
+      backgroundColor: "#e9edf2",
     },
   },
   totalAmount: {
@@ -121,9 +121,9 @@ const Category = (props) => {
                               
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography className={classes.cateroryTitle} variant="h5">Expenses by Categories</Typography>
-      </Grid>
+      </Grid> */}
       {card}
       <Modal
         open={open}

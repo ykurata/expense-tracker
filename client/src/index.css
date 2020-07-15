@@ -6,9 +6,7 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  /* font-family: 'Roboto', sans-serif !important; */
-  /* font-family: 'Source Sans Pro', sans-serif; */
-  font-family: 'Baloo Da 2', cursive !important;
+  font-family: 'Roboto', sans-serif;
   color: #505962;
-  background-color: #f0f3f5 !important;
+  background-color: #f2f5f7 !important;
 }

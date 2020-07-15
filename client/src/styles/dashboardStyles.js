@@ -51,7 +51,9 @@ const dashboardStyles = makeStyles(theme => ({
     marginLeft: 0,
 	},
 	list : {
-		paddingTop: '2rem'
+    paddingTop: '2rem',
+    fontFamily: 'Arial',
+    textTransform: 'uppercase'
 	},
 	transactionPaper: {
 		marginTop: '2rem',
@@ -67,9 +69,9 @@ const dashboardStyles = makeStyles(theme => ({
     color: '#647fe3'
   },
   button: {
-    backgroundColor: '#6397eb',
+    backgroundColor: '#3590F3',
     '&:hover': {
-      backgroundColor: '#d5dbed'
+      backgroundColor: '#7bb2ed'
     },
     marginLeft: '2rem'
   }

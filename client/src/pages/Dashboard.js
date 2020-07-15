@@ -160,7 +160,7 @@ const Dashboard = (props) => {
     <div>
       <List className={classes.list}>
 				<ListItem button>
-					<ListItemText primary={'Add Expense'} onClick={handleExpenseOpen} />
+					<ListItemText onClick={handleExpenseOpen}>Add Expenses</ListItemText>
 				</ListItem>
         <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
           <AddExpense/>
@@ -292,7 +292,14 @@ const Dashboard = (props) => {
             
             {/* select month and year button*/}
             <div>
-              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMonthClick}>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                aria-controls="simple-menu" 
+                aria-haspopup="true" 
+                className={classes.button}
+                onClick={handleMonthClick}
+              >
                 Select Month and Year
               </Button>
               <Menu
