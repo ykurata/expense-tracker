@@ -39,8 +39,8 @@ const dashboardStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
 		width: drawerWidth,
-    backgroundColor: '#F7C7DB',
-    color: 'black'
+    //backgroundColor: '#F7C7DB',
+    color: '#3590F3'
   },
   content: {
     flexGrow: 1,
@@ -54,7 +54,10 @@ const dashboardStyles = makeStyles(theme => ({
     paddingTop: '2rem',
     fontFamily: 'Arial',
     textTransform: 'uppercase'
-	},
+  },
+  listItem: {
+    marginBottom: '1rem'
+  },
 	transactionPaper: {
 		marginTop: '2rem',
 	},

@@ -26,6 +26,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
+import PaymentIcon from '@material-ui/icons/Payment';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import CategoryIcon from '@material-ui/icons/Category';
+
 // Import components 
 import DoughnutChart from "../components/DoughnutChart";
 import MonthlyExpense from "../components/MonthlyExpense";
@@ -159,21 +163,24 @@ const Dashboard = (props) => {
 	const drawer = (
     <div>
       <List className={classes.list}>
-				<ListItem button>
-					<ListItemText onClick={handleExpenseOpen}>Add Expenses</ListItemText>
+				<ListItem button className={classes.listItem}>
+          <PaymentIcon/>&nbsp;
+          <ListItemText primary={'Add Expense'} onClick={handleIncomeOpen}/>  
 				</ListItem>
         <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
           <AddExpense/>
         </Dialog>
 
-				<ListItem button>
+				<ListItem button className={classes.listItem}>
+          <AccountBalanceIcon/>&nbsp;
 					<ListItemText primary={'Add Income'} onClick={handleIncomeOpen}/>
 				</ListItem>
 				<Dialog open={incomeOpen} onClose={handleIncomeClose} aria-labelledby="form-dialog-title">
           <AddIncome/>
 				</Dialog>
 				
-				<ListItem button>
+				<ListItem button className={classes.listItem}>
+          <CategoryIcon/>&nbsp;
 					<ListItemText primary={'Add Category'} onClick={handleCategoryOpen} />
 				</ListItem>
         <Dialog open={categoryOpen} onClose={handleCategoryClose} aria-labelledby="form-dialog-title">
