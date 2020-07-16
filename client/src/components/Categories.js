@@ -12,13 +12,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   card: {
     '&:hover': {
-      backgroundColor: "#f2f4f7",
+      backgroundColor: "#e1e2e3",
     },
   },
   totalAmount: {
@@ -85,11 +84,8 @@ const Category = (props) => {
       <Card className={classes.card} onClick={handleOpen} data-my-value={item.name}>
         <CardContent>
           <Typography variant="body1" >{item.name}</Typography>
-          <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>
-          {/* <Button color="primary" size="small" onClick={handleOpen} data-my-value={item.name}>
-            See Details
-          </Button> */}
-        </CardContent>
+          <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>   
+        </CardContent>  
       </Card>  
     </Grid>
   );  
@@ -121,9 +117,9 @@ const Category = (props) => {
                               
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography className={classes.cateroryTitle} variant="h5">Expenses by Categories</Typography>
-      </Grid>
+      </Grid> */}
       {card}
       <Modal
         open={open}

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 import { Provider } from "react-redux";
 
@@ -12,6 +13,12 @@ import SignUp from  './pages/SignUp';
 import PrivateRoute from "./components/PrivateRoute";
 
 import store from './store';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'Arial',
+  },
+});
 
 if (localStorage.token) {
   // Set auth token header auth
@@ -26,6 +33,7 @@ if (localStorage.token) {
 function App() {
   return (
     <Provider store={store}>
+      <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <Route path="/login" component={Login}/>
         <Route path="/signup" component={SignUp}/>
@@ -33,6 +41,7 @@ function App() {
           <PrivateRoute exact path="/" component={Dashboard} />
         </Switch>
       </BrowserRouter>
+      </MuiThemeProvider>
     </Provider>
   );
 }

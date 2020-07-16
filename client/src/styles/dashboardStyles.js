@@ -4,7 +4,7 @@ const drawerWidth = 240;
 
 const dashboardStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
@@ -39,8 +39,8 @@ const dashboardStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
 		width: drawerWidth,
-    backgroundColor: '#b2badb',
-    color: 'balck'
+    //backgroundColor: '#F7C7DB',
+    color: '#3590F3'
   },
   content: {
     flexGrow: 1,
@@ -51,8 +51,13 @@ const dashboardStyles = makeStyles(theme => ({
     marginLeft: 0,
 	},
 	list : {
-		paddingTop: '2rem'
-	},
+    paddingTop: '2rem',
+    fontFamily: 'Arial',
+    textTransform: 'uppercase'
+  },
+  listItem: {
+    marginBottom: '1rem'
+  },
 	transactionPaper: {
 		marginTop: '2rem',
 	},
@@ -67,9 +72,9 @@ const dashboardStyles = makeStyles(theme => ({
     color: '#647fe3'
   },
   button: {
-    backgroundColor: '#6397eb',
+    backgroundColor: '#3590F3',
     '&:hover': {
-      backgroundColor: '#d5dbed'
+      backgroundColor: '#7bb2ed'
     },
     marginLeft: '2rem'
   }
