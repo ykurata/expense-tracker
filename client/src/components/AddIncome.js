@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// redux Action
 import { createIncome } from '../actions/incomeActions'; 
 
 import DialogActions from '@material-ui/core/DialogActions';
