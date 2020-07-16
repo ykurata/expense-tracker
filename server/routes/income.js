@@ -48,7 +48,6 @@ router.put("/update/:id", auth, async(req, res) => {
   }
 });
 
-
 // Get login user's all incomes 
 router.get("/all", auth, async(req, res) => {
   try {
@@ -61,8 +60,17 @@ router.get("/all", auth, async(req, res) => {
     res.status(400).json(err);
   }
 });
-  
 
+//Get a specific income by expense id
+router.get("/get/:id", auth, async(req, res) => {
+  try {
+    const income = await Income.findOne({ where: { id: req.params.id }});
+    return res.status(200).json(income);
+  } catch(err) {
+    console.log(err);
+  }
+});
+  
 // Delete an income
 router.delete("/delete/:id", auth, async(req, res) => {
   try {
