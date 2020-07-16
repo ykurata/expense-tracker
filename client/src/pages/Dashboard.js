@@ -160,8 +160,7 @@ const Dashboard = (props) => {
   const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
-  
-  
+
 	const drawer = (
     <div>
       <List className={classes.list}>
@@ -191,7 +190,7 @@ const Dashboard = (props) => {
 
         <ListItem button className={classes.listItem}>
           <CallMissedOutgoingIcon/>&nbsp;
-					<ListItemText primary={'All Expenses'} />
+					<a href="/expenses"><ListItemText primary={'All Expenses'} /></a>
 				</ListItem>
 
         <ListItem button className={classes.listItem}>
