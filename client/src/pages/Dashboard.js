@@ -29,6 +29,8 @@ import { useTheme } from '@material-ui/core/styles';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import CategoryIcon from '@material-ui/icons/Category';
+import CallMissedOutgoingIcon from '@material-ui/icons/CallMissedOutgoing';
+import CallMissedIcon from '@material-ui/icons/CallMissed';
 
 // Import components 
 import DoughnutChart from "../components/DoughnutChart";
@@ -187,6 +189,15 @@ const Dashboard = (props) => {
           <AddCategory/>
 				</Dialog>
 
+        <ListItem button className={classes.listItem}>
+          <CallMissedOutgoingIcon/>&nbsp;
+					<ListItemText primary={'All Expenses'} />
+				</ListItem>
+
+        <ListItem button className={classes.listItem}>
+          <CallMissedIcon/>&nbsp;
+					<ListItemText primary={'All Incomes'} />
+				</ListItem>
       </List>
     </div>
   );
