@@ -41,6 +41,16 @@ router.get("/all", auth, async(req, res) => {
   }
 });
 
+//Get a specific expense by expense id
+router.get("/get/:id", auth, async(req, res) => {
+  try {
+    const expense = await Expense.findOne({ where: { id: req.params.id }});
+    return res.status(200).json(expense);
+  } catch(err) {
+    console.log(err);
+  }
+});
+
 // Update an expense
 router.put("/update/:id", auth, async(req, res) => {
   // form validation 

@@ -10,6 +10,9 @@ import { Provider } from "react-redux";
 import Dashboard from  './pages/Dashboard';
 import Login from  './pages/Login';
 import SignUp from  './pages/SignUp';
+import AllExpenses from './pages/AllExpenses';
+import EditExpense from './pages/EditExpense';
+import EditIncome from './pages/EditIncome';
 import PrivateRoute from "./components/PrivateRoute";
 
 import store from './store';
@@ -39,6 +42,9 @@ function App() {
         <Route path="/signup" component={SignUp}/>
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute path="/expenses" component={AllExpenses} />
+          <PrivateRoute path="/expense/edit/:id" component={EditExpense} />
+          <PrivateRoute path="/income/edit/:id" component={EditIncome} />
         </Switch>
       </BrowserRouter>
       </MuiThemeProvider>

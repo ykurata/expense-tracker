@@ -13,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -40,12 +41,21 @@ const useStyles = makeStyles(theme => ({
   },
   modalCard: {
     position: 'absolute',
-    minWidth: 650,
+    minWidth: 400,
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
     // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
+  editIcon: {
+    color: '#647fe3',
+    '&:hover': {
+      borderRadius: '50%',
+      width: '10px',
+      heigth: '10px',
+      backgroundColor: "#e1e2e3"
+    },
+  }
 }));
 
 const Category = (props) => {
@@ -91,24 +101,31 @@ const Category = (props) => {
   );  
 
   const details = props.data.filter(x => x.category.includes(index));
- 
+
   const modalContent =  <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                               <TableRow>
                                 <TableCell align="left">Date</TableCell>
                                 <TableCell align="left">Description</TableCell>
-                                <TableCell align="left">Amount</TableCell>
+                                <TableCell align="right">Amount</TableCell>
+                                <TableCell></TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
                               {details.map((x, i) => (
-                                <TableRow key={i}>
+                                <TableRow key={i}> 
+                                 
                                   <TableCell component="th" scope="row">
                                     <Moment format="YYYY/MM/DD">{x.date}</Moment>
                                   </TableCell>
                                   <TableCell align="left">{x.description}</TableCell>
-                                  <TableCell align="left" className={classes.amount}>${x.amount.toFixed(2)}</TableCell>
+                                  <TableCell align="right" className={classes.amount}>
+                                    ${x.amount.toFixed(2)}
+                                  </TableCell>
+                                  <TableCell  className={classes.editIcon}>
+                                    <a href={`/expense/edit/${x.id}`}><EditIcon /></a>
+                                  </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>

@@ -59,7 +59,7 @@ const AddExpense = (props) => {
     props.createExpense(expenseData);
   }
 
-  let menuItems = categories.map(item => 
+  const menuItems = categories.map(item => 
     <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
   );
 

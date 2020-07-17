@@ -10,3 +10,8 @@ html, body {
   color: #505962;
   background-color: #e9eef2 !important;
 }
+
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+}

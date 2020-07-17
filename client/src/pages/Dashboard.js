@@ -29,6 +29,8 @@ import { useTheme } from '@material-ui/core/styles';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import CategoryIcon from '@material-ui/icons/Category';
+import CallMissedOutgoingIcon from '@material-ui/icons/CallMissedOutgoing';
+import CallMissedIcon from '@material-ui/icons/CallMissed';
 
 // Import components 
 import DoughnutChart from "../components/DoughnutChart";
@@ -158,14 +160,13 @@ const Dashboard = (props) => {
   const menuItem = uniqMonth.map((x, i) => (
     <MenuItem key={i} data-my-value={x} onClick={getDate}>{x}</MenuItem>
   ));
-  
-  
+
 	const drawer = (
     <div>
       <List className={classes.list}>
 				<ListItem button className={classes.listItem}>
           <PaymentIcon/>&nbsp;
-          <ListItemText primary={'Add Expense'} onClick={handleIncomeOpen}/>  
+          <ListItemText primary={'Add Expense'} onClick={handleExpenseOpen}/>  
 				</ListItem>
         <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
           <AddExpense/>
@@ -187,6 +188,15 @@ const Dashboard = (props) => {
           <AddCategory/>
 				</Dialog>
 
+        <ListItem button className={classes.listItem}>
+          <CallMissedOutgoingIcon/>&nbsp;
+					<a href="/expenses"><ListItemText primary={'All Expenses'} /></a>
+				</ListItem>
+
+        <ListItem button className={classes.listItem}>
+          <CallMissedIcon/>&nbsp;
+					<ListItemText primary={'All Incomes'} />
+				</ListItem>
       </List>
     </div>
   );
