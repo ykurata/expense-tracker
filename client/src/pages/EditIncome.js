@@ -21,11 +21,10 @@ import Select from '@material-ui/core/Select';
 import Navbar from '../components/Navbar';
 import cardStyles from '../styles/cardStyles';
 
-const EditExpense = (props) => {
+const EditIncome = (props) => {
   const classes = cardStyles();
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
-  const category = useSelector(state => state.category.categories);
   const dispatch = useDispatch();
   const [expenseData, setExpenseData] = useState({
     date: '',
@@ -33,6 +32,7 @@ const EditExpense = (props) => {
     amount: '',
     description: ''
   });
+
 
   const handleChange = e => {
     setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
@@ -67,9 +67,6 @@ const EditExpense = (props) => {
     dispatch(updateExpense(id, expenseData, token));
   }
   
-  const menuItems = category.map(item => 
-    <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
-  );
 
   return (
     <div>
@@ -92,18 +89,7 @@ const EditExpense = (props) => {
                 shrink: true,
               }}
             />
-            <InputLabel>Category</InputLabel>
-            <Select
-              name="category"
-              id="category"
-              value={expenseData.category}
-              input={<Input id="category" />}
-              fullWidth
-              onChange={handleChange}
-              className={classes.textField}
-            > 
-              {menuItems}
-            </Select>
+          
             <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
               <Input
                 id="standard-adornment-amount"
@@ -137,4 +123,4 @@ const EditExpense = (props) => {
   );
 }
 
-export default EditExpense;
+export default EditIncome;
