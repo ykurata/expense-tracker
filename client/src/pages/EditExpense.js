@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getExpenses } from '../actions/expenseActions';
+import { getExpense } from '../actions/expenseActions';
+import { getCategories } from '../actions/categoryActions';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -44,10 +43,25 @@ const useStyles = makeStyles({
 const EditExpense = (props) => {
   const classes = useStyles();
   const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const expense = props.expense;
+  const [expenseData, setExpenseData] = useState({ date: '', category: '', amount: '', description: '' });
+
+  const handleChange = e => {
+    setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    props.getExpense(props.match.params.id, token)
+  }, [])
   
   useEffect(() => {
-    props.getExpenses(token);
-  }, []);
+    props.getCategories(userId, token)
+  }, [])
+  
+  const menuItems = props.category.map(item => 
+    <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
+  );
 
   return (
     <div>
@@ -63,7 +77,8 @@ const EditExpense = (props) => {
               label="Date"
               type="date"
               name="date"
-              //onChange={handleChange}
+              onChange={handleChange}
+              value={expense.date || ''}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -72,28 +87,33 @@ const EditExpense = (props) => {
             <InputLabel>Category</InputLabel>
             <Select
               name="category"
+              id="category"
+              value={expenseData.category || ''}
               input={<Input id="category" />}
               fullWidth
+              onChange={handleChange}
               className={classes.textField}
             > 
-
+              {menuItems}
             </Select>
             <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
               <Input
-              id="standard-adornment-amount"
-              className={classes.textField}
-              name="amount"
-              
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              fullWidth
-            />
+                id="standard-adornment-amount"
+                className={classes.textField}
+                name="amount"
+                value={expense.amount || ''}
+                onChange={handleChange}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                fullWidth
+              />
             <TextField
               autoFocus
               margin="dense"
               name="description"
               id="description"
               label="Description"
-              
+              onChange={handleChange}
+              value={expense.description || ''}
               type="text"
               fullWidth
             />
@@ -108,16 +128,19 @@ const EditExpense = (props) => {
 }
 
 EditExpense.propTypes = {
-  getExpenses: PropTypes.func.isRequired,
-  expenses: PropTypes.array.isRequired,
+  getExpense: PropTypes.func.isRequired,
+  expense: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  category: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  expenses: state.expense.expenses,
+  expense: state.expense.expense,
+  category: state.category.categories,
 });
 
 export default 
   connect(
   mapStateToProps, 
-  { getExpenses })
+  { getExpense, getCategories })
   (EditExpense);

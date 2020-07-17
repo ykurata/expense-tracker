@@ -14,8 +14,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
-import Link from '@material-ui/core/Link';
-import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -103,7 +101,7 @@ const Category = (props) => {
   );  
 
   const details = props.data.filter(x => x.category.includes(index));
- 
+
   const modalContent =  <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
@@ -116,7 +114,7 @@ const Category = (props) => {
                             </TableHead>
                             <TableBody>
                               {details.map((x, i) => (
-                                <TableRow key={i}>
+                                <TableRow key={i}> 
                                  
                                   <TableCell component="th" scope="row">
                                     <Moment format="YYYY/MM/DD">{x.date}</Moment>
@@ -125,11 +123,10 @@ const Category = (props) => {
                                   <TableCell align="right" className={classes.amount}>
                                     ${x.amount.toFixed(2)}
                                   </TableCell>
-                                  <a href="/expenses" >
-                                    <TableCell className={classes.editIcon}><EditIcon /></TableCell>
-                                  </a>
+                                  <TableCell  className={classes.editIcon}>
+                                    <a href={`/expense/edit/${x.id}`}><EditIcon /></a>
+                                  </TableCell>
                                 </TableRow>
-                               
                               ))}
                             </TableBody>
                           </Table>

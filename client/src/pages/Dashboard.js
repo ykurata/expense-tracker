@@ -166,7 +166,7 @@ const Dashboard = (props) => {
       <List className={classes.list}>
 				<ListItem button className={classes.listItem}>
           <PaymentIcon/>&nbsp;
-          <ListItemText primary={'Add Expense'} onClick={handleIncomeOpen}/>  
+          <ListItemText primary={'Add Expense'} onClick={handleExpenseOpen}/>  
 				</ListItem>
         <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
           <AddExpense/>

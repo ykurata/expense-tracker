@@ -1,7 +1,8 @@
-import { GET_EXPENSES } from '../actions/types';
+import { GET_EXPENSES, GET_EXPENSE } from '../actions/types';
 
 const initialState = {
-  expenses: []
+  expenses: [],
+  expense: {},
 }
 
 export default function(state = initialState, action) {
@@ -11,6 +12,11 @@ export default function(state = initialState, action) {
         ...state,
         expenses: action.payload
       }
+    case GET_EXPENSE:
+      return {
+        ...state,
+        expense: action.payload
+      }  
     default: 
       return state;  
   }

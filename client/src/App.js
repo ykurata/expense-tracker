@@ -42,7 +42,7 @@ function App() {
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
           <PrivateRoute path="/expenses" component={AllExpenses} />
-          <PrivateRoute path="/edit/expense" component={EditExpense} />
+          <PrivateRoute path="/expense/edit/:id" component={EditExpense} />
         </Switch>
       </BrowserRouter>
       </MuiThemeProvider>
