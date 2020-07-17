@@ -1,4 +1,7 @@
-import { GET_EXPENSES, GET_EXPENSE } from '../actions/types';
+import { 
+  GET_EXPENSES, 
+  GET_EXPENSE,
+} from '../actions/types';
 
 const initialState = {
   expenses: [],

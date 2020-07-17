@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getExpense } from '../actions/expenseActions';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateExpense } from '../actions/expenseActions';
 import { getCategories } from '../actions/categoryActions';
 
 import Button from '@material-ui/core/Button';
@@ -13,14 +13,16 @@ import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Select from '@material-ui/core/Select';
+import Link from '@material-ui/core/Link';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from '../components/Navbar';
+
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -37,6 +39,9 @@ const useStyles = makeStyles({
   button: {
     marginRight: '2rem',
     marginTop: '1rem'
+  },
+  cancelButton: {
+    marginLeft: '1.5rem'
   }
 });
 
@@ -44,22 +49,50 @@ const EditExpense = (props) => {
   const classes = useStyles();
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
-  const expense = props.expense;
-  const [expenseData, setExpenseData] = useState({ date: '', category: '', amount: '', description: '' });
+  const category = useSelector(state => state.category.categories);
+  const dispatch = useDispatch();
+  const [expenseData, setExpenseData] = useState({
+    date: '',
+    category: '',
+    amount: '',
+    description: ''
+  });
+
 
   const handleChange = e => {
     setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    props.getExpense(props.match.params.id, token)
+    axios.get(`/expense/get/${props.match.params.id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+      .then(res => {
+        setExpenseData({
+          date: res.data.date,
+          category: res.data.category,
+          amount: res.data.amount.toFixed(2),
+          description: res.data.description
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }, [])
-  
+
+  // useEffect(() => {
+  //   dispatch(getExpense(props.match.params.id, token));
+  // }, []);
+
   useEffect(() => {
-    props.getCategories(userId, token)
-  }, [])
+    dispatch(getCategories(userId, token));
+  }, [userId, token]);
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const id = props.match.params.id;
+    dispatch(updateExpense(id, expenseData, token));
+  }
   
-  const menuItems = props.category.map(item => 
+  const menuItems = category.map(item => 
     <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>
   );
 
@@ -68,7 +101,7 @@ const EditExpense = (props) => {
       <Navbar />
 		  <Card className={classes.card}>
         <CardContent>
-          <form>
+          <form onSubmit={onSubmit}>
             <Typography variant="h6" className={classes.textField}>
               Edit Expense
             </Typography>
@@ -78,7 +111,7 @@ const EditExpense = (props) => {
               type="date"
               name="date"
               onChange={handleChange}
-              value={expense.date || ''}
+              value={expenseData.date}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -88,7 +121,7 @@ const EditExpense = (props) => {
             <Select
               name="category"
               id="category"
-              value={expenseData.category || ''}
+              value={expenseData.category}
               input={<Input id="category" />}
               fullWidth
               onChange={handleChange}
@@ -101,7 +134,7 @@ const EditExpense = (props) => {
                 id="standard-adornment-amount"
                 className={classes.textField}
                 name="amount"
-                value={expense.amount || ''}
+                value={expenseData.amount}
                 onChange={handleChange}
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 fullWidth
@@ -113,13 +146,15 @@ const EditExpense = (props) => {
               id="description"
               label="Description"
               onChange={handleChange}
-              value={expense.description || ''}
+              value={expenseData.description}
               type="text"
               fullWidth
             />
             <Grid align='right' className={classes.button}>
               <Button variant="contained" type="submit" color="primary">Submit</Button>
+              <Button className={classes.cancelButton} variant="contained" color="default" href="/">Cancel</Button>
             </Grid>
+            <ToastContainer />
           </form>
         </CardContent>
       </Card>
@@ -127,20 +162,4 @@ const EditExpense = (props) => {
   );
 }
 
-EditExpense.propTypes = {
-  getExpense: PropTypes.func.isRequired,
-  expense: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired,
-  category: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = state => ({
-  expense: state.expense.expense,
-  category: state.category.categories,
-});
-
-export default 
-  connect(
-  mapStateToProps, 
-  { getExpense, getCategories })
-  (EditExpense);
+export default EditExpense;
