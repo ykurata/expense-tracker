@@ -5,5 +5,6 @@ export const GET_EXPENSES = "GET_EXPENSES";
 export const GET_EXPENSE = "GET_EXPENSE";
 // export const UPDATE_EXPENSE = "UPDATE_EXPENSE";
 export const GET_INCOMES = "GET_INCOMES";
+export const GET_INCOME = "GET_INCOME";
 export const GET_USER = "GET_USER";
 export const GET_CATEGORIES = "GET_CATEGORIES";

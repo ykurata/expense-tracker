@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import Moment from 'react-moment';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
-
-import Modal from '@material-ui/core/Modal';
+import EditIcon from '@material-ui/icons/Edit';
 
 import { Doughnut } from 'react-chartjs-2';
 
@@ -30,11 +37,20 @@ const useStyles = makeStyles(theme => ({
   modalPaper: {
     position: 'absolute',
     width: 400,
+    maxHeight: 500,
+    overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
     // boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 3),
   },
+  editIcon: {
+    color: '#647fe3',
+    '&:hover': {
+      borderRadius: '50%',
+      backgroundColor: "#e1e2e3"
+    },
+  }
 }));
 
 const DoughnutChart = (props) => {
@@ -70,7 +86,6 @@ const DoughnutChart = (props) => {
             totalIncome,
             //(totalIncome-totalExpense).toFixed(2)
             totalExpense
-
           ],
           backgroundColor:[
             '#3590F3',
@@ -82,7 +97,68 @@ const DoughnutChart = (props) => {
         'Income',
         'Expense'
       ]
-	}
+  }
+  
+  const incomeTable =   <TableContainer component={Paper}>
+                          <Table aria-label="simple table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left">Description</TableCell>
+                                <TableCell align="right">Amount</TableCell>
+                                <TableCell></TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {props.inc.map((x, i) => (
+                                <TableRow key={i}> 
+                                
+                                  <TableCell component="th" scope="row">
+                                    <Moment format="YYYY/MM/DD">{x.date}</Moment>
+                                  </TableCell>
+                                  <TableCell align="left">{x.description}</TableCell>
+                                  <TableCell align="right" className={classes.amount}>
+                                    ${x.amount.toFixed(2)}
+                                  </TableCell>
+                                  <TableCell className={classes.editIcon}>
+                                    <a href={`/income/edit/${x.id}`}><EditIcon/></a>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+
+const expenseTable =   <TableContainer component={Paper}>
+                        <Table aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell align="left">Date</TableCell>
+                              <TableCell align="left">Description</TableCell>
+                              <TableCell align="right">Amount</TableCell>
+                              <TableCell></TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {props.exp.map((x, i) => (
+                              <TableRow key={i}> 
+                              
+                                <TableCell component="th" scope="row">
+                                  <Moment format="YYYY/MM/DD">{x.date}</Moment>
+                                </TableCell>
+                                <TableCell align="left">{x.description}</TableCell>
+                                <TableCell align="right" className={classes.amount}>
+                                  ${x.amount.toFixed(2)}
+                                </TableCell>
+                                <TableCell  className={classes.editIcon}>
+                                  <a href={`/expense/edit/${x.id}`}><EditIcon /></a>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>                      
+
 
   return (
     <Paper className={classes.paper} elevation={3}>
@@ -98,10 +174,7 @@ const DoughnutChart = (props) => {
               aria-describedby="simple-modal-description"
             >
               <div className={classes.modalPaper}>
-                <h2 id="simple-modal-title">Text in a modal</h2>
-                <p id="simple-modal-description">
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </p>
+                {incomeTable}
               </div>
             </Modal>
         </Grid>
@@ -116,10 +189,7 @@ const DoughnutChart = (props) => {
             aria-describedby="simple-modal-description"
           >
             <div className={classes.modalPaper}>
-              <h2 id="simple-modal-title">Text in a modal</h2>
-              <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
+              {expenseTable}
             </div>
           </Modal>
         </Grid>

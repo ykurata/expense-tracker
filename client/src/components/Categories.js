@@ -42,6 +42,8 @@ const useStyles = makeStyles(theme => ({
   modalCard: {
     position: 'absolute',
     minWidth: 400,
+    maxHeight: 400,
+    overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
     // boxShadow: theme.shadows[5],
@@ -51,8 +53,6 @@ const useStyles = makeStyles(theme => ({
     color: '#647fe3',
     '&:hover': {
       borderRadius: '50%',
-      width: '10px',
-      heigth: '10px',
       backgroundColor: "#e1e2e3"
     },
   }

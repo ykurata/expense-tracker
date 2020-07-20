@@ -3,8 +3,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateExpense } from '../actions/expenseActions';
-import { getCategories } from '../actions/categoryActions';
+import { updateIncome } from '../actions/incomeActions';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -15,8 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 
 import Navbar from '../components/Navbar';
 import cardStyles from '../styles/cardStyles';
@@ -26,24 +23,22 @@ const EditIncome = (props) => {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
-  const [expenseData, setExpenseData] = useState({
+  const [incomeData, setIncomeData] = useState({
     date: '',
-    category: '',
     amount: '',
     description: ''
   });
 
 
   const handleChange = e => {
-    setExpenseData({ ...expenseData, [e.target.name]: e.target.value });
+    setIncomeData({ ...incomeData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    axios.get(`/expense/get/${props.match.params.id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+    axios.get(`/income/get/${props.match.params.id}`, { headers: {"Authorization" : `Bearer ${token}`}})
       .then(res => {
-        setExpenseData({
+        setIncomeData({
           date: res.data.date,
-          category: res.data.category,
           amount: res.data.amount.toFixed(2),
           description: res.data.description
         })
@@ -53,18 +48,10 @@ const EditIncome = (props) => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   dispatch(getExpense(props.match.params.id, token));
-  // }, []);
-
-  useEffect(() => {
-    dispatch(getCategories(userId, token));
-  }, [userId, token]);
-
   const onSubmit = e => {
     e.preventDefault();
     const id = props.match.params.id;
-    dispatch(updateExpense(id, expenseData, token));
+    dispatch(updateIncome(id, incomeData, token));
   }
   
 
@@ -75,7 +62,7 @@ const EditIncome = (props) => {
         <CardContent>
           <form onSubmit={onSubmit}>
             <Typography variant="h6" className={classes.textField}>
-              Edit Expense
+              Edit Income
             </Typography>
             <TextField
               id="date"
@@ -83,7 +70,7 @@ const EditIncome = (props) => {
               type="date"
               name="date"
               onChange={handleChange}
-              value={expenseData.date}
+              value={incomeData.date}
               className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -95,7 +82,7 @@ const EditIncome = (props) => {
                 id="standard-adornment-amount"
                 className={classes.textField}
                 name="amount"
-                value={expenseData.amount}
+                value={incomeData.amount}
                 onChange={handleChange}
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 fullWidth
@@ -107,7 +94,7 @@ const EditIncome = (props) => {
               id="description"
               label="Description"
               onChange={handleChange}
-              value={expenseData.description}
+              value={incomeData.description}
               type="text"
               fullWidth
             />
