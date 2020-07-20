@@ -27,6 +27,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
+import ListIcon from '@material-ui/icons/List';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -202,6 +203,11 @@ const Dashboard = (props) => {
         <ListItem button className={classes.listItem}>
           <CallMissedIcon/>&nbsp;
 					<a href="/incomes"><ListItemText primary={'All Incomes'} /></a>
+				</ListItem>
+
+        <ListItem button className={classes.listItem}>
+          <ListIcon/>&nbsp;
+					<a href="/categories"><ListItemText primary={'All Categories'} /></a>
 				</ListItem>
       </List>
     </div>
