@@ -15,6 +15,8 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 const useStyles = makeStyles(theme => ({
   card: {
     '&:hover': {
@@ -23,6 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
   totalAmount: {
     color: '#647fe3',
+  },
+  marginTop: {
+    marginTop: '.5rem'
   },
   description: {
     alignItems: 'left'
@@ -89,12 +94,24 @@ const Category = (props) => {
     fixedExp.push({ name: prop, value: holder[prop].toFixed(2) });
   }
 
-  const card = fixedExp.map((item, index) => 
+  const addBudget = fixedExp.map(item => {
+    const budgetItem = props.categories.find(element => element.name === item.name)
+    item.budget = budgetItem ? budgetItem.budget.toFixed(2) : null;
+    return item;
+  })
+  
+  const card = addBudget.map((item, index) => 
     <Grid item xs={6} sm={4} md={3} key={index} >
       <Card className={classes.card} onClick={handleOpen} data-my-value={item.name}>
         <CardContent>
           <Typography variant="body1" >{item.name}</Typography>
-          <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>   
+          <Typography variant="h6" className={classes.totalAmount}>${item.value}</Typography>  
+          { (item.value / item.budget) * 100 >= 100 ? (
+            <LinearProgress className={classes.marginTop} variant="determinate" value={100} />
+          ) : (
+            <LinearProgress className={classes.marginTop} variant="determinate" value={(item.value / item.budget)* 100} />
+          )} 
+          <Typography className={classes.marginTop}>Budget ${item.budget}</Typography>
         </CardContent>  
       </Card>  
     </Grid>
