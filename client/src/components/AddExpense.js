@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCategories } from '../actions/categoryActions';
@@ -34,9 +34,6 @@ const AddExpense = (props) => {
   const [expenseOpen, setExpenseOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [expenseData, setExpenseData] = useState({ date: today, category: '', amount: '', description: '' });
-  const categories = props.category;
-  const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
 
   const handleExpenseClose = () => {
     setExpenseOpen(false);
@@ -50,14 +47,12 @@ const AddExpense = (props) => {
     setSelectedDate(date);
   };
 
-  useEffect(() => {
-    props.getCategories(userId, token);
-  }, []);
-
   const handleSubmit = e => {
     e.preventDefault();
     props.createExpense(expenseData);
   }
+  
+  const categories = props.categories;
 
   const menuItems = categories.map(item => 
     <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import { getExpenses } from '../actions/expenseActions';
 import { getIncomes } from '../actions/incomeActions';
+import { getCategories } from '../actions/categoryActions';
 import { getUser } from '../actions/userActions';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -153,6 +154,11 @@ const Dashboard = (props) => {
 		props.getIncomes(token);
   }, []);
 
+  // Get categories
+	useEffect(() => {
+		props.getCategories(userId, token);
+  }, []);
+
   const monthAndYear = [];
   expenseData.map(x => monthAndYear.push(x.date.slice(0, 7)));
   const uniqMonth = [...new Set(monthAndYear)];
@@ -169,7 +175,7 @@ const Dashboard = (props) => {
           <ListItemText primary={'Add Expense'} onClick={handleExpenseOpen}/>  
 				</ListItem>
         <Dialog open={expenseOpen} onClose={handleExpenseClose} aria-labelledby="form-dialog-title">
-          <AddExpense/>
+          <AddExpense categories={props.category} />
         </Dialog>
 
 				<ListItem button className={classes.listItem}>
@@ -343,7 +349,7 @@ const Dashboard = (props) => {
           </Grid>
           
           {/* Expenses with Categories */}
-          <Categories data={filteredExpense} />
+          <Categories data={filteredExpense} categories={props.category} />
         
       </div>
     </div>
@@ -358,7 +364,9 @@ Dashboard.propTypes = {
   getIncomes: PropTypes.func.isRequired,
   incomes: PropTypes.array.isRequired,
   getUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  category: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -366,11 +374,12 @@ const mapStateToProps = state => ({
   expenses: state.expense.expenses,
   incomes: state.income.incomes,
   user: state.user.user,
+  category: state.category.categories,
 });
 
 export default 
   connect(
   mapStateToProps, 
-  { logoutUser, getExpenses, getIncomes, getUser })
+  { logoutUser, getExpenses, getIncomes, getUser, getCategories })
   (Dashboard);
 
