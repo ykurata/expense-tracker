@@ -9,6 +9,7 @@ html, body {
   font-family: 'Roboto', sans-serif;
   color: #505962;
   background-color: #e9eef2 !important;
+  margin: 0;
 }
 
 a, a:visited, a:hover, a:active {
