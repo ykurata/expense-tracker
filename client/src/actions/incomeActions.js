@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { GET_INCOMES, GET_ERRORS } from './types';
+import { GET_INCOMES, GET_INCOME, GET_ERRORS } from './types';
 
 export const getIncomes = (token) => dispatch => {
   axios.get("/income/all", { headers: {"Authorization" : `Bearer ${token}`} })
@@ -28,6 +28,39 @@ export const createIncome = (newIncome, token) => dispatch => {
         draggable: true,
         });
       window.location.href = "/";
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const getIncome = (id, token) => dispatch => {
+  axios.get(`/income/get/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      dispatch({
+        type: GET_INCOME,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const updateIncome = (id, updatedIncome, token) => dispatch => {
+  axios.put(`/income/update/${id}`, updatedIncome, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      toast('Updated the income!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     })
     .catch(err => {
       dispatch({

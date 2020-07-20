@@ -86,7 +86,6 @@ const DoughnutChart = (props) => {
             totalIncome,
             //(totalIncome-totalExpense).toFixed(2)
             totalExpense
-
           ],
           backgroundColor:[
             '#3590F3',
@@ -122,7 +121,7 @@ const DoughnutChart = (props) => {
                                     ${x.amount.toFixed(2)}
                                   </TableCell>
                                   <TableCell className={classes.editIcon}>
-                                    <a href={`/expense/edit/${x.id}`}><EditIcon/></a>
+                                    <a href={`/income/edit/${x.id}`}><EditIcon/></a>
                                   </TableCell>
                                 </TableRow>
                               ))}
