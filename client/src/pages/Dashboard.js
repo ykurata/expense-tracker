@@ -195,7 +195,7 @@ const Dashboard = (props) => {
 
         <ListItem button className={classes.listItem}>
           <CallMissedIcon/>&nbsp;
-					<ListItemText primary={'All Incomes'} />
+					<a href="/incomes"><ListItemText primary={'All Incomes'} /></a>
 				</ListItem>
       </List>
     </div>
