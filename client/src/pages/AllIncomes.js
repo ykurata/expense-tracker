@@ -17,27 +17,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from '../components/Navbar';
-
-const useStyles = makeStyles({
-  container: {
-    marginTop: '7rem',
-  },
-  title: {
-    paddingBottom: '2rem'
-  },
-  table: {
-    width: 650,
-    maxHeight: 500,
-    overflow: 'auto'
-  },
-  button: {
-    marginTop: '1rem',
-    textAlign: 'center'
-  }
-});
+import tableStyles from '../styles/tableStyles';
 
 const AllIncomes = (props) => {
-  const classes = useStyles();
+  const classes = tableStyles();
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
   const incomes = useSelector(state => state.income.incomes);
@@ -58,9 +41,9 @@ const AllIncomes = (props) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Date</TableCell>
-                <TableCell align="left">Description</TableCell>
-                <TableCell align="right">Amount</TableCell>
+                <TableCell className={classes.tableHead} align="left">Date</TableCell>
+                <TableCell className={classes.tableHead} align="left">Description</TableCell>
+                <TableCell className={classes.tableHead} align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

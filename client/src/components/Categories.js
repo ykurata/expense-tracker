@@ -51,14 +51,11 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
   editIcon: {
     color: '#647fe3',
     '&:hover': {
-      borderRadius: '50%',
-      backgroundColor: "#e1e2e3"
+      color: '#123ee0'
     },
   }
 }));

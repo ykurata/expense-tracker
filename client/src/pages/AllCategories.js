@@ -4,6 +4,7 @@ import { getCategories } from '../actions/categoryActions';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -13,41 +14,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import EditIcon from '@material-ui/icons/Edit';
 
 import Navbar from '../components/Navbar';
-
-const useStyles = makeStyles({
-  container: {
-    marginTop: '7rem',
-  },
-  title: {
-    paddingBottom: '2rem'
-  },
-  table: {
-    width: 400,
-    maxHeight: 500,
-    overflow: 'auto'
-  },
-  tableHead: {
-    fontWeight: 'bold'
-  },
-  editIcon: {
-    color: '#647fe3',
-    '&:hover': {
-      borderRadius: '50%',
-      backgroundColor: "#e1e2e3"
-    },
-  },
-  button: {
-    marginTop: '1rem',
-    textAlign: 'center'
-  }
-});
+import tableStyles from '../styles/tableStyles';
 
 const AllCategories = (props) => {
-  const classes = useStyles();
+  const classes = tableStyles();
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
@@ -81,7 +53,7 @@ const AllCategories = (props) => {
                   <TableCell align="right" >
                     ${x.budget.toFixed(2)}
                   </TableCell>
-                  <TableCell className={classes.editIcon}>
+                  <TableCell align='right' className={classes.editIcon}>
                     <a href={`/category/edit/${x.id}`}><EditIcon /></a>
                   </TableCell>
                 </TableRow>
