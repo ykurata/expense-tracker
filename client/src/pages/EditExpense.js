@@ -26,6 +26,7 @@ const EditExpense = (props) => {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const category = useSelector(state => state.category.categories);
+  const errors = useSelector(state => state.errors);
   const dispatch = useDispatch();
   const [expenseData, setExpenseData] = useState({
     date: '',
@@ -76,6 +77,11 @@ const EditExpense = (props) => {
             <Typography variant="h6" className={classes.textField}>
               Edit Expense
             </Typography>
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.date}</Typography>
+            ) : (
+              null
+            )}
             <TextField
               id="date"
               label="Date"
@@ -89,6 +95,11 @@ const EditExpense = (props) => {
               }}
             />
             <InputLabel>Category</InputLabel>
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.category}</Typography>
+            ) : (
+              null
+            )}
             <Select
               name="category"
               id="category"
@@ -101,15 +112,20 @@ const EditExpense = (props) => {
               {menuItems}
             </Select>
             <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
-              <Input
-                id="standard-adornment-amount"
-                className={classes.textField}
-                name="amount"
-                value={expenseData.amount}
-                onChange={handleChange}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                fullWidth
-              />
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.amount}</Typography>
+            ) : (
+              null
+            )}
+            <Input
+              id="standard-adornment-amount"
+              className={classes.textField}
+              name="amount"
+              value={expenseData.amount}
+              onChange={handleChange}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              fullWidth
+            />
             <TextField
               autoFocus
               margin="dense"

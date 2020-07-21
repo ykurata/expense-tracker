@@ -23,6 +23,7 @@ const EditIncome = (props) => {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
+  const errors = useSelector(state => state.errors);
   const [incomeData, setIncomeData] = useState({
     date: '',
     amount: '',
@@ -64,6 +65,11 @@ const EditIncome = (props) => {
             <Typography variant="h6" className={classes.textField}>
               Edit Income
             </Typography>
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.date}</Typography>
+            ) : (
+              null
+            )}
             <TextField
               id="date"
               label="Date"
@@ -78,15 +84,20 @@ const EditIncome = (props) => {
             />
           
             <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
-              <Input
-                id="standard-adornment-amount"
-                className={classes.textField}
-                name="amount"
-                value={incomeData.amount}
-                onChange={handleChange}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                fullWidth
-              />
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.amount}</Typography>
+            ) : (
+              null
+            )}
+            <Input
+              id="standard-adornment-amount"
+              className={classes.textField}
+              name="amount"
+              value={incomeData.amount}
+              onChange={handleChange}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              fullWidth
+            />
             <TextField
               autoFocus
               margin="dense"

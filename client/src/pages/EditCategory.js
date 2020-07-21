@@ -22,6 +22,7 @@ const EditCategory = (props) => {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
+  const errors = useSelector(state => state.errors);
   const [categoryData, setCategoryData] = useState({
     name: '',
     budget: ''
@@ -59,6 +60,11 @@ const EditCategory = (props) => {
             <Typography variant="h6" className={classes.textField}>
               Edit Category
             </Typography>
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.name}</Typography>
+            ) : (
+              null
+            )}
             <TextField
               autoFocus
               margin="dense"
@@ -71,6 +77,11 @@ const EditCategory = (props) => {
               onChange={handleChange}
               className={classes.textField}
             />
+            {errors ? (
+              <Typography color="error" variant="body2">{errors.budget}</Typography>
+            ) : (
+              null
+            )}
             <Input
               id="standard-adornment-amount"
               value={categoryData.budget}
