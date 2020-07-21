@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 const AddExpense = (props) => {
   const classes = useStyles();
+  const token = localStorage.getItem('token');
   let curr = new Date();
   curr.setDate(curr.getDate());
   const today = curr.toISOString().substr(0, 10);
@@ -49,7 +50,7 @@ const AddExpense = (props) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.createExpense(expenseData);
+    props.createExpense(expenseData, token);
   }
   
   const categories = props.categories;
@@ -130,7 +131,6 @@ const AddExpense = (props) => {
           </DialogActions>
         </form>
       </DialogContent>
-      
     </div> 
   );
 }

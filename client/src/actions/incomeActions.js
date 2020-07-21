@@ -69,3 +69,21 @@ export const updateIncome = (id, updatedIncome, token) => dispatch => {
       });
     });
 };
+
+export const deleteIncome = (id, token) => dispatch => {
+  axios.delete(`/income/delete/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      toast('Deleted income!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      window.location.href = "/";
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};

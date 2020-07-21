@@ -9,12 +9,16 @@ const cardStyles = makeStyles({
   textField: {
     marginBottom: '1rem'
   },
-  button: {
+  buttonContainer: {
     marginRight: '2rem',
     marginTop: '1rem'
   },
-  cancelButton: {
+  button: {
     marginLeft: '1.5rem'
+  },
+  backButton: {
+    marginTop: '1rem',
+    textAlign: 'center'
   }
 });
 

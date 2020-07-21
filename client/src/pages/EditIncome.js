@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateIncome } from '../actions/incomeActions';
+import { updateIncome, deleteIncome } from '../actions/incomeActions';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -47,7 +47,12 @@ const EditIncome = (props) => {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, []);
+
+  const deleteItem = () => {
+    const id = props.match.params.id;
+    dispatch(deleteIncome(id, token));
+  }
 
   const onSubmit = e => {
     e.preventDefault();
@@ -55,68 +60,79 @@ const EditIncome = (props) => {
     dispatch(updateIncome(id, incomeData, token));
   }
   
-
   return (
     <div>
       <Navbar />
-		  <Card className={classes.card}>
-        <CardContent>
-          <form onSubmit={onSubmit}>
-            <Typography variant="h6" className={classes.textField}>
-              Edit Income
-            </Typography>
-            {errors ? (
-              <Typography color="error" variant="body2">{errors.date}</Typography>
-            ) : (
-              null
-            )}
-            <TextField
-              id="date"
-              label="Date"
-              type="date"
-              name="date"
-              onChange={handleChange}
-              value={incomeData.date}
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          
-            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
-            {errors ? (
-              <Typography color="error" variant="body2">{errors.amount}</Typography>
-            ) : (
-              null
-            )}
-            <Input
-              id="standard-adornment-amount"
-              className={classes.textField}
-              name="amount"
-              value={incomeData.amount}
-              onChange={handleChange}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              name="description"
-              id="description"
-              label="Description"
-              onChange={handleChange}
-              value={incomeData.description}
-              type="text"
-              fullWidth
-            />
-            <Grid align='right' className={classes.button}>
-              <Button variant="contained" type="submit" color="primary">Submit</Button>
-              <Button className={classes.cancelButton} variant="contained" color="default" href="/">Back</Button>
-            </Grid>
-            <ToastContainer />
-          </form>
-        </CardContent>
-      </Card>
+      <Grid container>
+        <Card className={classes.card}>
+          <CardContent>
+            <form onSubmit={onSubmit}>
+              <Typography variant="h6" className={classes.textField}>
+                Edit Income
+              </Typography>
+              {errors ? (
+                <Typography color="error" variant="body2">{errors.date}</Typography>
+              ) : (
+                null
+              )}
+              <TextField
+                id="date"
+                label="Date"
+                type="date"
+                name="date"
+                onChange={handleChange}
+                value={incomeData.date}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            
+              <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
+              {errors ? (
+                <Typography color="error" variant="body2">{errors.amount}</Typography>
+              ) : (
+                null
+              )}
+              <Input
+                id="standard-adornment-amount"
+                className={classes.textField}
+                name="amount"
+                value={incomeData.amount}
+                onChange={handleChange}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                fullWidth
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                name="description"
+                id="description"
+                label="Description"
+                onChange={handleChange}
+                value={incomeData.description}
+                type="text"
+                fullWidth
+              />
+              <Grid align='right' className={classes.buttonContainer}>
+                <Button variant="contained" type="submit" color="primary">Submit</Button>
+                <Button 
+                  className={classes.button} 
+                  variant="contained" 
+                  color="secondary"
+                  onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) deleteItem() } } 
+                >
+                  Delete
+                </Button>
+              </Grid>
+              <ToastContainer />
+            </form>
+          </CardContent>
+        </Card>
+        <Grid item xs={12} className={classes.backButton} >
+          <Button variant='outlined' color='primary' href="/">Back to Dashboard</Button>
+        </Grid>
+      </Grid>
     </div>
   );
 }

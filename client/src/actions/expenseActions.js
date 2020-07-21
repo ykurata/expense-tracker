@@ -73,3 +73,21 @@ export const updateExpense = (id, updatedExpense, token) => dispatch => {
       });
     });
 };
+
+export const deleteExpense = (id, token) => dispatch => {
+  axios.delete(`/expense/delete/${id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      toast('Deleted expense!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      window.location.href = "/";
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};

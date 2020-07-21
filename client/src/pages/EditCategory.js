@@ -54,51 +54,53 @@ const EditCategory = (props) => {
   return (
     <div>
       <Navbar />
-		  <Card className={classes.card}>
-        <CardContent>
-          <form onSubmit={onSubmit}>
-            <Typography variant="h6" className={classes.textField}>
-              Edit Category
-            </Typography>
-            {errors ? (
-              <Typography color="error" variant="body2">{errors.name}</Typography>
-            ) : (
-              null
-            )}
-            <TextField
-              autoFocus
-              margin="dense"
-              name="name"
-              id="name"
-              label="Category"
-              value={categoryData.name}
-              type="text"
-              fullWidth
-              onChange={handleChange}
-              className={classes.textField}
-            />
-            {errors ? (
-              <Typography color="error" variant="body2">{errors.budget}</Typography>
-            ) : (
-              null
-            )}
-            <Input
-              id="standard-adornment-amount"
-              value={categoryData.budget}
-              name="budget"
-              placeholder="Monthly Budget"
-              onChange={handleChange}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              fullWidth
-            />
-            <Grid align='right' className={classes.button}>
-              <Button variant="contained" type="submit" color="primary">Submit</Button>
-              <Button className={classes.cancelButton} variant="contained" color="default" href="/">Back</Button>
-            </Grid>   
-            <ToastContainer />
-          </form>
-        </CardContent>
-      </Card>
+      <Grid container>
+        <Card className={classes.card}>
+          <CardContent>
+            <form onSubmit={onSubmit}>
+              <Typography variant="h6" className={classes.textField}>
+                Edit Category
+              </Typography>
+              {errors ? (
+                <Typography color="error" variant="body2">{errors.name}</Typography>
+              ) : (
+                null
+              )}
+              <TextField
+                autoFocus
+                margin="dense"
+                name="name"
+                id="name"
+                label="Category"
+                value={categoryData.name}
+                type="text"
+                fullWidth
+                onChange={handleChange}
+                className={classes.textField}
+              />
+              {errors ? (
+                <Typography color="error" variant="body2">{errors.budget}</Typography>
+              ) : (
+                null
+              )}
+              <Input
+                id="standard-adornment-amount"
+                value={categoryData.budget}
+                name="budget"
+                placeholder="Monthly Budget"
+                onChange={handleChange}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                fullWidth
+              />
+              <Grid align='right' className={classes.buttonContainer}>
+                <Button variant="contained" type="submit" color="primary">Submit</Button>
+                <Button className={classes.button} variant="contained" color="default" href="/">Back</Button>
+              </Grid>   
+              <ToastContainer />
+            </form>
+          </CardContent>
+        </Card>
+      </Grid>
     </div>
   );
 }
