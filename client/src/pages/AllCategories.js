@@ -14,6 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
 
 import Navbar from '../components/Navbar';
 
@@ -28,6 +29,16 @@ const useStyles = makeStyles({
     width: 400,
     maxHeight: 500,
     overflow: 'auto'
+  },
+  tableHead: {
+    fontWeight: 'bold'
+  },
+  editIcon: {
+    color: '#647fe3',
+    '&:hover': {
+      borderRadius: '50%',
+      backgroundColor: "#e1e2e3"
+    },
   },
   button: {
     marginTop: '1rem',
@@ -58,8 +69,9 @@ const AllCategories = (props) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Category Name</TableCell>
-                <TableCell align="right">Monthly Budget</TableCell>
+                <TableCell align="left" className={classes.tableHead}>Category Name</TableCell>
+                <TableCell align="right" className={classes.tableHead}>Monthly Budget</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,6 +80,9 @@ const AllCategories = (props) => {
                   <TableCell align="left">{x.name}</TableCell>
                   <TableCell align="right" >
                     ${x.budget.toFixed(2)}
+                  </TableCell>
+                  <TableCell className={classes.editIcon}>
+                    <a href={`/category/edit/${x.id}`}><EditIcon /></a>
                   </TableCell>
                 </TableRow>
               ))}

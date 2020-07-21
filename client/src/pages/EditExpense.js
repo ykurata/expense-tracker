@@ -53,10 +53,6 @@ const EditExpense = (props) => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   dispatch(getExpense(props.match.params.id, token));
-  // }, []);
-
   useEffect(() => {
     dispatch(getCategories(userId, token));
   }, [userId, token]);
