@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateIncome } from '../actions/incomeActions';
+import { updateCategory } from '../actions/categoryActions';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -12,36 +12,32 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Navbar from '../components/Navbar';
 import cardStyles from '../styles/cardStyles';
 
-const EditIncome = (props) => {
+const EditCategory = (props) => {
   const classes = cardStyles();
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
   const errors = useSelector(state => state.errors);
-  const [incomeData, setIncomeData] = useState({
-    date: '',
-    amount: '',
-    description: ''
+  const [categoryData, setCategoryData] = useState({
+    name: '',
+    budget: ''
   });
 
-
   const handleChange = e => {
-    setIncomeData({ ...incomeData, [e.target.name]: e.target.value });
+    setCategoryData({ ...categoryData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    axios.get(`/income/get/${props.match.params.id}`, { headers: {"Authorization" : `Bearer ${token}`}})
+    axios.get(`/category/get/${props.match.params.id}`, { headers: {"Authorization" : `Bearer ${token}`}})
       .then(res => {
-        setIncomeData({
-          date: res.data.date,
-          amount: res.data.amount.toFixed(2),
-          description: res.data.description
+        setCategoryData({
+          name: res.data.name,
+          budget: res.data.budget.toFixed(2)
         })
       })
       .catch(err => {
@@ -52,9 +48,8 @@ const EditIncome = (props) => {
   const onSubmit = e => {
     e.preventDefault();
     const id = props.match.params.id;
-    dispatch(updateIncome(id, incomeData, token));
+    dispatch(updateCategory(id, categoryData, token));
   }
-  
 
   return (
     <div>
@@ -63,56 +58,43 @@ const EditIncome = (props) => {
         <CardContent>
           <form onSubmit={onSubmit}>
             <Typography variant="h6" className={classes.textField}>
-              Edit Income
+              Edit Category
             </Typography>
             {errors ? (
-              <Typography color="error" variant="body2">{errors.date}</Typography>
+              <Typography color="error" variant="body2">{errors.name}</Typography>
             ) : (
               null
             )}
             <TextField
-              id="date"
-              label="Date"
-              type="date"
-              name="date"
+              autoFocus
+              margin="dense"
+              name="name"
+              id="name"
+              label="Category"
+              value={categoryData.name}
+              type="text"
+              fullWidth
               onChange={handleChange}
-              value={incomeData.date}
               className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
-          
-            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
             {errors ? (
-              <Typography color="error" variant="body2">{errors.amount}</Typography>
+              <Typography color="error" variant="body2">{errors.budget}</Typography>
             ) : (
               null
             )}
             <Input
               id="standard-adornment-amount"
-              className={classes.textField}
-              name="amount"
-              value={incomeData.amount}
+              value={categoryData.budget}
+              name="budget"
+              placeholder="Monthly Budget"
               onChange={handleChange}
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              name="description"
-              id="description"
-              label="Description"
-              onChange={handleChange}
-              value={incomeData.description}
-              type="text"
               fullWidth
             />
             <Grid align='right' className={classes.button}>
               <Button variant="contained" type="submit" color="primary">Submit</Button>
               <Button className={classes.cancelButton} variant="contained" color="default" href="/">Back</Button>
-            </Grid>
+            </Grid>   
             <ToastContainer />
           </form>
         </CardContent>
@@ -121,4 +103,4 @@ const EditIncome = (props) => {
   );
 }
 
-export default EditIncome;
+export default EditCategory;

@@ -38,3 +38,22 @@ export const createCategory = (newCategory, token) => dispatch => {
     });
 };
 
+export const updateCategory = (id, updatedCategory, token) => dispatch => {
+  axios.put(`/category/update/${id}`, updatedCategory, { headers: {"Authorization" : `Bearer ${token}`}})
+    .then(res => {
+      toast('Updated a category!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    });
+};

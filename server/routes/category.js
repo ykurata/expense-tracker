@@ -58,6 +58,18 @@ router.get("/all/:id", auth, async(req, res) => {
   }
 });
 
+// Get a category by id 
+router.get("/get/:id", auth, async(req, res) => {
+  try {
+    const category = await Category.findOne({
+      where: { id: req.params.id }
+    });
+    res.status(200).json(category);
+  } catch(err) {
+    console.log(err);
+  }
+});
+
 // GET all categories
 router.get("/all", auth, async(req, res) => {
   try {

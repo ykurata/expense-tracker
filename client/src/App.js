@@ -12,8 +12,10 @@ import Login from  './pages/Login';
 import SignUp from  './pages/SignUp';
 import AllExpenses from './pages/AllExpenses';
 import AllIncomes from './pages/AllIncomes';
+import AllCategories from './pages/AllCategories';
 import EditExpense from './pages/EditExpense';
 import EditIncome from './pages/EditIncome';
+import EditCategory from './pages/EditCategory';
 import PrivateRoute from "./components/PrivateRoute";
 
 import store from './store';
@@ -45,8 +47,10 @@ function App() {
           <PrivateRoute exact path="/" component={Dashboard} />
           <PrivateRoute path="/expenses" component={AllExpenses} />
           <PrivateRoute path="/incomes" component={AllIncomes} />
+          <PrivateRoute path="/categories" component={AllCategories} />
           <PrivateRoute path="/expense/edit/:id" component={EditExpense} />
           <PrivateRoute path="/income/edit/:id" component={EditIncome} />
+          <PrivateRoute path="/category/edit/:id" component={EditCategory} />
         </Switch>
       </BrowserRouter>
       </MuiThemeProvider>

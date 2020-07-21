@@ -111,7 +111,7 @@ const Category = (props) => {
           ) : (
             <LinearProgress className={classes.marginTop} variant="determinate" value={(item.value / item.budget)* 100} />
           )} 
-          <Typography className={classes.marginTop}>Budget ${item.budget}</Typography>
+          <Typography variant="body2" className={classes.marginTop}>Budget ${item.budget}</Typography>
         </CardContent>  
       </Card>  
     </Grid>
