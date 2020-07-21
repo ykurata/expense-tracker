@@ -14,30 +14,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from '../components/Navbar';
+import tableStyles from '../styles/tableStyles';
 
-const useStyles = makeStyles({
-  container: {
-    marginTop: '7rem',
-  },
-  title: {
-    paddingBottom: '2rem'
-  },
-  table: {
-    width: 650,
-    maxHeight: 500,
-    overflow: 'auto'
-  },
-  button: {
-    marginTop: '1rem',
-    textAlign: 'center'
-  }
-});
 
 const AllExpenses = (props) => {
-  const classes = useStyles();
+  const classes = tableStyles();
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
   const expenses = useSelector(state => state.expense.expenses);
@@ -58,9 +41,9 @@ const AllExpenses = (props) => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Date</TableCell>
-                <TableCell align="left">Description</TableCell>
-                <TableCell align="right">Amount</TableCell>
+                <TableCell className={classes.tableHead} align="left">Date</TableCell>
+                <TableCell className={classes.tableHead} align="left">Description</TableCell>
+                <TableCell className={classes.tableHead} align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

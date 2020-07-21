@@ -47,8 +47,7 @@ const useStyles = makeStyles(theme => ({
   editIcon: {
     color: '#647fe3',
     '&:hover': {
-      borderRadius: '50%',
-      backgroundColor: "#e1e2e3"
+      color: '#123ee0'
     },
   }
 }));
