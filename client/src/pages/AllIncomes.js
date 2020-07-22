@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Moment from 'react-moment';
-import PropTypes from 'prop-types';
 import { getIncomes } from '../actions/incomeActions';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,7 +13,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from '../components/Navbar';
 import tableStyles from '../styles/tableStyles';

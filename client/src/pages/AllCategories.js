@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Moment from 'react-moment';
 import { getCategories } from '../actions/categoryActions';
 import { useSelector, useDispatch } from 'react-redux';
 

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Moment from 'react-moment';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -12,56 +15,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
-import EditIcon from '@material-ui/icons/Edit';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    '&:hover': {
-      backgroundColor: "#e1e2e3",
-    },
-  },
-  totalAmount: {
-    color: '#647fe3',
-  },
-  marginTop: {
-    marginTop: '.5rem'
-  },
-  description: {
-    alignItems: 'left'
-  },
-  amount: {
-    color: '#647fe3'
-  },
-  date: {
-    flaot: 'right',
-    marginLeft: '8rem'
-  },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalCard: {
-    position: 'absolute',
-    minWidth: 400,
-    maxHeight: 400,
-    overflow: 'auto',
-    backgroundColor: theme.palette.background.paper,
-    border: '.5px solid #000',
-  },
-  editIcon: {
-    color: '#647fe3',
-    '&:hover': {
-      color: '#123ee0'
-    },
-  }
-}));
+import modalStyles from '../styles/modalStyles';
 
 const Category = (props) => {
-  const classes = useStyles();
+  const classes = modalStyles();
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState();
 
@@ -117,12 +75,12 @@ const Category = (props) => {
   const details = props.data.filter(x => x.category.includes(index));
 
   const modalContent =  <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
+                          <Table aria-label="simple table">
                             <TableHead>
                               <TableRow>
-                                <TableCell align="left">Date</TableCell>
-                                <TableCell align="left">Description</TableCell>
-                                <TableCell align="right">Amount</TableCell>
+                                <TableCell className={classes.tableHead} align="left">Date</TableCell>
+                                <TableCell className={classes.tableHead} align="left">Description</TableCell>
+                                <TableCell className={classes.tableHead} align="right">Amount</TableCell>
                                 <TableCell></TableCell>
                               </TableRow>
                             </TableHead>

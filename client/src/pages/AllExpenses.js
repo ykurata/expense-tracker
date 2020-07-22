@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Moment from 'react-moment';
-import PropTypes from 'prop-types';
 import { getExpenses } from '../actions/expenseActions';
 import { useSelector, useDispatch } from 'react-redux';
 
