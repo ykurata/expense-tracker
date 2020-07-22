@@ -8,10 +8,10 @@ const cardStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       width: 400
     },
-    ["@media (max-width:400px)"]: { 
+    "@media (max-width:400px)": { 
       width: 320
     },
-    ["@media (max-width:350px)"]: { 
+    "@media (max-width:350px)": { 
       width: 300
     },
   },

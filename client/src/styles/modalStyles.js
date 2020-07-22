@@ -34,10 +34,10 @@ const modalStyles = makeStyles(theme => ({
     overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
-    ["@media (max-width:430px)"]: { 
+    "@media (max-width:430px)": { 
       minWidth: 340
     },
-    ["@media (max-width:350px)"]: { 
+    "@media (max-width:350px)": { 
       minWidth: 300
     },
   },

@@ -4,12 +4,9 @@ const profileImageStyles = makeStyles(theme => ({
   form: {
     width: 400,
     height: 450,
-    ["@media (max-width:450px)"]: { 
+    "@media (max-width:450px)": { 
       width: 300
-    },
-    // ["@media (max-width:400px)"]: { 
-    //   width: 300
-    // },
+    }
   },
   avatar: {
     width: 200,

@@ -20,7 +20,6 @@ import cardStyles from '../styles/cardStyles';
 const EditCategory = (props) => {
   const classes = cardStyles();
   const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
   const errors = useSelector(state => state.errors);
   const [categoryData, setCategoryData] = useState({
@@ -43,7 +42,7 @@ const EditCategory = (props) => {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, []);
 
   const onSubmit = e => {
     e.preventDefault();

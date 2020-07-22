@@ -52,11 +52,11 @@ const EditExpense = (props) => {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     dispatch(getCategories(userId, token));
-  }, [userId, token]);
+  }, []);
 
   const deleteItem = () => {
     const id = props.match.params.id;

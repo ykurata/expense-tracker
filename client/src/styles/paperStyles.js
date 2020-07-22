@@ -10,25 +10,25 @@ const paperStyles = makeStyles(theme => ({
       width: '500px',
       minHeight: '23rem'
     },
-    ["@media (max-width:500px)"]: { 
+    "@media (max-width:500px)": { 
       width: '400px',
       minHeight: '300px',
       margin: 'auto'
     },
-    ["@media (max-width:450px)"]: { 
+    "@media (max-width:450px)": { 
       width: '400px',
       margin: 'auto'
     },
-    ["@media (max-width:420px)"]: { 
+    "@media (max-width:420px)": { 
       width: '360px',
       margin: 'auto'
     },
-    ["@media (max-width:400px)"]: { 
+    "@media (max-width:400px)": { 
       width: '320px',
       maxHeight: '300px',
       margin: 'auto'
     },
-    ["@media (max-width:350px)"]: { 
+    "@media (max-width:350px)": { 
       width: '280px',
       maxHeight: '280px',
     }
@@ -54,10 +54,10 @@ const paperStyles = makeStyles(theme => ({
     overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
-    ["@media (max-width:430px)"]: { 
+    "@media (max-width:430px)": { 
       minWidth: 340
     },
-    ["@media (max-width:350px)"]: { 
+    "@media (max-width:350px)": { 
       minWidth: 300
     },
   },
