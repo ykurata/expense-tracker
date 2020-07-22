@@ -49,11 +49,17 @@ const paperStyles = makeStyles(theme => ({
   },
   modalPaper: {
     position: 'absolute',
-    width: 400,
+    minWidth: 400,
     maxHeight: 500,
     overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     border: '.5px solid #000',
+    ["@media (max-width:430px)"]: { 
+      minWidth: 340
+    },
+    ["@media (max-width:350px)"]: { 
+      minWidth: 300
+    },
   },
   editIcon: {
     color: '#647fe3',
@@ -66,7 +72,7 @@ const paperStyles = makeStyles(theme => ({
 		padding: theme.spacing(1),
     marginLeft: '.5rem',
     marginBottom: '1.2rem'
-	},
+  },
 }));
 
 export default paperStyles;
