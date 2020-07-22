@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const tableStyles = makeStyles({
+const tableStyles = makeStyles(theme => ({
   container: {
     marginTop: '7rem',
   },
@@ -10,7 +10,19 @@ const tableStyles = makeStyles({
   table: {
     width: 650,
     maxHeight: 500,
-    overflow: 'auto'
+    overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: 500
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 400
+    },
+    ["@media (max-width:400px)"]: { 
+      width: 340
+    },
+    ["@media (max-width:350px)"]: { 
+      width: 320
+    },
   },
   tableHead: {
     fontWeight: 'bold'
@@ -25,6 +37,6 @@ const tableStyles = makeStyles({
     marginTop: '1rem',
     textAlign: 'center'
   }
-});
+}));
 
 export default tableStyles;
