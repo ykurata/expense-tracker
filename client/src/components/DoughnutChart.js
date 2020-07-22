@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Doughnut } from 'react-chartjs-2';
 import Moment from 'react-moment';
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
@@ -11,49 +13,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { Doughnut } from 'react-chartjs-2';
-
-const useStyles = makeStyles(theme => ({
-	paper: {
-		minHeight: '22rem',
-	},
-	subTitle: {
-		padding: theme.spacing(1),
-  },
-  incomeButton: {
-    backgroundColor: '#3590F3',
-  },
-  expenseButton: {
-    backgroundColor: '#62BFED'
-  },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalPaper: {
-    position: 'absolute',
-    width: 400,
-    maxHeight: 500,
-    overflow: 'auto',
-    backgroundColor: theme.palette.background.paper,
-    border: '.5px solid #000',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
-  },
-  editIcon: {
-    color: '#647fe3',
-    '&:hover': {
-      color: '#123ee0'
-    },
-  }
-}));
+import paperStyles from '../styles/paperStyles';
 
 const DoughnutChart = (props) => {
-  const classes = useStyles();
+  const classes = paperStyles();
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
 
@@ -196,7 +161,13 @@ const expenseTable =   <TableContainer component={Paper}>
       {props.exp.length === 0 && props.inc.length === 0 ? (
         <Typography align='center'>No data saved</Typography>
       ): (
-        <Doughnut data={data} />
+        <Doughnut 
+          data={data}
+          options={{
+            responsive: true,
+            maintainAspectRatio: true,
+          }} 
+        />
       )}
       
       {props.inc.length === 0 || props.exp.length === 0 ? (
