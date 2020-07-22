@@ -1,25 +1,14 @@
 import React from 'react';
+import { Bar } from 'react-chartjs-2';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
-import { Bar } from 'react-chartjs-2';
-
-const useStyles = makeStyles(theme => ({
-	paper: {
-		minHeight: '22rem',
-	},
-	header: {
-		borderBottom: '1px solid #ebeced',
-		padding: theme.spacing(1),
-		marginLeft: '.5rem',
-	},
-}));
+import paperStyles from '../styles/paperStyles';
 
 const MonthlyExpense = (props) => {
-  const classes = useStyles();
+  const classes = paperStyles();
 
   const monthAndYear = [];
   props.data.map(x => monthAndYear.push(x.date.slice(0, 7)));
@@ -56,7 +45,13 @@ const MonthlyExpense = (props) => {
       {amountArr.length === 1 ? (
         <Typography align='center'>No data saved</Typography>
       ) : (
-        <Bar data={data} />
+        <Bar 
+          data={data} 
+          options={{
+            responsive: true,
+            maintainAspectRatio: true,
+          }} 
+        />
       )}
     </Paper>
   );

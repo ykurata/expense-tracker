@@ -21,7 +21,6 @@ import cardStyles from '../styles/cardStyles';
 const EditIncome = (props) => {
   const classes = cardStyles();
   const token = localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
   const errors = useSelector(state => state.errors);
   const [incomeData, setIncomeData] = useState({

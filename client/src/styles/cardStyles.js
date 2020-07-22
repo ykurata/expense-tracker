@@ -1,10 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const cardStyles = makeStyles({
+const cardStyles = makeStyles(theme => ({
   card: {
     width: 500,
     margin: 'auto',
-    marginTop: '10rem'
+    marginTop: '10rem',
+    [theme.breakpoints.down('xs')]: {
+      width: 400
+    },
+    "@media (max-width:400px)": { 
+      width: 320
+    },
+    "@media (max-width:350px)": { 
+      width: 300
+    },
   },
   textField: {
     marginBottom: '1rem'
@@ -20,7 +29,7 @@ const cardStyles = makeStyles({
     marginTop: '1rem',
     textAlign: 'center'
   }
-});
+}));
 
 export default cardStyles;
   
