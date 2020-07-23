@@ -38,9 +38,15 @@ const paperStyles = makeStyles(theme => ({
   },
   incomeButton: {
     backgroundColor: '#3590F3',
+    '&:hover': {
+      backgroundColor: '#73aff0'
+    },
   },
   expenseButton: {
-    backgroundColor: '#62BFED'
+    backgroundColor: '#62BFED',
+    '&:hover' : {
+      backgroundColor: '#95d0ed'
+    }
   },
   modal: {
     display: 'flex',

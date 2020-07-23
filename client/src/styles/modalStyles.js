@@ -7,7 +7,7 @@ const modalStyles = makeStyles(theme => ({
     },
   },
   totalAmount: {
-    color: '#647fe3',
+    color: '#3590F3',
   },
   marginTop: {
     marginTop: '.5rem'
@@ -16,7 +16,7 @@ const modalStyles = makeStyles(theme => ({
     alignItems: 'left'
   },
   amount: {
-    color: '#647fe3'
+    color: '#4361ee'
   },
   date: {
     flaot: 'right',
