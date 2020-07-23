@@ -67,9 +67,9 @@ const DoughnutChart = (props) => {
                           <Table aria-label="simple table">
                             <TableHead>
                               <TableRow>
-                                <TableCell align="left">Date</TableCell>
-                                <TableCell align="left">Description</TableCell>
-                                <TableCell align="right">Amount</TableCell>
+                                <TableCell className={classes.tableHead} align="left">Date</TableCell>
+                                <TableCell className={classes.tableHead} align="left">Description</TableCell>
+                                <TableCell className={classes.tableHead} align="right">Amount</TableCell>
                                 <TableCell></TableCell>
                               </TableRow>
                             </TableHead>
@@ -97,9 +97,9 @@ const expenseTable =   <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                           <TableHead>
                             <TableRow>
-                              <TableCell align="left">Date</TableCell>
-                              <TableCell align="left">Description</TableCell>
-                              <TableCell align="right">Amount</TableCell>
+                              <TableCell className={classes.tableHead} align="left">Date</TableCell>
+                              <TableCell className={classes.tableHead} align="left">Description</TableCell>
+                              <TableCell className={classes.tableHead} align="right">Amount</TableCell>
                               <TableCell></TableCell>
                             </TableRow>
                           </TableHead>

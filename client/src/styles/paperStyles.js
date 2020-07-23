@@ -79,6 +79,9 @@ const paperStyles = makeStyles(theme => ({
     marginLeft: '.5rem',
     marginBottom: '1.2rem'
   },
+  tableHead: {
+    fontWeight: 'bold'
+  }
 }));
 
 export default paperStyles;
