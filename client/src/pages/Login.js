@@ -43,6 +43,15 @@ const Login = (props) => {
       history.push("/");
     }
   });
+
+  const demoLogin = e => {
+    e.preventDefault();
+    const demoUser = {
+      email: 'demouser@gmail.com',
+      password: 'password'
+    };
+    props.loginUser(demoUser);
+  }
   
   return (
     <Grid container component="main" className={classes.root}>
@@ -108,6 +117,7 @@ const Login = (props) => {
               color="primary"
               size="large"
               className={classes.submit}
+              onClick={demoLogin}
             >
               Demo User
             </Button>
