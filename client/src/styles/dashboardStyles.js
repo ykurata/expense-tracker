@@ -8,8 +8,8 @@ const dashboardStyles = makeStyles(theme => ({
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
-		backgroundColor: '#fafafa',
-		color: 'grey'
+		backgroundColor: '#0d3b66',
+		color: '#fafafa'
 	},
 	avatar: {
     width: theme.spacing(6),
@@ -39,7 +39,6 @@ const dashboardStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
 		width: drawerWidth,
-    //backgroundColor: '#F7C7DB',
     color: '#3590F3'
   },
   content: {
@@ -69,12 +68,13 @@ const dashboardStyles = makeStyles(theme => ({
   },
   month: {
     paddingBottom: '1rem',
-    color: '#647fe3'
+    color: '#3590F3',
+    fontSize: '1.5rem'
   },
   button: {
-    backgroundColor: '#3590F3',
+    backgroundColor: '#0D3B66',
     '&:hover': {
-      backgroundColor: '#7bb2ed'
+      backgroundColor: '#276fb3'
     },
     marginLeft: '2rem'
   }

@@ -227,7 +227,7 @@ const Dashboard = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" style={{ flex: 1 }} noWrap>
-            Expense Tracker
+            Expense Manager
           </Typography>
 					<div>
             {props.auth.isAuthenticated ? (
@@ -328,7 +328,7 @@ const Dashboard = (props) => {
                 className={classes.button}
                 onClick={handleMonthClick}
               >
-                Select Month and Year
+                Select Month 
               </Button>
               <Menu
                 id="simple-menu"
