@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { registerUser } from '../actions/authActions';
+import { registerUser, loginUser } from '../actions/authActions';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,6 +46,15 @@ const SignUp = (props) => {
       history.push("/");
     }
   });
+
+  const demoLogin = e => {
+    e.preventDefault();
+    const demoUser = {
+      email: 'demouser@gmail.com',
+      password: 'password'
+    };
+    props.loginUser(demoUser);
+  }
   
   return (
     <Grid container component="main" className={classes.root}>
@@ -145,6 +154,7 @@ const SignUp = (props) => {
               color="primary"
               size="large"
               className={classes.submit}
+              onClick={demoLogin}
             >
               Demo User
             </Button>
@@ -164,6 +174,7 @@ const SignUp = (props) => {
 
 SignUp.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -173,4 +184,4 @@ const mapStateToProp = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProp, { registerUser })(SignUp); 
+export default connect(mapStateToProp, { registerUser, loginUser })(SignUp); 
