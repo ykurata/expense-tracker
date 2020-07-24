@@ -79,7 +79,7 @@ Responsive for both web and mobile.<br></br>
 
 * ### Edit and delete data
 <div align="center">
-  <img src="./readme-assets/edit-expense-manager-edit-data.gif" width="700" heigt="500">
+  <img src="./readme-assets/expense-manager-edit-data.gif" width="700" heigt="500">
 </div>    
 <br />
 <br />
@@ -91,9 +91,16 @@ Responsive for both web and mobile.<br></br>
 <br />
 <br />
 
+* ### All expenses and income
+<div align="center">
+  <img src="./readme-assets/expense-manager-table.jpg" width="700" heigt="500">
+</div>  
+<br />
+<br />
+
 * ### Add profile image
 <div align="center">
-  <img src="./readme-assets/expense-manager-profile-image.jpg" width="700" heigt="500">
+  <img src="./readme-assets/expense-manager-profile-iamge.jpg" width="700" heigt="500">
 </div>  
 <br />
 <br />
