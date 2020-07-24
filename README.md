@@ -1,4 +1,4 @@
-# Expense Tracker 
+# Expense Manager
 
 This is an application to track your income and expenses. Users can save income and expense data and the app displays data with graphs. Data can be filtered by month. <br></br>
 Responsive for both web and mobile.<br></br>
