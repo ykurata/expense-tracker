@@ -79,14 +79,14 @@ Responsive for both web and mobile.<br></br>
 
 * ### Edit and delete data
 <div align="center">
-  <img src="./readme-assets/edit-expense-manager-edit-data.jpg" width="700" heigt="500">
+  <img src="./readme-assets/edit-expense-manager-edit-data.gif" width="700" heigt="500">
 </div>    
 <br />
 <br />
 
 * ### Filter data by month 
 <div align="center">
-  <img src="./readme-assets/expense-manager-filter-data-by-month.gif" width="700" heigt="500">
+  <img src="./readme-assets/expense-manager-filter-by-month.gif" width="700" heigt="500">
 </div>    
 <br />
 <br />
