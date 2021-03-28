@@ -1,0 +1,12 @@
+2021-03-27 18:00:34.950 EDT [68372] LOG:  starting PostgreSQL 13.2 on arm-apple-darwin20.3.0, compiled by Apple clang version 12.0.0 (clang-1200.0.32.29), 64-bit
+2021-03-27 18:00:34.951 EDT [68372] LOG:  listening on IPv6 address "::1", port 5432
+2021-03-27 18:00:34.951 EDT [68372] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-03-27 18:00:34.951 EDT [68372] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-03-27 18:00:34.953 EDT [68373] LOG:  database system was shut down at 2021-03-27 18:00:22 EDT
+2021-03-27 18:00:34.955 EDT [68372] LOG:  database system is ready to accept connections
+2021-03-27 18:01:12.438 EDT [68386] FATAL:  role "expense" does not exist
+2021-03-27 18:01:54.650 EDT [68399] FATAL:  role "expense" does not exist
+2021-03-27 18:02:20.863 EDT [68401] FATAL:  role "expense" does not exist
+2021-03-27 18:03:07.864 EDT [68420] FATAL:  role "expense" does not exist
+2021-03-27 18:04:44.696 EDT [68434] FATAL:  database "expenses" does not exist
+2021-03-27 18:05:07.601 EDT [68438] FATAL:  database "expenses" does not exist
